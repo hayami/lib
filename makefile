@@ -2,6 +2,10 @@ DOTFILES= $(shell for x in .??*; do [ "$$x" != ".git" ] && echo "$$x"; done)
 DOTDIR	= $(shell pwd | sed -e "s:^$$HOME/::")
 PRIVATE	= $(HOME)/private/dot
 
+.PHONY:	default commit relink
+
+default: commit
+
 commit:
 	git commit -a
 
