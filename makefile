@@ -1,3 +1,4 @@
+# vim: noet sw=8 sts=8
 DOTFILES= $(shell for x in .??*; do [ "$$x" != ".git" ] && echo "$$x"; done)
 DOTDIR	= $(shell pwd | sed -e "s:^$$HOME/::")
 PRIVATE	= $(HOME)/private/dot
