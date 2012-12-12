@@ -9,6 +9,7 @@ default: commit
 
 commit:
 	git commit -a
+	git push
 
 relink:
 	@for f in $(DOTFILES); do \
@@ -17,3 +18,5 @@ relink:
 	    find $(HOME)/$$f -printf '%p -> %l\n'; \
 	done
 	@[ ! -d $(PRIVATE) ] || $(MAKE) --no-print-directory -C $(PRIVATE) $@
+
+# EOF
