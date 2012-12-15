@@ -17,6 +17,7 @@ relink:
 	    ln -s $(DOTDIR)/$$f $(HOME) || return 1; \
 	    find $(HOME)/$$f -printf '%p -> %l\n'; \
 	done
+	[ ! -f .netrc ] || chmod 600 .netrc
 	@[ ! -d $(PRIVATE) ] || $(MAKE) --no-print-directory -C $(PRIVATE) $@
 
 # EOF
