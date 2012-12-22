@@ -1,8 +1,9 @@
 # vim: noet sw=8 sts=8
-DOTFILES= $(shell for x in .??*; do [ "$$x" != ".git" ] && echo "$$x"; done)
+DOTFILES= $(shell git ls-files .??* | sed -e 's:/.*::' | sort -u)
 DOTDIR	= $(shell pwd | sed -e "s:^$$HOME/::")
 PRIVATE	= $(HOME)/private/dot
 
+MAKEFLAGS += --no-print-directory
 .PHONY:	default commit relink
 
 default: commit
@@ -18,6 +19,6 @@ relink:
 	    find $(HOME)/$$f -printf '%p -> %l\n'; \
 	done
 	[ ! -f .netrc ] || chmod 600 .netrc
-	@[ ! -d $(PRIVATE) ] || $(MAKE) --no-print-directory -C $(PRIVATE) $@
+	@[ ! -d $(PRIVATE) ] || $(MAKE) -C $(PRIVATE) $@
 
 # EOF
