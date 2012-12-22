@@ -1,5 +1,7 @@
 # vim: noet sw=8 sts=8
-DOTFILES= $(shell git ls-files .??* | sed -e 's:/.*::' | sort -u)
+DOTFILES= ${shell for i in .??* *; do case $$i in \
+	  .git|.gitignore|makefile);; \
+	  *) echo $$i;; esac; done}
 DOTDIR	= $(shell pwd | sed -e "s:^$$HOME/::")
 PRIVATE	= $(HOME)/private/dot
 
