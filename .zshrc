@@ -75,12 +75,13 @@ unsetenvall () {
 alias ls='ls -F'
 alias ll='\ls -Al --color=tty'
 alias sl='ls'
+alias less="${PAGER:-'less'}"
 alias cu='cu --parity=none --nostop'
 #         cu --parity=none --nostop --line /dev/ttyUSB0 --speed 115200 dir
 #alias lpr='lpr -h'
 
 ##
-##  Enabling completion
+##  Enabling Completion
 ##
 autoload -U compinit
 compinit
@@ -125,12 +126,12 @@ setopt list_packed
 setopt no_auto_remove_slash
 
 ##
-##  Hostname completion
+##  Hostname Completion
 ##
 _cache_hosts=(localhost tako moka kame oden mikado)
 
 ##
-##  Private settings
+##  Private Settings
 ##
 if [ -r $HOME/.zshrc-private ]; then
     . $HOME/.zshrc-private
