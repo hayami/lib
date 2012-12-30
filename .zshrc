@@ -133,8 +133,8 @@ _cache_hosts=(localhost tako moka kame oden mikado)
 ##
 ##  Private Settings
 ##
-if [ -r $HOME/.zshrc-private ]; then
-    . $HOME/.zshrc-private
+if [ -r ~/.zshrc-private ]; then
+    . ~/.zshrc-private
 fi
 
 ##  End of ~/.zshrc
