@@ -22,6 +22,6 @@ relink:
 	    find $(HOME)/$$f -printf '%p -> %l\n'; \
 	done
 	[ ! -f .netrc ] || chmod 600 .netrc
-	[ ! -d $(PRIVATE) ] || $(MAKE) -C $(PRIVATE) $@
+	[ -z "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@
 
 # EOF
