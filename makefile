@@ -6,12 +6,14 @@ DOTDIR	:= $(shell pwd | sed -e "s:^$$HOME/::")
 PRIVATE	:= $(HOME)/private/dot
 
 MAKEFLAGS += --no-print-directory
-.PHONY:	default commit relink
+.PHONY:	default commit push relink
 
-default: commit
+default: commit push
 
 commit:
 	git commit -a
+
+push:
 	git push
 
 relink:
