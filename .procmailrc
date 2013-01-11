@@ -1,0 +1,17 @@
+PATH=/bin:/usr/bin
+MAILDIR=$HOME/Maildir
+DEFAULT=$MAILDIR/
+LOGFILE=$MAILDIR/procmail.log
+INCLUDERC=$HOME/.procmailrc-private
+
+
+### Backup copies
+#:0 c
+#.backup/
+
+
+### Silently discard
+#:0:
+#* ^From: 
+#* ^To: 
+#/dev/null
