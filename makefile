@@ -27,8 +27,9 @@ relink:
 	    ln -s $(DOTDIR)/$$f $(HOME) || return 1; \
 	    find $(HOME)/$$f -printf '%p -> %l\n'; \
 	done
-	[ ! -f .netrc      ] || chmod 0600 .netrc
-	[ ! -f .procmailrc ] || chmod 0600 .procmailrc
+	[ ! -f .netrc       ] || chmod 0600 .netrc
+	[ ! -f .procmailrc  ] || chmod 0600 .procmailrc
+	[ ! -f .fetchmailrc ] || chmod 0600 .fetchmailrc
 	[ -z "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@-private
 
 # EOF
