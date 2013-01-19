@@ -37,9 +37,9 @@ relink-common:
 	[ ! -f .netrc       ] || chmod 0600 .netrc
 	[ ! -f .procmailrc  ] || chmod 0600 .procmailrc
 	[ ! -f .fetchmailrc ] || chmod 0600 .fetchmailrc
+	[ ! -d .xmisc       ] || chmod a+x .xmisc/*xinitrc*
 
 relink-public: relink-common
-	chmod a+x .xmisc/*xinitrc*
 ifeq ($(NODE),tako)
 	cd $(HOME)/.config/xfce4
 	cd $(HOME)/.config/xfce4; [ ! -L xinitrc ] || rm xinitrc
