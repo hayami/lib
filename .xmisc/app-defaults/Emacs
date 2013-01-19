@@ -1,0 +1,16 @@
+!
+!   Emacs 22.x
+!
+
+! .emacs でも設定できるが、こっちの方が綺麗に動いてくれる。
+Emacs.geometry:		80x49+0-0
+Emacs.background:	#FFFCDE
+!Emacs.bitmapIcon:	on
+
+! 『あと、メニューバーのフォントや色を変えるには、.emacs 系の
+!   ファイルではダメで、 ~/.Xresourcesで設定する。』とのこと。
+Emacs.pane.menubar.*.font:	-*-helvetica-bold-r-normal--12-*-*-*-*-*-*-*
+Emacs.pane.menubar.*.margin:		0
+Emacs.pane.menubar.*.background:	gray75
+Emacs.pane.menubar.*.borderWidth:	0
+Emacs.pane.menubar.*.shadowThickness:	1

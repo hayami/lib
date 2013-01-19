@@ -1,0 +1,11 @@
+!
+!   XClock
+!
+*Title:		XClock
+*iconName:	XClock
+*geometry:	-0+0
+*update:	1
+*chime:		False
+*hands:		Black
+*foreground:	Black
+*background:	#FFFCDE

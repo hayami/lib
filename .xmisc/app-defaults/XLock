@@ -1,0 +1,47 @@
+.mode: swarm
+.font: -b&h-lucida-medium-r-normal-sans-24-*-*-*-*-*-iso8859-1
+.background: #FFFCDE
+.foreground: Black
+.name: Name: 
+.password: Password: 
+.info: Enter password to unlock; select icon to lock.
+.validate: Validating login...
+.invalid: Invalid login.
+.nice: 10
+.timeout: 30
+.mono: off
+.nolock: off
+.remote: off
+.allowroot: on
+.enablesaver: on
+.allowaccess: off
+.echokeys: off
+.usefirst: off
+.verbose: off
+.hop.delay: 0
+.hop.batchcount: 1000
+.hop.saturation: 1
+.qix.delay: 30000
+.qix.batchcount: 64
+.qix.saturation: 1
+.image.delay: 2000000
+.image.batchcount: 8
+.image.saturation: 0.3
+.life.delay: 1000000
+.life.batchcount: 100
+.life.saturation: 1
+.swarm.delay: 10000
+.swarm.batchcount: 100
+.swarm.saturation: 1
+.rotor.delay: 10000
+.rotor.batchcount: 4
+.rotor.saturation: 0.4
+.pyro.delay: 15000
+.pyro.batchcount: 40
+.pyro.saturation: 1
+.blank.delay: 5000000
+.blank.batchcount: 1
+.blank.saturation: 1
+.flame.delay: 200000
+.flame.batchcount: 20
+.flame.saturation: 1

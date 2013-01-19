@@ -1,0 +1,25 @@
+!
+!   XTerm
+!
+!*Title:			XTerm
+!*iconName:			XTerm
+!*background:			#FFFCDE
+!*VT100*background:		#FFFCDE
+!*VT100*foreground:		Black
+!*VT100*lineSpace:		0
+!*VT100*saveLines:		512
+!*VT100.scrollBar:		true
+!*VT100.scrollbar.width:	10
+!*VT100.scrollbar.background:	#FFFCDE
+!*VT100.scrollbar.foreground:	black
+!*VT100*eightBitInput:		false
+!*VT100*font:			fixed
+!*VT100*font1:			-*-fixed-medium-r-normal--7-*-iso8859-1
+!*VT100*font2:			-*-fixed-medium-r-normal--10-*-iso8859-1
+!*VT100*font3:			-*-fixed-medium-r-normal--14-*-iso8859-1
+!*VT100*font4:			-*-fixed-medium-r-normal--16-*-iso8859-1
+!*VT100*font5:			-*-fixed-medium-r-normal--20-*-iso8859-1
+!*VT100*font6:			-*-fixed-medium-r-normal--24-*-iso8859-1
+!*VT100*Scrollbar.translations:	#override \
+!	<Btn5Down>:		StartScroll(Forward)\n\
+!	<Btn4Down>:		StartScroll(Backward)\n

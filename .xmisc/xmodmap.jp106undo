@@ -1,0 +1,29 @@
+!
+! 106JP Keyboard (undo)
+!
+pointer     = 1 2 3 4 5 6 7 8 9
+keycode  66 = Eisu_toggle Caps_Lock
+keycode 109 = Control_R
+keycode 115 = Super_L
+keycode 116 = Super_R
+keycode 131 = Muhenkan
+keycode 129 = Henkan_Mode Mode_switch
+keycode 208 = Hiragana_Katakana Romaji
+keycode  49 = Zenkaku_Hankaku Kanji
+
+clear Lock
+add Lock = Eisu_toggle
+
+clear Control
+add Control = Control_L Control_R
+
+clear Mod1
+clear Mod2
+clear Mod3
+clear Mod4
+clear Mod5
+add Mod1 = Alt_L Alt_L Meta_L
+add Mod2 = Num_Lock
+add Mod4 = Super_L Hyper_L
+add Mod5 = Mode_switch ISO_Level3_Shift
+remove Mod5 = Henkan_Mode

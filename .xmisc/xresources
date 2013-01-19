@@ -1,0 +1,10 @@
+!
+!   Opposed to Debian keyboard policy
+!
+*VT100.Translations: #override \
+    ~Shift ~Ctrl ~Meta <Key>BackSpace: string("\010")\n\
+    ~Shift ~Ctrl ~Meta <Key>Delete: string("\177")\n\
+    ~Shift ~Ctrl ~Meta <Key>Home: string("\033[1~")\n\
+    ~Shift ~Ctrl ~Meta <Key>End: string("\033[4~")
+
+! EOF

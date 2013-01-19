@@ -1,0 +1,31 @@
+!
+!   KTerm
+!
+*Title:				KTerm
+*iconName:			KTerm
+*background:			#FFFCDE
+*VT100*background:		#FFFCDE
+*VT100*foreground:		Black
+*VT100*lineSpace:		0
+*VT100*saveLines:		512
+*VT100.scrollBar:		true
+*VT100.scrollbar.width:		14
+*VT100.scrollbar.background:	#EFECCE
+*VT100.scrollbar.foreground:	black
+*VT100*eightBitInput:		false
+*VT100*fontList:		-*-fixed-medium-r-normal--16-*
+*VT100*fontList1:		-*-fixed-medium-r-normal--10-*
+*VT100*fontList2:		-*-fixed-medium-r-normal--12-*
+*VT100*fontList3:		-*-fixed-medium-r-normal--14-*
+*VT100*fontList4:		-*-fixed-medium-r-normal--16-*
+*VT100*fontList5:		-*-fixed-medium-r-normal--24-*
+*VT100*fontList6:		-*-fixed-medium-r-normal--24-*
+*VT100*kanjiMode:		euc
+*VT100*translations:		#override \
+	Shift<Key>space:	begin-conversion(_JAPANESE_CONVERSION)
+*VT100*Scrollbar.translations:	#override \
+	<Btn5Down>:		StartScroll(Forward)\n\
+	<Btn4Down>:		StartScroll(Backward)\n
+
+!*iconPixmap:			/usr/local/share/X11/bitmaps/icon32
+!*iconMask:			/usr/local/share/X11/bitmaps/icon32m

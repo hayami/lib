@@ -1,0 +1,11 @@
+!
+!   XBiff
+!
+*Title:		XBiff
+*iconName:	XBiff
+*geometry:	82x82-174+0
+*foreground:	Black
+*fullPixmap:	flagup
+*emptyPixmap:	flagdown
+*update:	10
+*volume:	100

@@ -1,0 +1,30 @@
+!
+!   XPbiff
+!
+*Title:				XPbiff
+*iconName:			XPbiff
+*geometry:			-174+116
+*popupGeometry:			-0+0
+*pollingTime:			10000
+!*arrivePixmap:			flagup
+*nomailPixmap:			flagdown
+*mono:				False
+*raise:				True
+*stayRaised:			False
+*animate:			True
+*popup:				True
+*bell:				True
+*popdown:			True
+*info_base.hSpace:		0
+*info_base.vSpace:		0
+*arriveForeground:		Yellow
+*arriveBackground:		Red
+*nomailForeground:		Black
+*nomailBackground:		#FFFCDE
+*info.foreground:		Black
+*info.background:		#FFFCDE
+*info_base.background:		#FFFCDE
+*popdown_button.foreground:	Black
+*popdown_button.background:	#FFFCDE
+!*bitmapFilePath:		/usr/private/your_private_bitmap_filepath
+!.spoolPath:			/var/spool/your_system_mailpath

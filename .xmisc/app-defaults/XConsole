@@ -1,0 +1,13 @@
+!
+!   XConsole
+!
+*Title:			XConsole
+*iconName:		XConsole
+*editType:		read
+*iconic:		true
+*font:			fixed
+*geometry:		800x200-0-0
+*text.Foreground:	Black
+*text.Background:	#FFFCDE
+*text.scrollVertical:	Always
+*text.scrollHorizontal:	WhenNeeded

@@ -1,0 +1,36 @@
+!
+! 106JP Keyboard
+!
+! - Swap Caps_Lock and Control_R
+! - Super_L -> Meta_L
+! - Super_R -> Meta_R
+! - Muhenkan -> space
+! - Henkan_Mode -> space
+! - Hiragana_Katakana -> space
+! - Zenkaku_Hankaku -> Esc
+!
+pointer     = 1 3 2 4 5 6 7 8 9
+keycode  66 = Control_R
+keycode 109 = Caps_Lock
+keycode 115 = Meta_L
+keycode 116 = Meta_R
+keycode 131 = space
+keycode 129 = space
+keycode 208 = space
+keycode  49 = Escape
+
+clear Lock
+add Lock = Caps_Lock
+
+clear Control
+add Control = Control_L Control_R
+
+clear Mod1
+clear Mod2
+clear Mod3
+clear Mod4
+clear Mod5
+
+add Mod1 = Alt_L Alt_R
+add Mod2 = Num_Lock
+add Mod3 = Meta_L Meta_R

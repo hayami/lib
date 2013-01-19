@@ -1,0 +1,11 @@
+!
+! PC101(US) Keyboard -> Happy Hacking Keyboard (HHK)
+!
+pointer     = 1 3 2 4 5
+keycode 115 =
+keycode 129 = Meta_R
+keycode 131 = Meta_L
+
+clear Mod4
+add Mod4 = Meta_L
+add Mod4 = Meta_R

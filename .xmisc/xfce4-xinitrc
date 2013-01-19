@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -d $HOME/bin ]; then
+    (
+	IFS=:
+	set -- $PATH
+	for i in "$@"; do
+	    [ "X$i" = "X$HOME/bin" ] && return 0
+	done
+	return 1
+    ) || PATH=$HOME/bin:$PATH
+fi
+
+. /etc/xdg/xfce4/xinitrc

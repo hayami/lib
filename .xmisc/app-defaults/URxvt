@@ -1,0 +1,20 @@
+!
+!   rxvt-unicode
+!
+!   PLEASE NOTE: URxvt.* resources set here will override users' Rxvt.*
+!   resources. Edit with care.
+!
+!   See urxvt(1) for more details, urxvt(7) for FAQ.
+!
+URxvt.font: -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1,	\
+            -misc-fixed-medium-r-normal--14-*-*-*-*-*-jisx0208.1983-0,	\
+            -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
+URxvt.background:	#FFFCDE
+URxvt.foreground:	black
+URxvt.backspacekey:	\010
+URxvt.saveLines:	512
+URxvt.scrollBar:	True
+URxvt.preeditType:	OverTheSpot
+
+! Uncomment to use the historical terminfo entry
+URxvt.termName:		rxvt
