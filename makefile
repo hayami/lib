@@ -37,7 +37,6 @@ relink-common:
 	[ ! -f .netrc       ] || chmod 0600 .netrc
 	[ ! -f .procmailrc  ] || chmod 0600 .procmailrc
 	[ ! -f .fetchmailrc ] || chmod 0600 .fetchmailrc
-	[ ! -d .xmisc       ] || chmod a+x .xmisc/*xinitrc*
 
 relink-public: relink-common
 ifeq ($(NODE),tako)
