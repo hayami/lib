@@ -72,8 +72,8 @@ unsetenvall () {
 ##
 ##  Aliases
 ##
-alias ls='ls -F'
-alias ll='\ls -Al --color=tty'
+alias ls='\ls --time-style=long-iso -F'
+alias ll='\ls --time-style=long-iso -Al --color=tty'
 alias sl='ls'
 alias less="${PAGER:-'less'}"
 alias cu='cu --parity=none --nostop'

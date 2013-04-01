@@ -23,9 +23,9 @@ push:
 	git push
 
 relink:
-	[ -z "$(PRIVATE)" ] || $(MAKE) $@-public
-	[ -n "$(PRIVATE)" ] || $(MAKE) $@-private
-	[ -z "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@-private
+	[ ! -n "$(PRIVATE)" ] || $(MAKE) $@-public
+	[ ! -z "$(PRIVATE)" ] || $(MAKE) $@-private
+	[ ! -d "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@-private
 
 relink-common:
 	@for f in $(LINKS); do \
