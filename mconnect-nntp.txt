@@ -1,0 +1,32 @@
+/usr/etc/mconnect -p 119 news3.iij.ad.jp << EOF
+POST
+Path: not-for-mail
+From: noname@example.jp (HAYAMI Ken'ichi)
+Newsgroups: iij.test
+Subject: TEST
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+
+テスト
+.
+QUIT
+EOF
+
+/usr/etc/mconnect -p 119 news3.iij.ad.jp << EOF
+GROUP iij.test
+GROUP fj.fleamarket.comp
+QUIT
+EOF
+
+/usr/etc/mconnect -p 119 news3.iij.ad.jp << EOF
+GROUP iij.test
+ARTICLE 1919
+QUIT
+EOF
+
+/usr/etc/mconnect -p 119 news3.iij.ad.jp << EOF
+GROUP fj.fleamarket.comp
+ARTICLE 21225
+QUIT
+EOF
