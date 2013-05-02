@@ -1,0 +1,45 @@
+From: noname@example.jp (HAYAMI Ken'ichi)
+To: noname@example.jp (HAYAMI Ken'ichi)
+Cc: noname@example.jp
+Reply-To: noname@example.jp
+Return-Receipt-To: noname@example.jp
+Subject: 
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-2022-JP
+Content-Transfer-Encoding: 7bit
+
+---------------- Original message follows ----------------
+------------- Begin Included Message ------------- 
+------------- End Included Message ------------- 
+------------- Begin Forwarded Message ------------- 
+------------- End Forwarded Message ------------- 
+------------- Begin Attached Message ------------- 
+------------- End Attached Message ------------- 
+
+Date: 
+Distribution: 
+Distribution: japan
+Distribution: world
+Expires: 1 Jan 1970 00:00:00 GMT
+Followup-To: fj.jokes
+Followup-To: poster
+From: 
+In-Reply-To: 
+Keywords: 
+Lines: 
+Message-ID: 
+NNTP-Posting-Host: 
+News-Software: 
+Newsgroups: 
+Organization: 
+Path: 
+References: 
+Reply-To: 
+Return-Receipt-To: 
+Sender: 
+Subject: 
+Summary: 
+Supersedes: <message-id>
+To: 
+To: (My Friends)
+To: (Recipient list suppressed)
