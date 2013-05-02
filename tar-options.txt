@@ -1,0 +1,17 @@
+tar \
+--gzip \
+--create \
+--sparse \
+--numeric-owner \
+--atime-preserve \
+--one-file-system \
+--blocking-factor=126
+tar \
+--extract \
+--verbose \
+--sparse \
+--numeric-owner \
+--atime-preserve \
+--same-permissions \
+--file=- \
+--directory=${mnt}

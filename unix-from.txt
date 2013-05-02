@@ -1,0 +1,1 @@
+UNIX From の条件は egrep '^From<SPC>' と等価。
