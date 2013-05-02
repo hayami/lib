@@ -1,0 +1,15 @@
+COLUMNS=132 dpkg -l | less -S
+dpkg --status ftp
+dpkg -L ftp			# インストールされたファイルを表示
+dpkg -S '/usr/bin/id*'		# ファイルがどのパッケージに属するかを表示
+dpkg -c file.deb		# deb パッケージに含まれるファイル一覧を表示
+dpkg -x file.deb /tmp/dir	# パッケージに含まれるファイルをすべて取り出す
+apt-cache pkgnames [先頭一致文字列] | less
+apt-cache show t-code
+apt-cache depends w3m
+apt-cache rdepends apmd
+apt-cache showpkg apmd
+apt-get -s upgrade		# -s == --dry-run == --no-act
+apt-get -s install t-code	# -s == --dry-run == --no-act
+apt-get -s --purge remove t-code (dpkg --purge t-code)
+apt-get -s --purge autoremove t-code
