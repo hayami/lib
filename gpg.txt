@@ -1,0 +1,10 @@
+GnuPG のコマンド: http://www.nina.jp/server/windows/gpg/commands.html
+gpg -a -r user@example.jp -e 暗号化するファイル名
+gpg -d 暗号化されたファイル > 復号化されたファイル
+gpg --list-keys [names]
+gpg --list-secret-keys [names]
+gpg --fingerprint [names]
+gpg --import pubkey.asc
+gpg --import < pubkey.asc
+gpg --keyserver hkp://wwwkeys.pgp.net --recv-keys 0x517D0F0E
+gpg --verify linux-2.6.18.2.tar.bz2.sign linux-2.6.18.2.tar.bz2
