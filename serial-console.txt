@@ -1,0 +1,11 @@
+/etc/inittab: s0:12345:respawn:/sbin/agetty -L 9600 ttyS0 vt102
+
+/etc/securetty: ttyS0
+
+/etc/lilo.conf: serial=0,9600n8
+
+/etc/lilo.conf: 	append="console=tty0 console=ttyS0,9600n8"
+
+cu --parity=none --nostop --line /dev/ttyS0 --speed 115200 dir
+
+screen /dev/ttyS0 115200

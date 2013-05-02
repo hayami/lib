@@ -1,0 +1,9 @@
+sudo mount -t smbfs -o username=guest,rw,uid=noname,gid=noname,\
+	file_mode=0644,iocharset=utf8,codepage=cp932 //192.168.0.99/xxx /mnt/smb
+sudo smbumount /mnt/smb
+findsmb [-r] [192.168.0.255]
+net SHARE [-l] [-U noname[%password]] -S server-name
+smbmount //samba.example.jp/lst /mnt -o username=noname
+sudo mount -t smbfs -o username=noname //samba.example.jp/lst /mnt
+sudo mount -t cifs -o username=noname //samba.example.jp/lst /mnt
+sudo mount -t cifs -o user=noname //samba.example.jp/lst /mnt
