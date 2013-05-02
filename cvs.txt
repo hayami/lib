@@ -1,0 +1,9 @@
+CVS コマンド例
+cvs help
+cvs --help log
+cvs -d :pserver:noname@cvs.example.jp:2401/home/cvsroot log | less
+export CVSROOT=':pserver:noname@cvs.example.jp:2401/home/cvsroot'
+cvs log | less
+cvs diff -u -r1.3 -r1.4 file.c | less
+cvs diff -u -r タグ名1 -r タグ名2 | less -S
+cvs -q update
