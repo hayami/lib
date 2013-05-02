@@ -1,0 +1,13 @@
+telnet smtp-server smtp
+HELO smtp-client.example.jp
+MAIL From:<noname@example.jp>
+RCPT To:<noname@example.jp>
+DATA
+Subject: test
+From: nobody
+To: nobody
+
+This is a test mail.    
+Please ignore this.
+.
+QUIT
