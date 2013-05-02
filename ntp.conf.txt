@@ -1,0 +1,8 @@
+UNIX Magazine 2004年1月号 pp.56
+/etc/ntp.conf
+	restrict default ignore
+	restrict 127.0.0.1
+	restrict 192.168.0.0 mask 255.255.255.0
+	restrict 192.168.1.0 mask 255.255.255.0
+	server (ISPから指定されたIPアドレス)
+	driftfile /etc/ntp/drift

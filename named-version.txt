@@ -1,0 +1,3 @@
+> bind8.xかどうか見分ける方法はありますか?
+    $ dig @ns.some.domain version.bind chaos txt
+では如何でしょうか。
