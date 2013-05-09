@@ -59,7 +59,7 @@ psg() {
 }
 
 unsetenvall () {
-    PATH=/bin:/usr/bin; export PATH
+    PATH=/usr/bin:/bin; export PATH
     for x in `env | sed 's/=.*$//'`; do
         case "$x" in
             HOME|HOSTTYPE|LOGNAME|OSTYPE|PATH|PWD|TERM|TZ|USER|_) ;;
@@ -72,8 +72,14 @@ unsetenvall () {
 ##
 ##  Aliases
 ##
-alias ls='\ls --time-style=long-iso -F'
-alias ll='\ls --time-style=long-iso -Al --color=tty'
+if \ls --time-style=long-iso -ld / > /dev/null 2>&1; then
+    alias ls='\ls --time-style=long-iso -F'
+    alias ll='\ls --time-style=long-iso -Al --color=tty'
+else
+    alias ls='\ls -F'
+    alias ll='\ls -Al'
+fi
+
 alias sl='ls'
 alias less="${PAGER:-'less'}"
 alias cu='cu --parity=none --nostop'
@@ -89,7 +95,8 @@ compinit
 ##
 ##  Search path for the cd command
 ##
-CDPATH=/home:/var/lib/dpkg
+#CDPATH=/path/to/dir1:/path/to/dir2
+CDPATH=
 
 ##
 ##  Filename completion suffixes to ignore

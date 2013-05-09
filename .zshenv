@@ -38,10 +38,12 @@ umask 022
 ##
 ##  PATH
 ##
-PATH=${HOME}/bin
-PATH=${PATH}:/usr/local/sbin:/usr/local/bin
-PATH=${PATH}:/usr/sbin:/usr/bin:/sbin:/bin
-export PATH
+PATH=/usr/bin:/bin; export PATH
+p=
+for dir in "$HOME/bin" /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin \
+	/bin /sbin; do [ -d "$dir" ] && p="${p}${p:+:}${dir}"; done
+PATH="$p"; export PATH
+unset p dir
 
 ##
 ##  Language/Locale
