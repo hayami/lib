@@ -1,7 +1,8 @@
 # vim: noet sw=8 sts=8
+
 NODE	:= $(shell uname -n | sed -e 's/[\.0-9].*//')
 
-EXCLUDE	:= .|..|.git|.gitignore|makefile
+EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
 ifeq ($(NODE),www)
@@ -14,9 +15,10 @@ PRIVATE	:= $(HOME)/private/dot
 
 MAKEFLAGS += --no-print-directory
 
-.PHONY:	default commit+push commit push
-.PHONY: relink relink-commonn relink-public relink-private
 .NOTPARALLEL:
+
+# ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+.PHONY:	default commit+push commit push
 
 default: commit+push
 
@@ -27,6 +29,9 @@ commit:
 
 push:
 	git push
+
+# ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+.PHONY: relink relink-commonn relink-public relink-private
 
 relink:
 	[ ! -n "$(PRIVATE)" ] || $(MAKE) $@-public
@@ -65,5 +70,29 @@ ifneq ($(XMODMAP),)
 	[ ! -e $(HOME)/.Xmodmap ]
 	ln -s $(DOTDIR)/.xmisc/$(XMODMAP) $(HOME)/.Xmodmap
 endif
+
+# ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+.PHONY: install update bin-install bin-update sys-install sys-update
+
+install: bin-install sys-install
+
+update:	bin-update sys-update
+
+bin-install:
+	install -d -m 0755 $(HOME)/bin
+	$(MAKE) bin-update
+
+bin-update:
+	install -m 0755 bin/* $(HOME)/bin/
+
+sys-install:
+	install -d -m 0755 $(HOME)/sys
+	install -d -m 0755 $(HOME)/sys/usrlocal
+	$(MAKE) sys-update
+
+sys-update:
+	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/usrlocal/
+
+# ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 # EOF

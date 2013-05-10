@@ -1,0 +1,104 @@
+#!/bin/sh -e
+
+usage() {
+    echo 'usage: ssh-tunnel command | remote-host ssh-command-line'
+    echo ''
+    echo 'command: [clear [all] | help | usage]'
+    echo '	clear	: stop ssh-agent'
+    echo '	all	: stop all "ssh -f - N" and "ssh-agent" processes'
+    echo '	help	: show this message'
+    echo '	usage	: same as help'
+    echo ''
+    echo 'examples:'
+    echo '	ssh-tunnel'
+    echo '	ssh-tunnel clear'
+    echo '	ssh-tunnel clear all'
+    echo '	ssh-tunnel remote-host'
+    echo '	ssh-tunnel remote-host ssh (options) remote-host'
+    echo '	ssh-tunnel remote-host scp (options) remote-host:file1 file2'
+    echo '	ssh-tunnel remote-host scp (options) file1 remote-host:file2'
+}
+
+msg_run_agent() {
+    echo -n 'Use the following command to start ssh-agent service: ' 1>&2
+    echo 'eval `ssh-agent`' 1>&2
+}
+
+if [ $# -eq 0 -o "$1" = "help" -o "$1" = "usage" ]; then
+    usage;
+    exit 0;
+fi
+
+if [ "$1" = "clear" ]; then
+    if [ "$2" = "all" ]; then
+	pid=`ps jx \
+	     | awk '$1 == 1 \
+		&& $10 == "ssh" \
+		&& $11 == "-f" \
+		&& $12 == "-N" { print $2; }'`
+	[ -n "$pid" ] && kill -TERM $pid
+    fi
+
+    [ -n "$SSH_AGENT_PID" ] && eval `ssh-agent -k > /dev/null 2>&1`
+    if [ "$2" = "all" ]; then
+	pid=`ps jx | awk '$10 ~ /ssh-agent$/ { print $2; }'`
+	[ -n "$pid" ] && kill -TERM $pid
+    fi
+
+    if [ "$2" = "all" ]; then
+	sleep 1
+	ret=`ps x | awk '$5 !~ /sshd/ && $5 ~ /ssh/ { print $0; }'`
+	if [ -n "$ret" ]; then
+	    ps x | awk 'NR == 1 || ($5 !~ /sshd/ && $5 ~ /ssh/) { print $0; }'
+	fi
+    fi
+    exit 0
+fi
+
+if [ -n "$SSH_AUTH_SOCK" -a -n "$SSH_AGENT_PID" ]; then
+    if ssh-add -l > /dev/null; then
+	if ! ssh-add -l | fgrep " $HOME/.ssh/id" > /dev/null; then
+	    ssh-add
+	fi
+    else
+	case $? in
+	    1)
+		ssh-add
+		;;
+	    2)
+		msg_run_agent
+		exit 1
+		;;
+	    *)
+		echo 'unknown error: ssh-agent -l' 1>&2
+		exit 1;
+		;;
+	esac
+    fi
+else
+    msg_run_agent
+    exit 1
+fi
+
+remote=$1; shift
+ssh -f -N "${remote}-tunnel"
+
+if [ $# -gt 0 ]; then
+    "$@" || :
+else
+    ssh $remote || :
+fi
+
+pid=`ps jx \
+     | awk '$1 == 1 && NF == 13 \
+	&& $10 == "ssh" \
+	&& $11 == "-f" \
+	&& $12 == "-N" \
+	&& $13 == "'"${remote}-tunnel"'" { print $2; }'`
+
+if [ -z "$pid" ]; then
+    echo "can not find process: ssh -f -N ${remote}-tunnel" 1>&2
+    exit 1
+fi
+
+kill -TERM $pid; exit

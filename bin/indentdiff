@@ -1,0 +1,12 @@
+#!/bin/sh
+prog=`basename $0`
+tmp=`mktemp /tmp/$prog.XXXXXX` || exit 1
+trap "rm -f $tmp; exit 1" 1 2 3 13 15
+
+for i in "$@"; do
+    indent --standard-output "$i" > $tmp
+    diff -u "$i" $tmp
+done
+
+rm -f $tmp
+exit 0

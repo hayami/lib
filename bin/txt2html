@@ -1,0 +1,50 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+cat << 'EOF'
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="ja">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>No Title</title>
+</head>
+<body>
+<pre>
+EOF
+nkf -w80 | sed -e 's/\&/\&amp;/g'	\
+	       -e 's/</\&lt;/g'		\
+	       -e 's/>/\&gt;/g'		\
+	       -e 's/"/\&quot;/g'
+cat << 'EOF'
+</pre>
+</body>
+</html>
+EOF
+exit 0
+fi
+
+if [ $# -eq 1 ]; then
+cat << 'EOF'
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="ja">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+EOF
+echo "<title>$1</title>"
+cat << 'EOF'
+</head>
+<body>
+<pre>
+EOF
+nkf -w80 < $1 | sed -e 's/\&/\&amp;/g'	\
+		    -e 's/</\&lt;/g'		\
+		    -e 's/>/\&gt;/g'		\
+		    -e 's/"/\&quot;/g'
+cat << 'EOF'
+</pre>
+</body>
+</html>
+EOF
+exit 0
+fi
+
+echo "usage: txt2html [file]" 1>&2
+exit 1

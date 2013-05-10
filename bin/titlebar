@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+#	From: masaoki@akebono.tky.yhp.co.jp (Kobayashi Masaoki)
+#	Date: Wed, 10 Nov 1993 23:22:45 GMT
+#	Subject: Re: [WANTED] xtitle
+#	Message-ID: <29470002@akebono.tky.yhp.co.jp>
+#	Organization: YHP Hachioji HSTD R&D, Tokyo Japan
+#	Newsgroups: fj.wanted
+#	
+#	kterm なら、
+#		echo "^[]2;hogehoge^G^[]1;piropiro^G"
+#	で、タイトルバーは"hogehoge"に、アイコン名は"piropiro"にな
+#	ります。もちろん、'^[' は "エスケープ"、'^G' は "CTRL-G" です。
+#	
+#	From: nomura@meis.sony.co.jp (Eiji Nomura)
+#	Newsgroups: fj.wanted
+#	Subject: Re: [WANTED] xtitle
+#	Message-ID: <NOMURA.93Nov16194731@Libra.meis.sony.co.jp>
+#	Date: 16 Nov 93 10:47:31 GMT
+#						
+#	kterm に限らず VT100の(ちゃんとした? :p)エミュレーターなら
+#	動作してくれると思います。私も
+#		echo -n "^[]0;"$*"^G"
+#	だけ書いたスクリプトを rename と言う名前で作ってあります。
+#	(ちなみに 0 だとタイトルバーとアイコン名の両方変えられます)
+#	VT100関連の他のコマンドとして、
+#		echo -n "^[[31m"
+#	を RED なんて名前で登録しています(笑)
+#	(カラーの端末じゃないと意味不明だな :-)
+#
+echo -n "]0;"$*""

@@ -1,0 +1,72 @@
+#!/bin/sh
+unset LANG
+#trash_time=`date +%s`
+trash_time=`date +"%Y-%m-%d-%H%M%S"`
+trash_dir=$HOME/trash
+trash_fs=`df -aP $trash_dir | tail -1 | sed -e 's/[[:space:]].*$//'`
+mvopt="-i"
+progname=`basename $0`
+
+# error message function
+err () {
+    echo "${progname}: $@" 1>&2
+}
+
+yesno () {
+    while :; do
+	echo -n "$@ (yes/no) "
+	read ans
+	[ "$ans" = "y" -o "$ans" = "yes" ] && return 0
+	[ "$ans" = "n" -o "$ans" = "no"  ] && return 1
+    done
+}
+
+tarmv () {
+    mkdir $trash_dir/$trash_time || return
+    tar cf - "$1" | (cd $trash_dir/$trash_time && tar xpf -)
+    mv $mvopt "$trash_dir/$trash_time/$1" "$trash_dir/${trash_time},$1"
+    rmdir $trash_dir/$trash_time || return
+    rm -rf "$1"
+    return
+}
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+    -i)
+	mvopt="-i"
+	;;
+    -f)
+	mvopt="-f"
+	;;
+    -*)
+	err "usage: [-i|-f] [file...]"
+	exit 1
+	;;
+    *)
+	flag=""
+	for i in "$@"; do
+	    if [ "X." != "X`dirname $i`" ]; then
+		err "path name is not supported: $i"
+		flag="NO";
+	    fi
+	done
+	[ -z "$flag" ] || exit 1
+
+	method="mv"
+	if [ -d "$1" ]; then
+	    target_fs=`df -aP "$1" | tail -1 | sed -e 's/[[:space:]].*$//'`
+	    if [ "$trash_fs" != "$target_fs" ]; then
+		method="tar"
+		if [ "X$mvopt" = "X-i" ]; then
+		    yesno "$1: move across filesystems?" || method="skip"
+		fi
+	    fi
+	fi
+	[ "$method" = "mv"   ] && mv $mvopt "$1" "$trash_dir/${trash_time},$1"
+	[ "$method" = "tar"  ] && tarmv "$1"
+	[ "$method" = "skip" ] && echo "skipped: $1"
+	;;
+    esac
+    shift
+done
+exit 0

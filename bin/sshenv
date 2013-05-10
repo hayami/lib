@@ -1,0 +1,13 @@
+#!/bin/sh
+ps uxwwe | while read line; do
+    for i in $line; do
+	case "$i" in
+	SSH_AGENT_PID=*) p="$i";;
+	SSH_AUTH_SOCK=*) s="$i";;
+	esac
+    done
+    if [ -n "$p" -a -n "$s" ]; then
+	echo "export $p; export $s"
+    fi
+    p=''; s=''
+done | sort -u

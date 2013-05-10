@@ -1,0 +1,2 @@
+#!/bin/sh
+indent --use-tabs --tab-size8 --standard-output "$@" | expand -i

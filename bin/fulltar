@@ -1,0 +1,3 @@
+#!/bin/sh
+exec tar -p --numeric-owner --atime-preserve --sparse \
+            --one-file-system --exclude='./lost+found' "$@"
