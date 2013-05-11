@@ -1,0 +1,9 @@
+# vim: noet sw=8 sts=8
+
+include $(HOME)/dot/makefile
+PRIVATE	:=
+
+relink-private: relink-common
+	chmod -R og-rwx .??*
+	[ ! -f .fonts.conf ] || chmod 0644 .fonts.conf
+	[ ! -f .forward    ] || chmod 0644 .forward

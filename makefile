@@ -2,9 +2,10 @@
 
 NODE	:= $(shell uname -n | sed -e 's/[\.0-9].*//')
 
-EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile
+EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
+
 ifeq ($(NODE),www)
 LINKS	:= ${shell for i in .less* .vimrc .zsh*; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
@@ -31,7 +32,7 @@ push:
 	git push
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-.PHONY: relink relink-commonn relink-public relink-private
+.PHONY: relink relink-common relink-public relink-private
 
 relink:
 	[ ! -n "$(PRIVATE)" ] || $(MAKE) $@-public
@@ -73,6 +74,7 @@ endif
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 .PHONY: install update bin-install bin-update sys-install sys-update
+.PHONY: private-dirs
 
 install: bin-install sys-install
 
@@ -93,6 +95,23 @@ sys-install:
 sys-update:
 	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/usrlocal/
 
+PRIVATE_DIRS := .ssh .gnupg
+
+private-dirs:
+	@dir="$(PRIVATE)"; \
+	while [ -n "$$dir" -a "$$dir" != "/" -a "$$dir" != "$(HOME)" ]; do \
+	    cmd="install -d -m 0700 $$dir"; echo $$cmd; $$cmd || return 1; \
+	    dir=`dirname $$dir`; \
+	done
+	@for d in $(PRIVATE_DIRS); do \
+	    if [ -z "$(PRIVATE)" ]; then \
+	         cmd="install -d -m 0700 $$d"; \
+	    else \
+	         cmd="install -d -m 0700 $(PRIVATE)/$$d"; \
+	    fi; \
+	    echo $$cmd; $$cmd || return 1; \
+	done
+	 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 # EOF
