@@ -31,49 +31,49 @@ fi
 
 if [ "$1" = "clear" ]; then
     if [ "$2" = "all" ]; then
-	pid=`ps jx \
-	     | awk '$1 == 1 \
-		&& $10 == "ssh" \
-		&& $11 == "-f" \
-		&& $12 == "-N" { print $2; }'`
-	[ -n "$pid" ] && kill -TERM $pid
+        pid=`ps jx \
+             | awk '$1 == 1 \
+                && $10 == "ssh" \
+                && $11 == "-f" \
+                && $12 == "-N" { print $2; }'`
+        [ -n "$pid" ] && kill -TERM $pid
     fi
 
     [ -n "$SSH_AGENT_PID" ] && eval `ssh-agent -k > /dev/null 2>&1`
     if [ "$2" = "all" ]; then
-	pid=`ps jx | awk '$10 ~ /ssh-agent$/ { print $2; }'`
-	[ -n "$pid" ] && kill -TERM $pid
+        pid=`ps jx | awk '$10 ~ /ssh-agent$/ { print $2; }'`
+        [ -n "$pid" ] && kill -TERM $pid
     fi
 
     if [ "$2" = "all" ]; then
-	sleep 1
-	ret=`ps x | awk '$5 !~ /sshd/ && $5 ~ /ssh/ { print $0; }'`
-	if [ -n "$ret" ]; then
-	    ps x | awk 'NR == 1 || ($5 !~ /sshd/ && $5 ~ /ssh/) { print $0; }'
-	fi
+        sleep 1
+        ret=`ps x | awk '$5 !~ /sshd/ && $5 ~ /ssh/ { print $0; }'`
+        if [ -n "$ret" ]; then
+            ps x | awk 'NR == 1 || ($5 !~ /sshd/ && $5 ~ /ssh/) { print $0; }'
+        fi
     fi
     exit 0
 fi
 
 if [ -n "$SSH_AUTH_SOCK" -a -n "$SSH_AGENT_PID" ]; then
     if ssh-add -l > /dev/null; then
-	if ! ssh-add -l | fgrep " $HOME/.ssh/id" > /dev/null; then
-	    ssh-add
-	fi
+        if ! ssh-add -l | fgrep " $HOME/.ssh/id" > /dev/null; then
+            ssh-add
+        fi
     else
-	case $? in
-	    1)
-		ssh-add
-		;;
-	    2)
-		msg_run_agent
-		exit 1
-		;;
-	    *)
-		echo 'unknown error: ssh-agent -l' 1>&2
-		exit 1;
-		;;
-	esac
+        case $? in
+            1)
+                ssh-add
+                ;;
+            2)
+                msg_run_agent
+                exit 1
+                ;;
+            *)
+                echo 'unknown error: ssh-agent -l' 1>&2
+                exit 1;
+                ;;
+        esac
     fi
 else
     msg_run_agent
@@ -91,10 +91,10 @@ fi
 
 pid=`ps jx \
      | awk '$1 == 1 && NF == 13 \
-	&& $10 == "ssh" \
-	&& $11 == "-f" \
-	&& $12 == "-N" \
-	&& $13 == "'"${remote}-tunnel"'" { print $2; }'`
+        && $10 == "ssh" \
+        && $11 == "-f" \
+        && $12 == "-N" \
+        && $13 == "'"${remote}-tunnel"'" { print $2; }'`
 
 if [ -z "$pid" ]; then
     echo "can not find process: ssh -f -N ${remote}-tunnel" 1>&2

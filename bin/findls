@@ -3,32 +3,32 @@ umask 022
 LANG=C
 export LANG
 
-timeformat='%TY-%Tm-%Td_%TT'
+timeformat='%TY-%Tm-%Td,%TT'
 
 while [ $# -gt 0 ]; do
     case "$1" in
     --notime)
-	timeformat='0000-00-00_00:00:00'
-	;;
+        timeformat='0000-00-00,00:00:00'
+        ;;
     -*)
-	echo "usage: findls [--notime] dir [dir...]" 1>&2
-	exit 1
-	;;
+        echo "usage: findls [--notime] dir [dir...]" 1>&2
+        exit 1
+        ;;
     *)
-	find "$@" \
-	   -type l -printf "l %m %n %u %g %s 0000-00-00_00:00:00 %p -> %l\n" \
-	-o -type d -printf "d %m %n %u %g %s 0000-00-00_00:00:00 %p\n" \
-	-o -printf "- %m %n %u %g %s $timeformat %p\n" \
-	| while read a b c d e f g file; do
-	    if [ X$a = X- ]; then
-		md5=`md5sum "$file"`
-	    else
-		md5="-  $file"
-	    fi
-	    echo "$a $b $c $d $e $f $g $md5"
-	done \
-	| sort -k +9
-	;;
+        find "$@" \
+           -type l -printf "l %m %n %u %g %s 0000-00-00,00:00:00 %p -> %l\n" \
+        -o -type d -printf "d %m %n %u %g %s 0000-00-00,00:00:00 %p\n" \
+        -o -printf "- %m %n %u %g %s $timeformat %p\n" \
+        | while read a b c d e f g file; do
+            if [ X$a = X- ]; then
+                md5=`md5sum "$file"`
+            else
+                md5="-  $file"
+            fi
+            echo "$a $b $c $d $e $f $g $md5"
+        done \
+        | sort -k +9
+        ;;
     esac
     shift
 done

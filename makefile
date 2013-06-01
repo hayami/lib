@@ -19,7 +19,8 @@ MAKEFLAGS += --no-print-directory
 .NOTPARALLEL:
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-.PHONY:	default commit+push commit push
+.PHONY:	default
+.PHONY:	commit+push commit push
 
 default: commit+push
 
@@ -32,7 +33,8 @@ push:
 	git push
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-.PHONY: relink relink-common relink-public relink-private
+.PHONY: relink
+.PHONY: relink-common relink-public relink-private
 
 relink:
 	[ ! -n "$(PRIVATE)" ] || $(MAKE) $@-public
@@ -73,27 +75,36 @@ ifneq ($(XMODMAP),)
 endif
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-.PHONY: install update bin-install bin-update sys-install sys-update
-.PHONY: private-dirs
+.PHONY: install update
+.PHONY: bin-install bin-update sys-install sys-update private-dirs
 
-install: bin-install sys-install
+install: bin-install sys-install private-dirs
 
 update:	bin-update sys-update
 
 bin-install:
+	[ -n "$(PRIVATE)" ]
 	install -d -m 0755 $(HOME)/bin
 	$(MAKE) bin-update
 
 bin-update:
+	[ -n "$(PRIVATE)" ]
 	install -m 0755 bin/* $(HOME)/bin/
 
 sys-install:
+	[ -n "$(PRIVATE)" ]
 	install -d -m 0755 $(HOME)/sys
 	install -d -m 0755 $(HOME)/sys/usrlocal
+	install -d -m 0755 $(HOME)/sys/backup
+	install -d -m 0755 $(HOME)/sys/backup/orig
+	install -d -m 0755 $(HOME)/sys/backup/new
 	$(MAKE) sys-update
 
 sys-update:
+	[ -n "$(PRIVATE)" ]
 	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/usrlocal/
+	install -m 0644 sys/backup/Makefile $(HOME)/sys/backup/
+	install -m 0644 sys/backup/*.sh $(HOME)/sys/backup/
 
 PRIVATE_DIRS := .ssh .gnupg
 
