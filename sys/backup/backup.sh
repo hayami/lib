@@ -218,6 +218,7 @@ backup_diff_check() {
 ###
 ### main
 ###
+sudo true || exit 1
 find /etc -xdev -name '*.orig' 1> $tmp.out 2> $tmp.err
 egrep    '^find: .*: Permission denied$' $tmp.err > $tmp.err1
 egrep -v '^find: .*: Permission denied$' $tmp.err > $tmp.err2

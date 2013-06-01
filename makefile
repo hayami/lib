@@ -104,7 +104,7 @@ sys-update:
 	[ -n "$(PRIVATE)" ]
 	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/usrlocal/
 	install -m 0644 sys/backup/Makefile $(HOME)/sys/backup/
-	install -m 0644 sys/backup/*.sh $(HOME)/sys/backup/
+	install -m 0755 sys/backup/*.sh $(HOME)/sys/backup/
 
 PRIVATE_DIRS := .ssh .gnupg
 
