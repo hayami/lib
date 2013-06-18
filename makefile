@@ -88,7 +88,7 @@ bin-install:
 	$(MAKE) bin-update
 
 bin-update:
-	install -m 0755 bin/* $(HOME)/bin/
+	[ ! -d bin ] || install -m 0755 bin/* $(HOME)/bin/
 	[ ! -d "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@
 
 sys-install:
