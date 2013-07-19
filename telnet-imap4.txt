@@ -16,3 +16,5 @@ telnet imap4-server 143
 * BYE Logging out
 6 OK Logout completed.
 Connection closed by foreign host.
+
+see also http://www.atmarkit.co.jp/ait/kw/mobile_kannkyou_yasashii_mail.html
