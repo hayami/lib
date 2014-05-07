@@ -144,7 +144,7 @@ backup_file() {
 
     [ $etcorigrm -eq 0 ] && return
 
-    read_ans "NOTICE: Do you remove $etcorig [y/N]? " && sudo rm $etcorig
+    read_ans "NOTICE: Do you want to remove $etcorig [y/N]? " && sudo rm $etcorig
 }
 
 backup_dir_check() {
