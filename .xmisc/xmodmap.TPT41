@@ -3,7 +3,7 @@
 ! - Swap Caps_Lock and Control_R
 ! - Alt_L is Meta_L
 !
-pointer     = 1 3 2 4 5
+pointer     = 1 3 2 4 5 6 7 8 9 10
 keycode  64 = Meta_L
 keycode  66 = Control_R
 keycode 109 = Caps_Lock
