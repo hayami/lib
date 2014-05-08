@@ -56,9 +56,6 @@ ifeq ($(XMODMAP),)
 ifeq ($(NODE),tako)
 XMODMAP	:= xmodmap.ArcKeyboard
 endif
-ifeq ($(NODE),moka)
-XMODMAP	:= xmodmap.TPT41
-endif
 ifeq ($(NODE),albion)
 XMODMAP	:= xmodmap.pointer23
 endif
