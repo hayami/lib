@@ -53,9 +53,6 @@ relink-common:
 	[ ! -f .fetchmailrc ] || chmod 0600 .fetchmailrc
 
 ifeq ($(XMODMAP),)
-ifeq ($(NODE),tako)
-XMODMAP	:= xmodmap.ArcKeyboard
-endif
 ifeq ($(NODE),albion)
 XMODMAP	:= xmodmap.pointer23
 endif
