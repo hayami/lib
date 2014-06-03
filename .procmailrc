@@ -1,7 +1,7 @@
-PATH=/bin:/usr/bin
-MAILDIR=$HOME/Maildir
-DEFAULT=$MAILDIR/
-LOGFILE=$MAILDIR/procmail.log
+#PATH=/bin:/usr/bin
+#MAILDIR=$HOME/Maildir
+#DEFAULT=$MAILDIR/
+#LOGFILE=$MAILDIR/procmail.log
 INCLUDERC=$HOME/.procmailrc-private
 
 
