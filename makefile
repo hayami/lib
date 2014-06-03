@@ -30,7 +30,7 @@ commit:
 	git commit -a
 
 push:
-	git push
+	git push origin master
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 .PHONY: relink
