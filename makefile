@@ -59,12 +59,12 @@ endif
 endif
 
 relink-public: relink-common
-ifneq ($(XMODMAP),)
 	cd $(HOME)/.config/xfce4
 	cd $(HOME)/.config/xfce4; [ ! -L xinitrc ] || rm xinitrc
 	cd $(HOME)/.config/xfce4; [ ! -e xinitrc ]
 	ln -s ../../$(DOTDIR)/.xmisc/xfce4-xinitrc $(HOME)/.config/xfce4/xinitrc
 	:
+ifneq ($(XMODMAP),)
 	[ -e .xmisc/$(XMODMAP) ]
 	[ ! -L $(HOME)/.Xmodmap ] || rm $(HOME)/.Xmodmap
 	[ ! -e $(HOME)/.Xmodmap ]
