@@ -58,11 +58,14 @@ XMODMAP	:= xmodmap.pointer23
 endif
 endif
 
-relink-public: relink-common
+relink-xfce4-xinitrc:
 	cd $(HOME)/.config/xfce4
 	cd $(HOME)/.config/xfce4; [ ! -L xinitrc ] || rm xinitrc
 	cd $(HOME)/.config/xfce4; [ ! -e xinitrc ]
 	ln -s ../../$(DOTDIR)/.xmisc/xfce4-xinitrc $(HOME)/.config/xfce4/xinitrc
+
+relink-public: relink-common
+	[ ! -d $(HOME)/.config/xfce4 ] || $(MAKE) relink-xfce4-xinitrc
 	:
 ifneq ($(XMODMAP),)
 	[ -e .xmisc/$(XMODMAP) ]
