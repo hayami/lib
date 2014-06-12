@@ -5,10 +5,12 @@ NODE	:= $(shell uname -n | sed -e 's/[\.0-9].*//')
 EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
+USRLOCAL:= usrlocal
 
 ifeq ($(NODE),www)
 LINKS	:= ${shell for i in .less* .vimrc .zsh*; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
+USRLOCAL:= syslocal
 endif
 
 DOTDIR	:= $(shell pwd | sed -e "s:^$$HOME/::")
@@ -94,7 +96,7 @@ bin-update:
 sys-install:
 	[ -n "$(PRIVATE)" ]
 	install -d -m 0755 $(HOME)/sys
-	install -d -m 0755 $(HOME)/sys/usrlocal
+	install -d -m 0755 $(HOME)/sys/$(USRLOCAL)
 	install -d -m 0755 $(HOME)/sys/backup
 	install -d -m 0755 $(HOME)/sys/backup/orig
 	install -d -m 0755 $(HOME)/sys/backup/new
@@ -102,7 +104,7 @@ sys-install:
 
 sys-update:
 	[ -n "$(PRIVATE)" ]
-	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/usrlocal/
+	install -m 0644 sys/usrlocal/Makefile $(HOME)/sys/$(USRLOCAL)/
 	install -m 0644 sys/backup/Makefile $(HOME)/sys/backup/
 	install -m 0755 sys/backup/*.sh $(HOME)/sys/backup/
 
