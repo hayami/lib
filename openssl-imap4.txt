@@ -1,0 +1,2 @@
+openssl s_client -connect imap4-server:993 -crlf (-quiet)
+(以下、telnet-imap4.txt を参照のこと)
