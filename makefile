@@ -48,7 +48,8 @@ relink-common:
 	    if [ -L $(HOME)/$$f ]; then rm $(HOME)/$$f || return 1; fi; \
 	    if [ -e $(HOME)/$$f ]; then ls -ld $(HOME)/$$f; return 1; fi; \
 	    ln -s $(DOTDIR)/$$f $(HOME) || return 1; \
-	    find $(HOME)/$$f -printf '%p -> %l\n' || ls -ld $(HOME)/$$f; \
+	    find $(HOME)/$$f -printf '\033[32m%p -> %l\033[39m\n' \
+	    || ls -ld $(HOME)/$$f; \
 	done
 	[ ! -f .netrc       ] || chmod 0600 .netrc
 	[ ! -f .procmailrc  ] || chmod 0600 .procmailrc
