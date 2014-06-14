@@ -8,7 +8,7 @@ LINKS	:= ${shell for i in .* *; do case $$i in \
 USRLOCAL:= usrlocal
 
 ifeq ($(NODE),www)
-LINKS	:= ${shell for i in .less* .vimrc .zsh*; do case $$i in \
+LINKS	:= ${shell for i in .less* .tmux.conf .vimrc .zsh*; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
 USRLOCAL:= syslocal
 endif
