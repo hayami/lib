@@ -26,14 +26,28 @@
 
 
 ;;;
+;;;	与えられたリストから basename が一致するディレクトリのリストを返す
+;;;
+(defun basename-match (basename directory-path)
+  (let ((list nil))
+    (dolist (path directory-path)
+      (setq dir (car (last (split-string path "/"))))
+      (cond ((and (string= basename dir)
+                  (file-accessible-directory-p path))
+             (add-to-list 'list path t nil))))
+    (eval 'list)))
+
+
+;;;
 ;;;
 ;;;	GNU Emacs 24.x 用各種設定
 ;;;
 (load-file "~/.elisp/ja-env.el")
 (load-file "~/.elisp/keybind.el")
-(load-file "~/.elisp/wnn7-egg.el")
+(cond ((basename-match "wnn7" load-path)
+       (load-file "~/.elisp/wnn7-egg.el")))
 (cond (window-system
-    (load-file "~/.elisp/x-client.el")))
+       (load-file "~/.elisp/x-client.el")))
 (load-file "~/.elisp/highlight.el")
 (load-file "~/.elisp/text-mode.el")
 (load-file "~/.elisp/shell-mode.el")
