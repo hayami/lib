@@ -28,7 +28,7 @@
 ;;;
 ;;;	$HOME/sys/local/share/emacs/site-lisp があれば load-path に加える
 ;;;
-(let ((dir "~/sys/local/share/emacs/site-lisp"))
+(let ((dir (expand-file-name "~/sys/local/share/emacs/site-lisp")))
   (when (and
          (not (member dir load-path))
          (file-accessible-directory-p dir))
