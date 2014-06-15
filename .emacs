@@ -26,6 +26,18 @@
 
 
 ;;;
+;;;	$HOME/sys/local/share/emacs/site-lisp があれば load-path に加える
+;;;
+(let ((dir "~/sys/local/share/emacs/site-lisp"))
+  (when (and
+         (not (member dir load-path))
+         (file-accessible-directory-p dir))
+    (add-to-list 'load-path dir)
+    (let ((default-directory dir))
+      (normal-top-level-add-subdirs-to-load-path))))
+
+
+;;;
 ;;;	与えられたリストから basename が一致するディレクトリのリストを返す
 ;;;
 (defun basename-match (basename directory-path)
