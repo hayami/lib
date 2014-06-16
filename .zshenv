@@ -59,8 +59,7 @@ export LANG
 PAGER="/usr/bin/env SHELL=/bin/sh less"
 LESS="-c -i -M -# 4 -R"
 LESSOPEN="| lesspipe %s"
-LESSCLOSE="lesspipe %s %s"
-export PAGER LESS LESSOPEN LESSCLOSE
+export PAGER LESS LESSOPEN
 
 ##
 ##  Editor
