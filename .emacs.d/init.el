@@ -54,17 +54,17 @@
 ;;;
 ;;;	GNU Emacs 24.x 用各種設定
 ;;;
-(load-file "~/.elisp/ja-env.el")
-(load-file "~/.elisp/keybind.el")
+(load-file "~/.emacs.d/local-lisp/ja-env.el")
+(load-file "~/.emacs.d/local-lisp/keybind.el")
 (cond ((basename-match "wnn7" load-path)
-       (load-file "~/.elisp/wnn7-egg.el")))
+       (load-file "~/.emacs.d/local-lisp/wnn7-egg.el")))
 (cond (window-system
-       (load-file "~/.elisp/x-client.el")))
-(load-file "~/.elisp/highlight.el")
-(load-file "~/.elisp/text-mode.el")
-(load-file "~/.elisp/shell-mode.el")
-(load-file "~/.elisp/cc-mode.el")
-(load-file "~/.elisp/misc.el")
+       (load-file "~/.emacs.d/local-lisp/x-client.el")))
+(load-file "~/.emacs.d/local-lisp/highlight.el")
+(load-file "~/.emacs.d/local-lisp/text-mode.el")
+(load-file "~/.emacs.d/local-lisp/shell-mode.el")
+(load-file "~/.emacs.d/local-lisp/cc-mode.el")
+(load-file "~/.emacs.d/local-lisp/misc.el")
 
 
 ;;; EOF
