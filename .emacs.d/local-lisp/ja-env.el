@@ -1,7 +1,8 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	日本語環境
-;;;
+;;; ja-env.el
+
+;;; 日本語環境
 (set-language-environment "Japanese")
 
 ;;; 文字コード
@@ -23,4 +24,4 @@
 ;;; Info の日本語文字化け対策
 (auto-compression-mode t)
 
-;;; EOF
+;;; ja-env.el ends here
