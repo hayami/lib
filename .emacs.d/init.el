@@ -43,9 +43,9 @@
 (load-file "~/.emacs.d/local-lisp/keybind.el")
 ;(setq wnn7-server-list '("localhost"))
 ;(setq wnn7-server-user "guest")	; local feature
-(cond ((and
-        (not (string= (getenv "JSERVER") ""))	; 環境変数 JSERVER が未定義の
-        (require 'wnn7egg-leim nil t))		; 時は (require ...) を実行する
+(cond ((and					; 環境変数 JSERVER が定義されて
+        (not (string= (getenv "JSERVER") ""))	; おり、その値が "" の場合は
+        (require 'wnn7egg-leim nil t))		; (require …) 以降を実行しない
        (load-file "~/.emacs.d/local-lisp/wnn7-egg.el")))
 (cond (window-system
        (load-file "~/.emacs.d/local-lisp/x-client.el")))
