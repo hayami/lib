@@ -1,6 +1,9 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	Text Mode
+;;; text-mode.el
+
+;;;
+;;; Text Mode
 ;;;
 (add-hook 'text-mode-hook
           '(lambda ()
@@ -12,4 +15,4 @@
 ;(require 'izonmoji-mode)
 ;(add-hook 'text-mode-hook 'izonmoji-mode-on)
 
-;;; EOF
+;;; text-mode.el ends here

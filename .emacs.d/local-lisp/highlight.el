@@ -1,8 +1,11 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	Text Highlighting
+;;; highlight.el
+
+;;;
+;;; Text Highlighting
 ;;;
 (require 'font-lock)
 (global-font-lock-mode t)
 
-;;; EOF
+;;; highlight.el ends here

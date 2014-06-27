@@ -1,6 +1,9 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	X クライアントとして起動した時の設定
+;;; x-client.el
+
+;;;
+;;; X クライアントとして起動した時の設定
 ;;;
 (setq-default mouse-yank-at-point t)		; カーソル位置にペースト
 (set-scroll-bar-mode 'right)			; スクロールバーを右側に出す
@@ -35,7 +38,6 @@
          ) default-frame-alist))
 (setq default-frame-alist initial-frame-alist)
 
-
 ;;;
 ;;; フォントの設定
 ;;;
@@ -54,14 +56,13 @@
       katakana-jisx0201:-*-fixed-medium-r-normal--16-*-jisx0201.1976-0")
     (set-face-font 'default "fontset-14")))
 
-
 ;;;
-;;;	Pass a URL to a WWW browser --- browse-url.el
-;;;	(Using Shift-mouse-1 is not desirable because
-;;;	that event has a standard meaning in Emacs.)
+;;; Pass a URL to a WWW browser --- browse-url.el
+;;; (Using Shift-mouse-1 is not desirable because
+;;; that event has a standard meaning in Emacs.)
 ;;;
 (autoload 'browse-url-at-mouse "browse-url" nil t)
 (global-set-key [S-mouse-2] 'browse-url-at-mouse)
 (setq browse-url-netscape-program "firefox")
 
-;;; EOF
+;;; x-client.el ends here

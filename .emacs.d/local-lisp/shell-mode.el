@@ -1,7 +1,10 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	Shell Mode
+;;; shell-mode.el
+
+;;;
+;;; Shell Mode
 ;;;
 (setq explicit-shell-file-name "/bin/sh")
 
-;;; EOF
+;;; shell-mode.el ends here

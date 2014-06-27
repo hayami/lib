@@ -1,6 +1,9 @@
 ;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
 ;;;
-;;;	その他もろもろ
+;;; misc.el
+
+;;;
+;;; その他もろもろ
 ;;;
 (setq make-backup-files nil)		; バックアップファイルは残さない
 (custom-set-variables
@@ -21,4 +24,4 @@
 (setq diff-switches '("-u"))		; default is "-c".
 ;(setq visible-bell t)			; 警告音
 
-;;; EOF
+;;; misc.el ends here
