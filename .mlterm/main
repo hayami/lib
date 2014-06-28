@@ -1,5 +1,5 @@
 bg_color = #FFFCDE
-mod_meta_mode= 8bit
+mod_meta_mode= esc
 mod_meta_key = meta
 bel_mode = visual
 logsize = 1024
