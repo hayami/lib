@@ -2,8 +2,12 @@
 ;;;
 ;;; x-client.el
 
+;;;;
+;;;; X クライアントとして起動した時の設定
+;;;;
+
 ;;;
-;;; X クライアントとして起動した時の設定
+;;; 各種設定
 ;;;
 (setq-default mouse-yank-at-point t)		; カーソル位置にペースト
 (set-scroll-bar-mode 'right)			; スクロールバーを右側に出す

@@ -2,8 +2,12 @@
 ;;;
 ;;; wnn7-egg.el
 
+;;;;
+;;;; OMRON Wnn7 Personal
+;;;;
+
 ;;;
-;;; OMRON Wnn7 Personal 各種設定
+;;; 各種設定
 ;;;
 ;(setq wnn7-server-list '("localhost"))
 ;(setq wnn7-server-user "guest")	; local feature
