@@ -1,6 +1,6 @@
 bg_color = #FFFCDE
 mod_meta_mode= esc
-mod_meta_key = meta
+mod_meta_key = alt
 bel_mode = visual
 logsize = 1024
 use_anti_alias = false
