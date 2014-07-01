@@ -26,10 +26,6 @@
 (define-key global-map (kbd "C-@") 'toggle-input-method)
 
 ;; フェンスモードで C-SPC を押すと [aA] モード (トグル動作)
-;; - emacs -nw で起動したときは C-SPC がうまく動いてくれない。C-SPC を押すと、
-;;   mini buffer に "ITS:>" と表示され入力待ちになる。そこで、一旦 C-g で逃げ
-;;   て、再度 C-SPC を押すと [aA] モードに入ってくれる。
-;; - もともとのキーバインディングの C-\ ではこの問題は起こらない。
 (define-key fence-mode-map (kbd "C-SPC") 'fence-toggle-egg-mode)
 (define-key fence-mode-map (kbd "C-@") 'fence-toggle-egg-mode)
 
