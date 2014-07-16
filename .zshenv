@@ -51,7 +51,8 @@ unset p dir
 ##  Language/Locale
 ##
 LANG=ja_JP.UTF-8
-export LANG
+TIME_STYLE=long-iso
+export LANG TIME_STYLE
 
 ##
 ##  Pager
