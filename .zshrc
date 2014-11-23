@@ -133,7 +133,7 @@ setopt no_auto_remove_slash
 ##
 ##  Hostname Completion
 ##
-_cache_hosts=(localhost tako moka kame oden mikado)
+_cache_hosts=(localhost mikado tako garlic)
 
 ##
 ##  Private Settings
