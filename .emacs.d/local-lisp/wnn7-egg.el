@@ -9,7 +9,7 @@
 ;;;
 ;;; 各種設定
 ;;;
-(setq wnn7-server-list '("jserver"))
+;(setq wnn7-server-list '("localhost"))
 ;(setq wnn7-server-user "guest")	; local feature
 (require 'wnn7egg-leim)
 (set-input-method "japanese-egg-wnn7")
