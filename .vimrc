@@ -20,6 +20,7 @@ set listchars+=precedes:<,extends:>
 set hlsearch
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
+nmap <ESC>w :set wrap!<CR>
 
 syntax on
 
