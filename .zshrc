@@ -29,7 +29,7 @@ umask 022
 ##
 ##  Terminal Settings
 ##
-stty sane erase ''
+[ -n "$TMUX" ] || stty sane erase ''
 [ "$TERM" = "" -o "$TERM" = "unknown" ] && export TERM=linux
 
 ##
