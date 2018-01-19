@@ -1,0 +1,99 @@
+#!/bin/sh
+prog=$(basename $0)
+n=0
+pos=0
+cmd=
+
+usage() {
+    cat <<- 'EOF'
+	usage: pipe0 [-#] command0 \| command1 \| command2 \| ...
+	   or: pipe0 [-#] command0 -- command1 -- command2 -- ...
+
+	  -# -- exit code of the #th command will be returned by this command
+	        where '#' is a number starting with 0
+	  -h -- show this usage
+	EOF
+}
+
+# tail part of $prog string may have a number
+x=$(echo "$prog" | sed -n -e 's/.*[^0-9]\([0-9][0-9]*\)$/\1/p')
+[ -n "$x" ] && pos="$x"
+
+for opt in "$@"; do
+    case "$opt" in
+    -[0-9]*)
+        pos=$(echo "$opt" | sed -e 's/^-\([0-9][0-9]*\).*/\1/')
+        shift
+        ;;
+    -h)
+        usage
+        exit 0
+        ;;
+    -*)
+        echo "Invalid option: $opt" 2>&1
+        usage 2>&1
+        exit 1
+        ;;
+    *)
+        break
+        ;;
+   esac
+done
+pos=$(echo $pos | sed -e 's/^0*\([0-9]\)/\1/')
+
+tmp=$(mktemp -d --tmpdir "$prog.XXXXXXXXXX")
+trap "rm -rf $tmp; exit 1" 0 1 2 3 13 15
+(umask 077; : > $tmp/ret)
+(umask 077; : > $tmp/run)
+
+for arg in "$@"; do
+    case "$arg" in
+    '|'|'--')
+        [ $n -eq $pos ] && echo -n '; echo $? >> '"$tmp/ret"'; }' >> $tmp/run
+        if [ -z "$cmd" ]; then
+            echo "No command line found" 2>&1
+            exit 1
+        fi
+        echo -n ' | ' >> $tmp/run
+        cmd=
+        n=$(expr $n +  1)
+        ;;
+    *)
+        if [ -z "$cmd" ]; then
+            [ $n -eq $pos ] && echo -n '{ ' >> $tmp/run
+            cmd="$arg"
+            echo -n "$cmd" >> $tmp/run
+        else
+            echo -n " '$arg'" >> $tmp/run
+        fi
+        ;;
+    esac
+done
+[ $n -eq $pos ] && echo -n '; echo $? >> '"$tmp/ret"'; }' >> $tmp/run
+echo >> $tmp/run
+
+if [ -z "$cmd" ]; then
+    echo "No command line found" 2>&1
+    exit 1
+fi
+if [ $n -lt $pos ]; then
+    echo "Invalid number: -$pos (expected less than or equal to $n)" 2>&1
+    exit 1
+fi
+
+# run the script
+. $tmp/run
+
+ret=$(cat $tmp/ret 2> /dev/null)
+case "$ret" in
+    [0-9]|[1-9][0-9]|[1-2][0-9][0-9])
+        ;;
+    *)
+        echo "${prog}: got an unexpected error" 2>&1
+        exit 1
+        ;;
+esac
+
+rm -rf $tmp
+trap - 0
+exit $ret
