@@ -128,7 +128,7 @@ setopt hist_ignore_space
 setopt hist_verify
 setopt no_beep
 setopt list_packed
-setopt no_auto_remove_slash
+#setopt no_auto_remove_slash
 
 ##
 ##  Hostname Completion
