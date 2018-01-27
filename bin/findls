@@ -9,27 +9,30 @@ while [ $# -gt 0 ]; do
     case "$1" in
     --notime)
         timeformat='0000-00-00,00:00:00'
+        shift
         ;;
     -*)
         echo "usage: findls [--notime] dir [dir...]" 1>&2
         exit 1
         ;;
     *)
-        find "$@" \
-           -type l -printf "l %m %n %u %g %s 0000-00-00,00:00:00 %p -> %l\n" \
-        -o -type d -printf "d %m %n %u %g %s 0000-00-00,00:00:00 %p\n" \
-        -o -printf "- %m %n %u %g %s $timeformat %p\n" \
-        | while read a b c d e f g file; do
-            if [ X$a = X- ]; then
-                md5=`md5sum "$file"`
-            else
-                md5="-  $file"
-            fi
-            echo "$a $b $c $d $e $f $g $md5"
-        done \
-        | sort -k +9
+        break
         ;;
     esac
-    shift
 done
+
+find "$@" \
+   -type l -printf "l %m %n %u %g %s 0000-00-00,00:00:00 %p -> %l\n" \
+-o -type d -printf "d %m %n %u %g %s 0000-00-00,00:00:00 %p\n" \
+-o -type f -printf "- %m %n %u %g %s $timeformat %p\n" \
+-o -printf "%y %m %n %u %g %s $timeformat %p\n" \
+| while read a b c d e f g file; do
+    if [ X$a = X- ]; then
+        md5=$(md5sum "$file")
+    else
+        md5="-  $file"
+    fi
+    echo "$a $b $c $d $e $f $g $md5"
+done \
+| sort -k +9
 exit 0
