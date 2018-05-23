@@ -30,8 +30,8 @@ for opt in "$@"; do
         exit 0
         ;;
     -*)
-        echo "Invalid option: $opt" 2>&1
-        usage 2>&1
+        echo "Invalid option: $opt" 1>&2
+        usage 1>&2
         exit 1
         ;;
     *)
@@ -51,7 +51,7 @@ for arg in "$@"; do
     '|'|'--')
         [ $n -eq $pos ] && echo -n '; echo $? >> '"$tmp/ret"'; }' >> $tmp/run
         if [ -z "$cmd" ]; then
-            echo "No command line found" 2>&1
+            echo "No command line found" 1>&2
             exit 1
         fi
         echo -n ' | ' >> $tmp/run
@@ -73,11 +73,11 @@ done
 echo >> $tmp/run
 
 if [ -z "$cmd" ]; then
-    echo "No command line found" 2>&1
+    echo "No command line found" 1>&2
     exit 1
 fi
 if [ $n -lt $pos ]; then
-    echo "Invalid number: -$pos (expected less than or equal to $n)" 2>&1
+    echo "Invalid number: -$pos (expected less than or equal to $n)" 1>&2
     exit 1
 fi
 
@@ -89,7 +89,7 @@ case "$ret" in
     [0-9]|[1-9][0-9]|[1-2][0-9][0-9])
         ;;
     *)
-        echo "${prog}: got an unexpected error" 2>&1
+        echo "${prog}: got an unexpected error" 1>&2
         exit 1
         ;;
 esac

@@ -1,0 +1,64 @@
+#!/bin/sh
+
+gnused() {
+    # Specify the GNU sed command below. This script is highly dependent on it.
+    sed "$@"
+    return $?
+}
+
+hex() {
+    # The od command derived from BSD does not have the -w option
+    echo -n "$1" | od -A n -v -t x1 \
+    | while read line; do
+        for i in $(echo $line); do
+            echo -n "\\x$i";
+        done
+    done
+}
+
+usage() {
+    cat 1>&2 <<- EOF
+	usage: $(basename $0) original replacement [backup-suffix file...]
+	       The length of the replacement string specified as the argument
+	       must be equal to or shorter than that of original string.
+	EOF
+    exit 1
+}
+
+# command line arguments
+opt=""
+if [ $# -eq 2 ]; then
+    orig="$1"
+    repl="$2"
+    shift 2
+elif [ $# -ge 4 ]; then
+    orig="$1"
+    repl="$2"
+    opt="-i$3"
+    shift 3
+else
+    usage
+fi
+
+# padding string
+pad=""
+if [ ${#orig} -ge ${#repl} ]; then
+    c=$((${#orig} - ${#repl}))
+    pad=$(while [ $c -gt 0 ]; do
+            c=$(($c - 1))
+            echo -n "\x00"
+        done)
+else
+    usage
+fi
+
+# hex string conversion
+orig=$(hex "$orig")
+repl=$(hex "$repl")
+
+# The following sed command can replace the newlines (\n) in a string
+# see https://stackoverflow.com/questions/1251999 for more details
+whole=':a;N;$!ba'
+
+gnused $opt -e "$whole;s/$orig\([\t\n\r\x20-\x7e]*\)\x00/$repl\1$pad\x00/g" "$@"
+return $?
