@@ -1,4 +1,7 @@
 telnet imap4-server 143
+Trying 192.168.0.1...
+Connected to imap4-server.
+Escape character is '^]'.
 * OK
 0 CAPABILITY
 1 LOGIN user password
@@ -17,4 +20,4 @@ telnet imap4-server 143
 6 OK Logout completed.
 Connection closed by foreign host.
 
-see also http://www.atmarkit.co.jp/ait/kw/mobile_kannkyou_yasashii_mail.html
+[参考資料](http://www.atmarkit.co.jp/ait/kw/mobile_kannkyou_yasashii_mail.html)
