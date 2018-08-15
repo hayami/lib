@@ -4,6 +4,7 @@ mod_meta_key = alt
 bel_mode = visual
 logsize = 1024
 use_anti_alias = false
+type_engine = xcore
 col_size_of_width_a = 2
 line_space = 0
 fontsize = 14

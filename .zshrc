@@ -72,12 +72,10 @@ unsetenvall () {
 ##
 ##  Aliases
 ##
-alias ls='\ls -F'
-if \ls --color=tty -ld / > /dev/null 2>&1; then
-    alias ll='ls -Al --color=tty'
-else
-    alias ll='ls -Al'
+if \ls -N --color=auto -ld / > /dev/null 2>&1; then
+    alias ls='\ls -N --color=auto'
 fi
+alias ll='ls -Al'
 alias sl='ls'
 alias less="${PAGER:-'less'}"
 alias cu='cu --parity=none --nostop'
