@@ -48,6 +48,7 @@ backup_file() {
     etcorigrm=0
 
     if [ -e "$etcorig" -a '(' ! -f "$etcorig" -o -L "$etcorig" ')' ]; then
+	# TODO: $etcorig がシンボリックリンクだった場合も対応すること
         echo "WARNING: $etcorig is not a regular file, skipping"
         echo -n "WARNING: "; ls -ld "$etcorig"
         echo
@@ -55,6 +56,7 @@ backup_file() {
     fi
 
     if [ -e "$etcfile" -a '(' ! -f "$etcfile" -o -L "$etcfile" ')' ]; then
+	# TODO: $etcfile がシンボリックリンクだった場合も対応すること
         echo "WARNING: $etcfile is not a regular file, skipping"
         echo -n "WARNING: "; ls -ld "$etcfile"
         echo
@@ -171,7 +173,7 @@ backup_diff_check() {
             exit 1
         fi
 
-        if [ -r "$etcfile" ]; then
+        if [ -r "$etcfile" -a -e "new/$bang" ]; then
 
             cmp "new/$bang" "$etcfile" > /dev/null 2>&1 && continue
             echo "WARNING: backup file may be out of date: $etcfile"
@@ -191,8 +193,12 @@ backup_diff_check() {
 
         else
 
-            find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT %p\n" \
-            > $tmp.etc
+            find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT %p" > $tmp.etc
+            if [ -h "$etcfile" ]; then
+                find "$etcfile" -printf " -> %l\n" >> $tmp.etc
+            else
+                echo >> $tmp.etc
+            fi
             cmp "new/${bang}${ext}" $tmp.etc > /dev/null 2>&1 && continue
             echo "WARNING: backup file may be out of date: $etcfile"
             diff -u "new/${bang}${ext}" $tmp.etc
