@@ -45,6 +45,10 @@
 ;(setq wnn7-server-user "guest")	; local feature
 (cond ((and					; 環境変数 JSERVER が定義されて
         (not (string= (getenv "JSERVER") ""))	; おり、その値が "" の場合は
+        (not (string=
+               (shell-command-to-string
+                 (concat "getent hosts " (or (getenv "JSERVER") "jserver")))
+               ""))
         (require 'wnn7egg-leim nil t))		; (require …) 以降を実行しない
        (load-file "~/.emacs.d/local-lisp/wnn7-egg.el")))
 (cond (window-system
