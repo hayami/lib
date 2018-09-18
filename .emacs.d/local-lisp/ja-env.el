@@ -16,6 +16,8 @@
 
 ;;; Quail Input (非常時用)
 (setq quail-japanese-use-double-n t)
+(define-key global-map (kbd "C-SPC") 'toggle-input-method)
+(define-key global-map (kbd "C-@") 'toggle-input-method)
 
 ;;; Anthy
 ;(load-library "anthy")
