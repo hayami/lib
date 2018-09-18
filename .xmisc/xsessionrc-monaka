@@ -25,5 +25,4 @@ else
 fi
 
 unset -f keymap
-unset -f displayconfig
 unset -f screenblank
