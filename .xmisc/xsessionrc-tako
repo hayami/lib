@@ -1,8 +1,17 @@
 keymap() {
+    # Microsoft Wireless All-In-One Media Keyboard (N9Z-00001) 専用設定
+    # キーボード左上の [マウス左ボタン対応キー] と [タッチパッドの右下]
+    # を同時に押すことによりマウスの 3 ボタン目をエミュレーションできる
+    for id in $(xinput list | sed -n -e 's/.*Microsoft.*id=\([0-9][0-9]*\).*pointer.*/\1/p'); do
+        if xinput list-props $id | egrep -q -w -i 'middle emulation'; then
+            xinput set-prop $id 'libinput Middle Emulation Enabled' 1
+        fi
+    done
+
     if xmodmap -pp | awk '$1 ~ /^[0-9]+$/ && \
                           $2 ~ /^[0-9]+$/ && \
                           $1 != $2 { exit 1 }'; then
-        xmodmap $HOME/.xmisc/xmodmap.TPX61
+        xmodmap $HOME/.xmisc/xmodmap.N9Z
     fi
 }
 
