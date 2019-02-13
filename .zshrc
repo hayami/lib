@@ -69,6 +69,67 @@ unsetenvall () {
     env
 }
 
+grep-color () {
+    if [ $# -eq 0 ]; then
+        case "$GREP_OPTIONS" in
+            *--color=never*)  x=       ;;
+            *--color=auto*)   x=always ;;
+            *--color=always*) x=never  ;;
+            *--color=*)       x=auto   ;;
+            *)                x=AUTO   ;;
+        esac
+        if [ -n "$x" ]; then
+            case "$x" in
+                [A-Z]*)
+                    x=$(echo "$x" | tr '[A-Z]' '[a-z]')
+                    [ -n "$GREP_OPTIONS" ] && GREP_OPTIONS="${GREP_OPTIONS} "
+                    export GREP_OPTIONS="${GREP_OPTIONS}--color=$x"
+                    ;;
+                *)
+                    GREP_OPTIONS="$(echo "$GREP_OPTIONS" | sed \
+                                    -e 's/--color=[^ \t]*/--color='"$x"'/g')"
+                    ;;
+            esac
+            echo "--color=$x"
+        fi
+    elif [ $# -eq 1 ]; then
+        x=$(eval echo $1)
+        x=${x%%' '*}
+        case "$x" in
+            au|aut|auto)              x=auto   ;;
+            al|alw|alwa|alway|always) x=always ;;
+            n|ne|nev|neve|never)      x=never  ;;
+            -|)                       x=       ;;
+            *)
+                echo "unexpected argument: '$1'" 1>&2
+                return 1
+                ;;
+        esac
+        if [ -n "$x" ]; then
+            GREP_OPTIONS=$(echo "$GREP_OPTIONS" | sed \
+                           -e 's/--color=[^ \t]*/--color='"$x"'/g')
+            case "$GREP_OPTIONS" in
+                *--color=*) ;;
+                *)
+                    [ -n "$GREP_OPTIONS" ] && GREP_OPTIONS="${GREP_OPTIONS} "
+                    export GREP_OPTIONS="${GREP_OPTIONS}--color=$x"
+                    ;;
+            esac
+            echo "--color=$x"
+        fi
+    else
+        echo "Too many arguments" 1>&2
+        return 1
+    fi
+    if [ -z "$x" ]; then
+        GREP_OPTIONS="$(echo "$GREP_OPTIONS" | sed \
+                        -e 's/[ \t]*--color=[^ \t]*[ \t]*/ /g' \
+                        -e 's/^ //' -e 's/ $//')"
+        [ -z "$GREP_OPTIONS" ] && unset GREP_OPTIONS
+        echo "The --color option has been removed"
+    fi
+}
+
 ##
 ##  Aliases
 ##
