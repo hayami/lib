@@ -1,0 +1,134 @@
+#!/bin/sh
+tmp=$(mktemp --tmpdir -d ${0##*/}-XXXXXXXX)
+trap "rm -rf $tmp" EXIT
+
+usage() {
+    if [ "$1" = 0 ]; then
+        ret=0
+    else
+        ret=1
+	exec 1>&2
+    fi
+    cat <<- EOF
+	Usage: ${0##*/} [-t] /BEGIN/... /END/... [--] command [args ...]
+	    or ${0##*/} /SEPARATOR/ [--] command [args ...]
+
+	Examples:
+	       ${0##*/} /BEGIN/ /END/ less < ca-bundle.crt
+	       ${0##*/} /BEGIN/-3 /END/ less < ca-bundle.crt
+	       ${0##*/} -t '/^diff /' '/^diff /-1' less < git.diff
+	       ${0##*/} '/--- cut here ---/' less < cut-here.txt
+	EOF
+    exit $ret
+}
+
+begin=
+end=
+separator=
+use_tail=false
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help)
+            usage 0
+            ;;
+        -t)
+            use_tail=true
+            ;;
+        /*/)
+            [ -z "$separator" ] && separator="$1"
+            if [ -z "$begin" ]; then
+                begin="$1"
+            elif [ -z "$end" ]; then
+                end="$1"
+            else
+                usage 1
+            fi
+            ;;
+        /*)
+            if [ -z "$begin" ]; then
+                begin="$1"
+            elif [ -z "$end" ]; then
+                end="$1"
+            else
+                usage 1
+            fi
+            ;;
+        --)
+            shift
+            break;
+            ;;
+        *)
+            break;
+            ;;
+    esac
+    shift
+done
+[ -z "$end" -a -z "$separator" ] && usage 1
+
+count=0
+cat > $tmp/cur
+
+while :; do
+    if [ -n "$begin" -a -n "$end" ]; then
+        ed $tmp/cur <<- EOF > /dev/null 2>&1 || exit 0	# 開始行が存在しない
+	\$
+	$begin
+	q
+	EOF
+        ed $tmp/cur <<- EOF > /dev/null 2>&1 || :	# 開始行より前がない
+	\$
+	$begin
+	1,-1d
+	w
+	q
+	EOF
+
+        cat ${tmp}/cur > ${tmp}/top
+        ed $tmp/top <<- EOF > /dev/null 2>&1
+	\$
+	$begin
+	$end
+	q
+	EOF
+        if [ $? -eq 0 ]; then
+            ed $tmp/top <<- EOF > /dev/null 2>&1 || :	# 終了行より後がない
+		\$
+		$begin
+		$end
+		+1,\$d
+		w
+		q
+		EOF
+        else						# 終了行が存在しない
+            [ "$use_tail" = true  ] || exit 0
+        fi
+    else
+        cat ${tmp}/cur > ${tmp}/top
+        ed $tmp/top <<- EOF > /dev/null 2>&1 || :	# 分離子が存在しない
+	\$
+	${separator},\$d
+	w
+	q
+	EOF
+    fi
+
+    "$@" < ${tmp}/top
+    count=$(($count + 1))
+
+    if [ -n "$begin" -a -n "$end" ]; then
+        cmd1="$begin"
+        cmd2="$end"
+    else
+        cmd1='#'
+        cmd2="$separator"
+    fi
+    ed $tmp/cur <<- EOF > /dev/null 2>&1 || exit 0	# 終了行/分離子がない
+	\$
+	$cmd1
+	$cmd2
+	1,.d
+	w
+	q
+	EOF
+done
