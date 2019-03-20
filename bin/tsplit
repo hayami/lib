@@ -15,8 +15,9 @@ usage() {
 
 	Examples:
 	       ${0##*/} /BEGIN/ /END/ less < ca-bundle.crt
+	       ${0##*/} /BEGIN/+1 /END/-1 less < ca-bundle.crt
 	       ${0##*/} /BEGIN/-3 /END/ less < ca-bundle.crt
-	       ${0##*/} -t '/^diff /' '/^diff /-1' less < git.diff
+	       ${0##*/} -t '/^diff /' '/^diff /;/^diff /-1' less < git.diff
 	       ${0##*/} '/--- cut here ---/' less < cut-here.txt
 	EOF
     exit $ret
@@ -87,14 +88,12 @@ while :; do
         cat ${tmp}/cur > ${tmp}/top
         ed $tmp/top <<- EOF > /dev/null 2>&1
 	\$
-	$begin
 	$end
 	q
 	EOF
         if [ $? -eq 0 ]; then
             ed $tmp/top <<- EOF > /dev/null 2>&1 || :	# 終了行より後がない
 		\$
-		$begin
 		$end
 		+1,\$d
 		w
@@ -117,16 +116,13 @@ while :; do
     count=$(($count + 1))
 
     if [ -n "$begin" -a -n "$end" ]; then
-        cmd1="$begin"
-        cmd2="$end"
+        cmd="$end"
     else
-        cmd1='#'
-        cmd2="$separator"
+        cmd="$separator"
     fi
     ed $tmp/cur <<- EOF > /dev/null 2>&1 || exit 0	# 終了行/分離子がない
 	\$
-	$cmd1
-	$cmd2
+	$cmd
 	1,.d
 	w
 	q
