@@ -1,5 +1,6 @@
 #!/bin/sh
-tmp=$(mktemp -d -t ${0##*/} 2> /dev/null || mktemp -d -t ${0##*/}.XXXXXXXX)
+tmp=$(mktemp -d -t ${0##*/} 2> /dev/null)		# BSD mktemp
+tmp=${tmp:-$(mktemp -d --tmpdir ${0##*/}.XXXXXXXX)}	# GNU mktemp
 trap "rm -rf $tmp" EXIT
 
 usage() {
