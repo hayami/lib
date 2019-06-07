@@ -99,7 +99,7 @@ grep-color () {
             au|aut|auto)              x=auto   ;;
             al|alw|alwa|alway|always) x=always ;;
             n|ne|nev|neve|never)      x=never  ;;
-            -|)                       x=       ;;
+            -|'')                     x=       ;;
             *)
                 echo "unexpected argument: '$1'" 1>&2
                 return 1

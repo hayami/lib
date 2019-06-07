@@ -1,5 +1,13 @@
 # vim: noet sw=8 sts=8
 
+# How to install in a clean environment
+#	cd ~
+#	git clone https://github.com/hayami/dot.git
+#	cd dot
+#	make install
+#	cp -pi makefile-private-template ../private/dot/makefile
+#	make relink
+
 NODE	:= $(shell uname -n | sed -e 's/[\.0-9].*//')
 
 EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
