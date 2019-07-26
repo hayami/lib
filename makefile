@@ -54,9 +54,9 @@ relink:
 
 relink-common:
 	@for f in $(LINKS); do \
-	    if [ -L $(HOME)/$$f ]; then rm $(HOME)/$$f || return 1; fi; \
-	    if [ -e $(HOME)/$$f ]; then ls -ld $(HOME)/$$f; return 1; fi; \
-	    ln -s $(DOTDIR)/$$f $(HOME) || return 1; \
+	    if [ -L $(HOME)/$$f ]; then rm $(HOME)/$$f || exit 1; fi; \
+	    if [ -e $(HOME)/$$f ]; then ls -ld $(HOME)/$$f; exit 1; fi; \
+	    ln -s $(DOTDIR)/$$f $(HOME) || exit 1; \
 	    find $(HOME)/$$f -printf '\033[32m%p -> %l\033[0m\n' \
 	    || ls -ld $(HOME)/$$f; \
 	done
@@ -123,7 +123,7 @@ PRIVATE_DIRS := .ssh .gnupg
 private-dirs:
 	@dir="$(PRIVATE)"; \
 	while [ -n "$$dir" -a "$$dir" != "/" -a "$$dir" != "$(HOME)" ]; do \
-	    cmd="install -d -m 0700 $$dir"; echo $$cmd; $$cmd || return 1; \
+	    cmd="install -d -m 0700 $$dir"; echo $$cmd; $$cmd || exit 1; \
 	    dir=`dirname $$dir`; \
 	done
 	@for d in $(PRIVATE_DIRS); do \
@@ -132,7 +132,7 @@ private-dirs:
 	    else \
 	         cmd="install -d -m 0700 $(PRIVATE)/$$d"; \
 	    fi; \
-	    echo $$cmd; $$cmd || return 1; \
+	    echo $$cmd; $$cmd || exit 1; \
 	done
 	 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
