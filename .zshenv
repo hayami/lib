@@ -82,4 +82,11 @@ export EDITOR
 #P4CLIENT=`uname -n | sed -e 's:\..*::'`
 #export P4PORT P4USER P4CLIENT
 
+##
+##  Private Settings
+##
+if [ -r ~/.zshenv-private ]; then
+    . ~/.zshenv-private
+fi
+
 ##  End of ~/.zshenv
