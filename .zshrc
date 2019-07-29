@@ -139,6 +139,8 @@ fi
 alias ll='ls -Al'
 alias sl='ls'
 alias less="${PAGER:-'less'}"
+alias vi='vim'
+alias view='vim -R'
 alias cu='cu --parity=none --nostop'
 #         cu --parity=none --nostop --line /dev/ttyUSB0 --speed 115200 dir
 #alias lpr='lpr -h'
