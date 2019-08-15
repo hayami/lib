@@ -16,6 +16,7 @@ set wrap
 " set nowrap
 set sidescroll=4
 set listchars+=precedes:<,extends:>
+set nobomb
 
 set hlsearch
 nmap <ESC>u :nohl<CR>
