@@ -42,10 +42,12 @@ function! GetStatusEx()
     let str = ''
     let str = str . '' . &fileformat . ']'
     if has('multi_byte') && &fileencoding != ''
-        let str = '[' . &fileencoding . ':' . str
-    else
-        let str = '[' . str
+        let str = &fileencoding . ':' . str
     endif
+    if &bomb
+       let str = 'bom:' . str
+    endif
+    let str = '[' . str
     return str
 endfunction
 
