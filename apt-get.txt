@@ -5,6 +5,7 @@ dpkg -S '/usr/bin/id*'		# ファイルがどのパッケージに属するかを
 dpkg -c file.deb		# deb パッケージに含まれるファイル一覧を表示
 dpkg -x file.deb /tmp/dir	# パッケージに含まれるファイルをすべて取り出す
 apt-cache pkgnames [先頭一致文字列] | less
+apt-cache search elinks
 apt-cache show t-code
 apt-cache depends w3m
 apt-cache rdepends apmd
