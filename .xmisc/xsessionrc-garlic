@@ -1,0 +1,36 @@
+keymap() {
+    if xmodmap -pp | awk '$1 ~ /^[0-9]+$/ && \
+                          $2 ~ /^[0-9]+$/ && \
+                          $1 != $2 { exit 1 }'; then
+        xmodmap $HOME/.xmisc/xmodmap.ArcKeyboard
+    fi
+}
+
+screenblank() {
+    xset s on
+
+    # 3600 秒後に screen saver を発動 (以下で設定する gray screen に移行)
+    xset s 3600 0
+
+    # ロックされる直前に 30 秒間の gray screen 表示あり
+    # この 30 秒がどこで制御されているのかわからない
+    xset s noblank
+
+    # ここでは DPMS を使用しない
+    # DPMS の制御は /etc/lightdm/local-scripts/greeter-setup.sh で実施
+    xset dpms 0 0 0
+    xset -dpms
+}
+
+if [ -t 0 ]; then
+    # 端末から読み込まれた場合
+    keymap
+    screenblank
+else
+    # ~/.xsessionrc から読み込まれた場合
+    (sleep 5; keymap) > /dev/null 2>&1 &
+    (sleep 10; screenblank) > /dev/null 2>&1 &
+fi
+
+unset -f keymap
+unset -f screenblank
