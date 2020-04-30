@@ -14,10 +14,10 @@ displayconfig() {
 screenblank() {
     xset s on
 
-    # 3600 秒後に screen saver を発動 (以下で設定する green screen に移行)
+    # 3600 秒後に screen saver を発動 (以下で設定する gray screen に移行)
     xset s 3600 0
 
-    # ロックされる直前に 30 秒間の Gray スクリーン表示あり
+    # ロックされる直前に 30 秒間の gray screen 表示あり
     # この 30 秒がどこで制御されているのかわからない
     xset s noblank
 
