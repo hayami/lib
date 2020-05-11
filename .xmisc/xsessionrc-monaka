@@ -20,7 +20,7 @@ if [ -t 0 ]; then
     screenblank
 else
     # ~/.xsessionrc から読み込まれた場合
-    keymap
+    (sleep 5; keymap) > /dev/null 2>&1 &
     (sleep 10; screenblank) > /dev/null 2>&1 &
 fi
 
