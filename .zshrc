@@ -133,8 +133,8 @@ grep-color () {
 ##
 ##  Aliases
 ##
-if \ls -N --color=auto -ld / > /dev/null 2>&1; then
-    alias ls='\ls -N --color=auto'
+if \ls -N --show-control-chars --color=auto -ld / > /dev/null 2>&1; then
+    alias ls='\ls -N --show-control-chars --color=auto'
 fi
 alias ll='ls -Al'
 alias sl='ls'
