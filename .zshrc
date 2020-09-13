@@ -133,11 +133,15 @@ grep-color () {
 ##
 ##  Aliases
 ##
-alias ls="\ls $(set --
-                for i in -N --show-control-chars --color=auto; do
-                    \ls $* $i -ld / > /dev/null 2>&1 && set -- $* $i
+alias ls="\ls $(args=
+                for i in			\
+                    -N				\
+                    --show-control-chars	\
+                    --color=auto		\
+                    ; do
+                    eval \\ls $args $i -ld / > /dev/null 2>&1 && args="$args $i"
                 done
-                echo $*)"
+                eval echo $args)"
 alias ll='ls -Al'
 alias sl='ls'
 alias less="${PAGER:-'less'}"
