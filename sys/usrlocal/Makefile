@@ -6,7 +6,7 @@ TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
 
 filecheck check: tmpdir filelist
-	for f in `find * -type f -print`; do \
+	for f in `find * -maxdepth 0 -type f -print`; do \
 	    sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $$f | tail -n +2; \
 	done | expand | sed -e 's/ -> .*//' | sort > $(TMPDIR)/ulist
 	uniq $(TMPDIR)/ulist > $(TMPDIR)/clist
