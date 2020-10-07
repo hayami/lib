@@ -17,7 +17,11 @@ read_ans() {
 
     while :; do
         echo -n "$msg"
-        read ans < /dev/tty
+        if [ -z "$answer" ]; then
+            read ans < /dev/tty
+        else
+            ans="$answer"
+        fi
 
         if [ "$ans" = "" ]; then	# default is "No"
             echo

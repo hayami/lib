@@ -5,14 +5,14 @@ default: usage
 usage help:
 	@echo "usage: make [options]"	\
 	"\noptions are:"		\
-	"\n	backup"			\
+	"\n	backup [answer=yes|no]"	\
 	"\n	diff [FILES=/etc/...]"	\
 	"\n	nodiff"			\
 	"\n"
 
 .PHONY:	backup
 backup:
-	./backup.sh
+	answer=$(answer) ./backup.sh
 
 .PHONY:	diff
 diff:
