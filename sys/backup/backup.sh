@@ -21,6 +21,7 @@ read_ans() {
             read ans < /dev/tty
         else
             ans="$answer"
+            echo "$ans"
         fi
 
         if [ "$ans" = "" ]; then	# default is "No"
