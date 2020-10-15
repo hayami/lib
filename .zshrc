@@ -62,7 +62,7 @@ unsetenvall () {
     PATH=/usr/bin:/bin; export PATH
     for x in `env | sed 's/=.*$//'`; do
         case "$x" in
-            HOME|HOSTTYPE|LOGNAME|OSTYPE|PATH|PWD|TERM|TZ|USER|_) ;;
+            HOME|HOSTTYPE|LOGNAME|OSTYPE|PATH|PWD|TERM|TMPDIR|TZ|USER|_) ;;
             *) unset $x;;
         esac
     done
