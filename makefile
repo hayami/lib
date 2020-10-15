@@ -17,8 +17,9 @@ USRLOCAL:= usrlocal
 
 ifeq ($(NODE),www)
 LINKS	:= ${shell for i in \
-	   .emacs.d .less* .tmux.conf .vimrc .zsh* \
-	   ; do case $$i in $(EXCLUDE));; *) echo $$i;; esac; done}
+	   .emacs.d .less* .termcap .tmux.conf .vimrc .zsh* \
+	   ; do [ -e "$$i" ] || continue; case $$i in \
+	   $(EXCLUDE));; *) echo $$i;; esac; done}
 USRLOCAL:= syslocal
 endif
 
