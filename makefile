@@ -8,23 +8,24 @@
 #	cp -pi makefile-private-template ../private/dot/makefile
 #	make relink
 
-NODE	:= $(shell uname -n | sed -e 's/[\.0-9].*//')
-
+PRIVATE	:= $(HOME)/private/dot
+USRLOCAL:= usrlocal
 EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
-USRLOCAL:= usrlocal
+DOTDIR	:= $(shell dir=$$(pwd); echo $${dir\#$$HOME/})
+PRIVDOT	:= $(shell dir=$(PRIVATE); echo $${dir\#$$HOME/})
+NODE	:= $(shell node=$$(uname -n); echo $${node%%[0-9.]*})
 
 ifeq ($(NODE),www)
+USRLOCAL:= syslocal
+ifneq ($(DOTDIR),$(PRIVDOT))
 LINKS	:= ${shell for i in \
 	   .emacs.d .less* .termcap .tmux.conf .vimrc .zsh* \
 	   ; do [ -e "$$i" ] || continue; case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
-USRLOCAL:= syslocal
 endif
-
-DOTDIR	:= $(shell pwd | sed -e "s:^$$HOME/::")
-PRIVATE	:= $(HOME)/private/dot
+endif
 
 MAKEFLAGS += --no-print-directory
 
