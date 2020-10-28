@@ -1,12 +1,13 @@
 # vim: noet sw=8 sts=8
 
-# How to install in a clean environment
-#	cd ~
-#	git clone https://github.com/hayami/dot.git
-#	cd dot
-#	make install
-#	cp -pi makefile-private-template ../private/dot/makefile
-#	make relink
+# Initial setup steps in vanilla home directory follows:
+# 	cd ~
+# 	git clone https://github.com/hayami/dot.git
+# 	cd dot
+# 	make install
+# 	(umask 077 && mkdir -p ../private/dot)
+# 	(umask 077 && cp -i makefile-private-template ../private/dot/makefile)
+# 	make relink
 
 PRIVATE	:= $(HOME)/private/dot
 USRLOCAL:= usrlocal
@@ -32,18 +33,25 @@ MAKEFLAGS += --no-print-directory
 .NOTPARALLEL:
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
-.PHONY:	default
-.PHONY:	commit+push commit push
+.PHONY:	default	usage help
 
-default: commit+push
+default: usage
 
-commit+push: commit push
-
-commit:
-	git commit -a
-
-push:
-	git push origin master
+usage help:
+	@printf "usage: make [options]\n"
+	@printf "options are:\n"
+	@printf "	usage (or help)\n"
+	@printf "	relink\n"
+	@printf "\n"
+	@printf "Initial setup steps in vanilla home directory follows:\n"
+	@printf "	cd ~\n"
+	@printf "	git clone https://github.com/hayami/dot.git\n"
+	@printf "	cd dot\n"
+	@printf "	make install\n"
+	@printf "	(umask 077 && mkdir -p ../private/dot)\n"
+	@printf "	(umask 077 "
+	@printf "&& cp -i makefile-private-template ../private/dot/makefile)\n"
+	@printf "	make relink\n"
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 .PHONY: relink
@@ -136,7 +144,7 @@ private-dirs:
 	    fi; \
 	    echo $$cmd; $$cmd || exit 1; \
 	done
-	 
+
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 # EOF
