@@ -12,12 +12,15 @@ usage help:
 
 .PHONY:	backup
 backup:
+	test -d orig -a -d new
 	answer=$(answer) ./backup.sh
 
 .PHONY:	diff
 diff:
+	test -d orig -a -d new
 	./diff.sh $(FILES)
 
 .PHONY:	nodiff
 nodiff:
+	test -d orig -a -d new
 	./nodiff.sh
