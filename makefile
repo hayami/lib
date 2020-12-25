@@ -14,8 +14,8 @@ USRLOCAL:= usrlocal
 EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
-DOTDIR	:= $(shell dir=$$(pwd); echo $${dir\#$$HOME/})
-PRIVDOT	:= $(shell dir=$(PRIVATE); echo $${dir\#$$HOME/})
+DOTDIR	:= $(shell pwd | sed -e "s|^$$HOME/||")
+PRIVDOT	:= $(shell echo $(PRIVATE) | sed -e "s|^$$HOME/||")
 NODE	:= $(shell node=$$(uname -n); echo $${node%%[0-9.]*})
 
 ifeq ($(NODE),www)
