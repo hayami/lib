@@ -200,7 +200,7 @@ setopt list_packed
 ##
 ##  Hostname Completion
 ##
-_cache_hosts=(localhost mikado tako garlic)
+_cache_hosts=(localhost tako mikado)
 
 ##
 ##  Private Settings
