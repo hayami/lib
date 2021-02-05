@@ -17,11 +17,13 @@ set wrap
 set sidescroll=4
 set listchars+=precedes:<,extends:>
 set nobomb
+set colorcolumn=81
 
 set hlsearch
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
 nmap <ESC>w :set wrap!<CR>
+nmap <ESC>8 :call Column80()<CR>
 
 syntax on
 
@@ -37,6 +39,18 @@ if has('autocmd')
     endfunction
     autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
+
+function! Column80()
+    " Type of &colorcolumn variable is string
+    if &colorcolumn == '' || &colorcolumn == '0'
+        let pos = 80 + 1
+        exe 'set colorcolumn=' . pos
+        echomsg printf('%d columns are shown in RED', pos)
+    else
+        set colorcolumn=
+        echomsg 'No specific columns are colored'
+    endif
+endfunction
 
 function! GetStatusEx()
     let str = ''
