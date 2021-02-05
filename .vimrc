@@ -23,7 +23,7 @@ set hlsearch
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
 nmap <ESC>w :set wrap!<CR>
-nmap <ESC>8 :call Column80()<CR>
+nmap <ESC>8 :call ToggleColorColumn()<CR>
 
 syntax on
 
@@ -40,17 +40,50 @@ if has('autocmd')
     autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
 
-function! Column80()
-    " Type of &colorcolumn variable is string
-    if &colorcolumn == '' || &colorcolumn == '0'
-        let pos = 80 + 1
-        exe 'set colorcolumn=' . pos
-        echomsg printf('%d columns are shown in RED', pos)
-    else
+if 1
+    let s:colorColumnPos = 81
+    function! ToggleColorColumn()
+        if winwidth(0) >= s:colorColumnPos
+            " Type of &colorcolumn variable is string
+            if &colorcolumn == '' || &colorcolumn == '0'
+                exe 'set colorcolumn=' . s:colorColumnPos
+                echomsg printf('%d columns are shown in RED', s:colorColumnPos)
+                return
+            endif
+        else
+            if &colorcolumn == ''
+                set colorcolumn=0
+                echomsg printf('%d columns are shown when width > %d',
+                             \ s:colorColumnPos, s:colorColumnPos - 1)
+                return
+            endif
+        endif
         set colorcolumn=
         echomsg 'No specific columns are colored'
-    endif
-endfunction
+    endfunction
+    function! ResetColorColumn()
+        if &colorcolumn != ''
+            if winwidth(0) >= s:colorColumnPos
+                exe 'set colorcolumn=' . s:colorColumnPos
+            else
+                set colorcolumn=0
+            endif
+            " 'redraw!' clears echo line. 'redraw' and 'redraw!'
+            "  have no effect when the window (not splited window)
+            " width changes from (less than 81) to 81.
+            redraw
+        endif
+        return winwidth(0)
+    endfunction
+    "
+    " VimResized event is available when window (like xterm) size has changed
+    " but not when size of split window has changed. The next URI shows a trick
+    " available in this case: https://vi.stackexchange.com/questions/22687
+    "
+    "if has('autocmd')
+    "    autocmd VimResized * call ResetColorColumn()
+    "endif
+endif
 
 function! GetStatusEx()
     let str = ''
@@ -66,4 +99,4 @@ function! GetStatusEx()
 endfunction
 
 set laststatus=2
-set statusline=%y%{GetStatusEx()}\ %f\ %m%r%=<%c:%l>
+set statusline=%y%{GetStatusEx()}\ %f\ %m%r%=<%c/%{ResetColorColumn()}:%l>
