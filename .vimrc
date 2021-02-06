@@ -27,21 +27,10 @@ nmap <ESC>8 :call ToggleColorColumn()<CR>
 
 syntax on
 
-if &term == 'mlterm' || &term == 'xterm-color'
-    highlight Statement ctermfg=DarkGray
-endif
-
-if has('autocmd')
-    function! AU_ReCheck_FENC()
-        if &fileencoding == 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-            let &fileencoding=&encoding
-        endif
-    endfunction
-    autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-
-if 1
-    let s:colorColumnPos = 81
+let s:useColorColumn = 1
+let s:colorColumnPos = 81
+let s:useColorColumnResizeTrick = 0
+if s:useColorColumn
     function! ToggleColorColumn()
         if winwidth(0) >= s:colorColumnPos
             " Type of &colorcolumn variable is string
@@ -68,21 +57,45 @@ if 1
             else
                 set colorcolumn=0
             endif
-            " 'redraw!' clears echo line. 'redraw' and 'redraw!'
-            "  have no effect when the window (not splited window)
-            " width changes from (less than 81) to 81.
+            " The following items are the verification results when
+            " 's:useColorColumnResizeTrick' is set to 1.
+            "   - 'redraw!' clears echo line.
+            "   - 'redraw' and 'redraw!' have no effect when the window (not
+            "     splited window) width changes from (less than 81) to 81.
             redraw
         endif
-        return winwidth(0)
+        if s:useColorColumnResizeTrick
+            return winwidth(0)
+        endif
     endfunction
     "
-    " VimResized event is available when window (like xterm) size has changed
-    " but not when size of split window has changed. The next URI shows a trick
-    " available in this case: https://vi.stackexchange.com/questions/22687
+    " The 'VimResized' event is available when the window (such as xterm) size
+    " is resized, but not when the split window is resized. The following URI
+    " shows a trick available in this case.
+    " https://vi.stackexchange.com/questions/22687
     "
-    "if has('autocmd')
-    "    autocmd VimResized * call ResetColorColumn()
-    "endif
+    " However, when the trick is applied, it seems that the cursor speed is
+    " slightly slowed down probably because 'redraw' occurs frequently.
+    "
+    " When applying the trick, set the value of 's:useColorColumnResizeTrick'
+    " variable just above to 1. Otherwise set it to 0.
+    "
+    if has('autocmd') && !s:useColorColumnResizeTrick
+        autocmd VimResized * call ResetColorColumn()
+    endif
+endif
+
+if &term == 'mlterm' || &term == 'xterm-color'
+    highlight Statement ctermfg=DarkGray
+endif
+
+if has('autocmd')
+    function! AU_ReCheck_FENC()
+        if &fileencoding == 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+            let &fileencoding=&encoding
+        endif
+    endfunction
+    autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
 
 function! GetStatusEx()
@@ -99,4 +112,8 @@ function! GetStatusEx()
 endfunction
 
 set laststatus=2
-set statusline=%y%{GetStatusEx()}\ %f\ %m%r%=<%c/%{ResetColorColumn()}:%l>
+set statusline=%y%{GetStatusEx()}\ %f\ %m%r%=<%c:%l>
+
+if s:useColorColumn && s:useColorColumnResizeTrick
+    set statusline=%y%{GetStatusEx()}\ %f\ %m%r%=<%c/%{ResetColorColumn()}:%l>
+endif
