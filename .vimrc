@@ -42,7 +42,7 @@ if s:useColorColumn
         else
             if &colorcolumn == ''
                 set colorcolumn=0
-                echomsg printf('%d columns are shown when width > %d',
+                echomsg printf('%d columns are shown in RED when width > %d',
                              \ s:colorColumnPos, s:colorColumnPos - 1)
                 return
             endif
@@ -81,7 +81,7 @@ if s:useColorColumn
     " variable just above to 1. Otherwise set it to 0.
     "
     if has('autocmd') && !s:useColorColumnResizeTrick
-        autocmd VimResized * call ResetColorColumn()
+        autocmd BufWinEnter,VimResized * call ResetColorColumn()
     endif
 endif
 
