@@ -22,6 +22,13 @@
 ##
 
 ##
+##  Pre Hook
+##
+if [ -r ~/.zshrc-prehook ]; then
+    . ~/.zshrc-prehook
+fi
+
+##
 ##  umask (again)
 ##
 umask 022
@@ -203,10 +210,10 @@ setopt list_packed
 _cache_hosts=(localhost tako mikado)
 
 ##
-##  Private Settings
+##  Post Hook
 ##
-if [ -r ~/.zshrc-private ]; then
-    . ~/.zshrc-private
+if [ -r ~/.zshrc-posthook ]; then
+    . ~/.zshrc-posthook
 fi
 
 ##  End of ~/.zshrc

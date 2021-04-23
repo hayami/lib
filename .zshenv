@@ -31,6 +31,13 @@
 ##
 
 ##
+##  Pre Hook
+##
+if [ -r ~/.zshenv-prehook ]; then
+    . ~/.zshenv-prehook
+fi
+
+##
 ##  umask
 ##
 umask 022
@@ -77,16 +84,11 @@ export EDITOR
 #https_proxy="http://proxy.example.jp:8080/"
 #export ftp_proxy http_proxy https_proxy
 
-#P4PORT="perforce.example.jp:1666"
-#P4USER=$USER
-#P4CLIENT=`uname -n | sed -e 's:\..*::'`
-#export P4PORT P4USER P4CLIENT
-
 ##
-##  Private Settings
+##  Post Hook
 ##
-if [ -r ~/.zshenv-private ]; then
-    . ~/.zshenv-private
+if [ -r ~/.zshenv-posthook ]; then
+    . ~/.zshenv-posthook
 fi
 
 ##  End of ~/.zshenv
