@@ -1,7 +1,7 @@
 SSH 鍵を新しく生成する時のコマンド
 
     $ rm -f .ssh/keyname .ssh/keyname.pub
-    $ ssh-keygen [-t rsa] [-b 4096] [-f .ssh/keyname] [-C "user@example.net"]
+    $ ssh-keygen [-t rsa] [-b 4096] [-f .ssh/keyname] [-C "user@host"]
     $ chmod (appropriate value) .ssh/keyname
     $ chmod (appropriate value) .ssh/keyname.pub
 
