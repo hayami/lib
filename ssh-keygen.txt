@@ -1,0 +1,28 @@
+SSH 鍵を新しく生成する時のコマンド
+
+    $ rm -f .ssh/keyname .ssh/keyname.pub
+    $ ssh-keygen [-t rsa] [-b 4096] [-f .ssh/keyname] [-C "user@example.net"]
+    $ chmod (appropriate value) .ssh/keyname
+    $ chmod (appropriate value) .ssh/keyname.pub
+
+    -t type     Specifies the type of key to create. RSA is the default type.
+
+    -b bits     Specifies the number of bits in the key to create. The default
+                is 2048 bits for RSA keys.
+
+    -f filename Specifies the filename of the key file. The default filename
+                depends on the algorithm. ~/.ssh/id_rsa(.pub) is the default
+                for RSA keys.
+
+    -C comment  Provides custom key comment which will be appended at the end
+                of the public key. The default is user@host.
+
+
+鍵は同じままでパスフレーズを変える方法
+
+    $ ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [-f keyfile]
+
+    -p          Requests changing the passphrase of a private key file instead
+                of creating a new private key. The program will prompt for the
+                file containing the private key, for the old passphrase, and
+                twice for the new passphrase.
