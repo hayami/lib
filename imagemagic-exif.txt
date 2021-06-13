@@ -1,0 +1,7 @@
+ImageMagic で Exif 情報を扱う
+
+Exif 情報を出力
+$ identify -verbose file.png | grep exif
+
+Exif 情報を削除
+$ convert infile.png -strip outfile.png
