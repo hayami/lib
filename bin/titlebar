@@ -1,5 +1,9 @@
 #!/bin/sh
-#
+
+# In addition to this script, the xtitle command and others may
+# have similar functions. For the xtitle information, visit the
+# following URL: https://legacy.cs.indiana.edu/~kinzler/xtitle/
+
 #	From: masaoki@akebono.tky.yhp.co.jp (Kobayashi Masaoki)
 #	Date: Wed, 10 Nov 1993 23:22:45 GMT
 #	Subject: Re: [WANTED] xtitle
