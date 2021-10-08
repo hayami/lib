@@ -1,0 +1,7 @@
+!
+! - Swap [`] and Esc
+!
+pointer = 1 2 3 4 5 6 7 8 10 9
+
+keysym Escape = grave asciitilde grave asciitilde
+keysym grave = Escape NoSymbol Escape
