@@ -32,4 +32,31 @@
 #	を RED なんて名前で登録しています(笑)
 #	(カラーの端末じゃないと意味不明だな :-)
 #
-echo -n "]0;"$*""
+case "$maxlen" in [0-9]|[0-9][0-9]|[0-9][0-9][0-9]) ;; *) maxlen=; esac
+
+case "${##*/}" in
+dostitle)
+    # なんか長すぎると固まる模様。どこまでメモリ貧乏なんだろう > Windows 10
+    # 最大 maxlen 文字で収めるようにした。文字列の長さの計算は厳密ではない。
+
+    # usage: cmd.exe /C powershell -command "Write-Host -NoNewline '$(dostitle HELO WORLD)'" '&' ...
+    maxlen=${maxlen:-80} ;;
+*)  maxlen=${maxlen:-0}  ;;
+esac
+
+last="$*"
+if [ $maxlen -gt 0 -a ${#last} -gt $maxlen ]; then
+    head=
+    str=
+    set -- $*
+    for i in $@; do
+        last="$str"
+        head="$head$1 "
+        shift
+        tail="$*"
+        str="${head}... (${#tail} chars)"
+        [ ${#str} -le $maxlen ] || break
+    done
+fi
+[ -n "$last" ] || last='(too long)'
+echo -n ']0;'"$last"''
