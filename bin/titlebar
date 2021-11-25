@@ -55,8 +55,10 @@ if [ $maxlen -gt 0 -a ${#last} -gt $maxlen ]; then
         shift
         tail="$*"
         str="${head}... (${#tail} chars)"
-        [ ${#str} -le $maxlen ] || break
+        if [ ${#str} -gt $maxlen ]; then
+            [ -n "$last" ] || last='(too long)'
+            break
+        fi
     done
 fi
-[ -n "$last" ] || last='(too long)'
 echo -n ']0;'"$last"''
