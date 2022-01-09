@@ -1,8 +1,0 @@
-#!/bin/sh
-XAPPLRESDIR=$HOME/.xmisc/app-defaults
-export XAPPLRESDIR
-
-unset XMODIFIERS
-unset GTK_IM_MODULE
-
-exec emacs "$@"
