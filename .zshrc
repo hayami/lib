@@ -194,16 +194,16 @@ bindkey -e		# emacs key bindings
 ##  setopt options (see 'man zshoptions' for more details)
 ##  type 'set -o' to see all options
 ##
-setopt correct
-setopt auto_pushd	# type "cd -<TAB>" to list dirs
-setopt pushd_ignore_dups
 setopt append_history
+setopt auto_pushd	# type "cd -<TAB>" to list dirs
+setopt chase_links
+setopt correct
 setopt hist_ignore_space
 setopt hist_verify
-setopt no_beep
-setopt chase_links
 setopt list_packed
 #setopt no_auto_remove_slash
+setopt no_beep
+setopt pushd_ignore_dups
 
 ##
 ##  Hostname Completion
