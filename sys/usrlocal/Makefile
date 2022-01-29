@@ -1,12 +1,12 @@
-SUDO	:= $(shell [ "`id -u`" != "0" -a ! -d "$(HOME)/sys/local" ] \
+SUDO	:= $(shell [ "$$(id -u)" != "0" -a ! -d "$$HOME/sys/local" ] \
 	   && which sudo > /dev/null 2>&1 && echo -n "sudo")
-PREFIX	:= $(shell [ -d "$(HOME)/sys/local" ] \
-	   && echo -n "$(HOME)/sys/local" || echo -n "/usr/local")
+PREFIX	:= $(shell [ -d "$$HOME/sys/local" ] \
+	   && echo -n "$$HOME/sys/local" || echo -n "/usr/local")
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
 
 filecheck check: tmpdir filelist
-	for f in `find * -maxdepth 0 -type f -print`; do \
+	for f in $$(find * -maxdepth 0 -type f -print); do \
 	    sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $$f | tail -n +2; \
 	done | expand | sed -e 's/ -> .*//' | sort > $(TMPDIR)/ulist
 	uniq $(TMPDIR)/ulist > $(TMPDIR)/clist
@@ -37,16 +37,17 @@ filecheck check: tmpdir filelist
 	fi
 
 filelist: tmpdir
-	regexp=`while read re; do			\
+	regexp=$$(while read re; do			\
 		    echo -n "$$or$$re";			\
 		    or='|';				\
-		done < EXCLUDES`;			\
+		done < EXCLUDES);			\
 	(cd $(PREFIX) && $(SUDO) find . -xdev -print)	\
 	| sed -e 's;^\.;$(PREFIX);'			\
 	| egrep -v "^($$regexp)$$"			\
 	| sort -u					\
+	| sed -e 's|^'"$$HOME"'/|$$HOME/|'		\
 	> $(TMPDIR)/flist
-	@cmd="cp $(TMPDIR)/flist $(TMPDIR)/filelist-`date +%T`"; \
+	@cmd="cp $(TMPDIR)/flist $(TMPDIR)/filelist-$$(date +%T)"; \
 	echo $$cmd; eval $$cmd
 
 tmpdir:
@@ -56,7 +57,7 @@ clean:
 	rm -rf $(TMPDIR)
 
 rkiv-all: clean
-	touch $(RKIVDIR)/`date '+%Y-%m-%d'`,usrlocal.tar.gz
+	touch $(RKIVDIR)/$$(date '+%Y-%m-%d'),usrlocal.tar.gz
 	LANG=C $(SUDO) tar \
 	--gzip \
 	--create \
@@ -64,14 +65,15 @@ rkiv-all: clean
 	--numeric-owner \
 	--atime-preserve \
 	--one-file-system \
-	--file $(RKIVDIR)/`date '+%Y-%m-%d'`,usrlocal.tar.gz \
+	--file $(RKIVDIR)/$$(date '+%Y-%m-%d'),usrlocal.tar.gz \
 	--directory $(PREFIX) .
 
 rkiv-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
 	rm -f $(TMPDIR)/$(PKG)-*
 	sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $(PKG) | tail -n +2 \
-	| expand | sed -e 's/ .*$$//' | sort -u | tee $(TMPDIR)/$(PKG)-list \
+	| expand | sed -e 's/ .*$$//' -e 's|^[$$]HOME/|'"$$HOME"'/|' \
+	| sort -u | tee $(TMPDIR)/$(PKG)-list \
 	| while read f; do [ -L "$$f" -o ! -d "$$f" ] || echo "//$$f"; done \
 	>  $(TMPDIR)/$(PKG)-dirs2
 	while read d2; do fgrep "$$d2/" $(TMPDIR)/$(PKG)-dirs2; done \
