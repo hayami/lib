@@ -208,7 +208,7 @@ setopt pushd_ignore_dups
 ##
 ##  Hostname Completion
 ##
-_cache_hosts=(localhost tako mikado)
+_cache_hosts=(localhost)
 
 ##
 ##  Post Hook
