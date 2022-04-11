@@ -43,7 +43,7 @@ read_ans() {
 }
 
 epoch_touch() {
-    TZ=UTC touch -t 197001010000.01 "$1"
+    TZ=UTC touch -h -t 197001010000.01 "$1"
 }
 
 backup_file() {
@@ -52,16 +52,14 @@ backup_file() {
     bang=`echo "$etcfile" | sed -e 's#/#!#g'`
     etcorigrm=0
 
-    if [ -e "$etcorig" -a '(' ! -f "$etcorig" -o -L "$etcorig" ')' ]; then
-	# TODO: $etcorig がシンボリックリンクだった場合も対応すること
+    if [ -e "$etcorig" -a '(' ! -f "$etcorig" -a ! -L "$etcorig" ')' ]; then
         echo "WARNING: $etcorig is not a regular file, skipping"
         echo -n "WARNING: "; ls -ld "$etcorig"
         echo
         return
     fi
 
-    if [ -e "$etcfile" -a '(' ! -f "$etcfile" -o -L "$etcfile" ')' ]; then
-	# TODO: $etcfile がシンボリックリンクだった場合も対応すること
+    if [ -e "$etcfile" -a '(' ! -f "$etcfile" -a ! -L "$etcfile" ')' ]; then
         echo "WARNING: $etcfile is not a regular file, skipping"
         echo -n "WARNING: "; ls -ld "$etcfile"
         echo
@@ -84,7 +82,7 @@ backup_file() {
         exit 1
     fi
 
-    if [ -r "$etcfile" ]; then
+    if [ ! -L "$etcfile" -a -r "$etcfile" ]; then
 
         if [ -e "orig/$bang" ]; then
             echo "NOTICE: backup file exists: $etcfile"
@@ -124,11 +122,16 @@ backup_file() {
                 find "$etcfile" -printf "%m %u:%g " > "orig/${bang}${ext}"
                 find $tmp.epoch -printf \
                 "%s %TY-%Tm-%Td %TT $etcfile\n" >> "orig/${bang}${ext}"
-                touch -r $tmp.epoch "orig/${bang}${ext}"
+                touch -h -r $tmp.epoch "orig/${bang}${ext}"
             else
                 find "$etcorig" -printf \
-                "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile\n" > "orig/${bang}${ext}"
-                touch -r "$etcorig" "orig/${bang}${ext}"
+                "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile" > "orig/${bang}${ext}"
+                if [ -h "$etcorig" ]; then
+                    find "$etcorig" -printf " -> %l\n" >> "orig/${bang}${ext}"
+                else
+                    echo >> "orig/${bang}${ext}"
+                fi
+                touch -h -r "$etcorig" "orig/${bang}${ext}"
             fi
             echo "INFO: backup file created: $etcorig"
             echo -n "INFO: "; ls -ld "orig/${bang}${ext}"
@@ -138,9 +141,14 @@ backup_file() {
         fi
 
         if [ ! -e "new/${bang}${ext}" ]; then
-            find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile\n" \
+            find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile" \
             > "new/${bang}${ext}"
-            touch -r "$etcfile" "new/${bang}${ext}"
+            if [ -h "$etcfile" ]; then
+                find "$etcfile" -printf " -> %l\n" >> "new/${bang}${ext}"
+            else
+                echo >> "new/${bang}${ext}"
+            fi
+            touch -h -r "$etcfile" "new/${bang}${ext}"
             echo "INFO: backup file created: $etcfile"
             echo -n "INFO: "; ls -ld "new/${bang}${ext}"
             echo -n "INFO: "; cat "new/${bang}${ext}"
@@ -213,7 +221,7 @@ backup_diff_check() {
 
             if [ $? -eq 0 ]; then
                 find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT %p\n" \
-                > "new/${bang}${ext}" && touch -r "$etcfile" "new/${bang}${ext}"
+                > "new/${bang}${ext}" && touch -h -r "$etcfile" "new/${bang}${ext}"
                 if [ $? -eq 0 ]; then
                     echo "INFO: backup file updated: $etcfile"
                     echo -n "INFO: "; ls -ld "new/${bang}${ext}"

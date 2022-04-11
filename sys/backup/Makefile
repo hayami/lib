@@ -18,7 +18,7 @@ backup:
 .PHONY:	diff
 diff:
 	test -d orig -a -d new
-	./diff.sh $(FILES)
+	set -o noglob; ./diff.sh $(FILES)
 
 .PHONY:	nodiff
 nodiff:
