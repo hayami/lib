@@ -1,0 +1,48 @@
+gdb command examples
+--------------------
+
+$ gdb [-q] [-x (somewhere)/.gdbinit]
+(gdb) file a.out
+(gdb) core-file core
+(gdb) set environment LD_PRELOAD=/path/to/librescue.so
+(gdb) set args --default --url=...
+(gdb) break main
+(gdb) run
+(gdb) break somefunc
+(gdb) cont
+
+(gdb) info threads
+(gdb) thread N			# N: info threads で表示される左側の番号を指定
+(gdb) thread apply all bt
+
+(gdb) bt
+(gdb) frame フレーム番号
+(gdb) up
+(gdb) down
+
+(gdb) info locals		# ローカル変数を表示
+(gdb) p 変数名
+(gdb) ptype 変数名		# データ型を表示
+(gdb) +
+(gdb) -
+(gdb) C-x C-a			# toggle CUI / TUI		[*1]
+(gdb) C-x C-o			# change the active window	[*1]
+(gdb) list
+(gdb) list sample.c:10
+(gdb) x 0xffff3210		# 0xffff3210 番地の内容を表示
+(gdb) gcore
+
+
+$ gdb
+(gdb) attach PID
+(gdb) detach
+
+
+$ gdbserver --attach :6666 $(pidof running-program)
+$ arm-linux-gnueabihf-gdb
+(gdb) target remote 192.168.0.123:6666
+(gdb) set sysroot .
+(gdb) detach
+
+
+[*1] see https://sourceware.org/gdb/current/onlinedocs/gdb/TUI-Keys.html
