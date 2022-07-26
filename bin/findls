@@ -1,19 +1,26 @@
 #!/bin/sh
+set -e
 umask 022
 LANG=C
 export LANG
 
-timeformat='%TY-%Tm-%Td,%TT'
+nomd5=0
+notime=0
+
+usage() {
+    echo "usage: findls [--no-md5] [--no-time] [dir ...]" 1>&2
+    exit 1
+}
 
 while [ $# -gt 0 ]; do
     case "$1" in
-    --notime)
-        timeformat='0000-00-00,00:00:00'
+    --no-md5|--nomd5)
+        nomd5=1
         shift
         ;;
-    -*)
-        echo "usage: findls [--notime] dir [dir ...]" 1>&2
-        exit 1
+    --no-time|--notime)
+        notime=1
+        shift
         ;;
     *)
         break
@@ -21,18 +28,47 @@ while [ $# -gt 0 ]; do
     esac
 done
 
+if [ $# -gt 0 ]; then
+    for x in "$@"; do
+        case "$x" in
+        -*)
+            usage
+            ;;
+        *)
+            [ -e "$x" ] || usage
+            ;;
+        esac
+    done
+else
+    set -- .
+fi
+
 find "$@" \
-   -type l -printf "l %m %n %u %g %s 0000-00-00,00:00:00 %p -> %l\n" \
--o -type d -printf "d %m %n %u %g %s 0000-00-00,00:00:00 %p\n" \
--o -type f -printf "- %m %n %u %g %s $timeformat %p\n" \
--o -printf "%y %m %n %u %g %s $timeformat %p\n" \
-| while read a b c d e f g file; do
-    if [ X$a = X- ]; then
-        md5=$(md5sum "$file")
-    else
-        md5="-  $file"
-    fi
-    echo "$a $b $c $d $e $f $g $md5"
+| sort -u \
+| while read file; do
+    ls -ld --time-style=full-iso "$file"
 done \
-| sort -k +9
+| while read mode link user group size ymd hms off path; do
+    if [ "$notime" -ne 0 ]; then
+        ymd='0000-00-00'
+        hms='00:00:00.000000000'
+        off='+0000'
+    fi
+    md5='-'
+    case "$mode" in
+    d*|l*)
+        ymd='0000-00-00'
+        hms='00:00:00.000000000'
+        off='+0000'
+        ;;
+    -*)
+        if [ "$nomd5" -eq 0 ]; then
+            md5=$(md5sum "$path")
+            md5=${md5% *}
+        fi
+        ;;
+    esac
+    echo "$mode $user $group $size ${ymd}+${hms}$off $md5 $path"
+done
+
 exit 0
