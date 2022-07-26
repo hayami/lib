@@ -7,11 +7,6 @@ export LANG
 nomd5=0
 notime=0
 
-usage() {
-    echo "usage: findls [--no-md5] [--no-time] [dir ...]" 1>&2
-    exit 1
-}
-
 while [ $# -gt 0 ]; do
     case "$1" in
     --no-md5|--nomd5)
@@ -22,26 +17,16 @@ while [ $# -gt 0 ]; do
         notime=1
         shift
         ;;
+    --help|--usage)
+        echo "usage: findls [--no-md5] [--no-time] [find options ...]" 1>&2
+        exit 0
+        ;;
     *)
         break
         ;;
     esac
 done
-
-if [ $# -gt 0 ]; then
-    for x in "$@"; do
-        case "$x" in
-        -*)
-            usage
-            ;;
-        *)
-            [ -e "$x" ] || usage
-            ;;
-        esac
-    done
-else
-    set -- .
-fi
+[ $# -gt 0 ] || set -- .
 
 find "$@" \
 | sort -u \
