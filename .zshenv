@@ -47,7 +47,8 @@ umask 022
 ##
 PATH=/usr/bin:/bin; export PATH
 p=
-for dir in $(find "$HOME/bin" -maxdepth 1 -type d -print 2> /dev/null | sort) \
+for dir in \
+    $(find -L "$HOME/bin" -maxdepth 1 -type d -print 2> /dev/null | sort) \
     $(for d in bin sbin; do ls -d $HOME/sys/local/$d 2> /dev/null; done) \
     /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin; do
     [ -d "$dir" ] && p="${p}${p:+:}${dir}"
