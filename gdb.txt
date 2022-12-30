@@ -26,7 +26,7 @@ $ gdb [-q] [-x (somewhere)/.gdbinit]
 (gdb) +
 (gdb) -
 (gdb) C-x C-a			# toggle CUI / TUI		[*1]
-(gdb) C-x C-o			# change the active window	[*1]
+(gdb) C-x o			# change the active window	[*1]
 (gdb) list
 (gdb) list sample.c:10
 (gdb) x 0xffff3210		# 0xffff3210 番地の内容を表示
