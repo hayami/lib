@@ -145,7 +145,7 @@ done
 
 
 ###
-### /etc/login.defs
+### set USERGROUPS_ENAB to 'no' in /etc/login.defs
 ###
 echo "*** /etc/login.defs" >> $log
 x=/etc/login.defs; [ -f $x.orig ] || cp -p $x $x.orig
