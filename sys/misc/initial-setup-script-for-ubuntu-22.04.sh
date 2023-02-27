@@ -1,15 +1,17 @@
 #!/bin/sh
 
 # このスクリプトの利用例
-#	$ ssh guest@このホスト
+#	$ ssh guest@remote
 #	guest$ # このスクリプトを /var/tmp にコピーしてくる
 #	guest$ # 例: /var/tmp/initial-setup-script-for-ubuntu-22.04.sh
-#	guest$ sudo su - root -c '/bin/sh /var/tmp/*-setup.sh'
+#	guest$ sudo su - root -c '/bin/sh /var/tmp/initial-setup-script-*.sh'
 #	guest$ sudo shutdown -r now
-#	$ ssh hayami@このホスト
-#		これを選択 >>> (0)  Exit, creating the file ~/.zshrc ...
-#	hayami% sudo chown hayami: /var/tmp/*-setup.*
-#	hayami% mv -i /var/tmp/initial-setup-script-for-* .
+#	$ ssh hayami@remote
+#	| これを選択 >>> (0)  Exit, creating the file ~/.zshrc ...
+#	hayami% cd /var/tmp
+#	hayami% sudo chown hayami: initial-setup-script-*.log
+#	hayami% mv -i initial-setup-script-*.log ~/
+#	hayami% cd
 #	hayami% rm .zshrc .profile .bash*
 #	hayami% git clone https://github.com/hayami/memo.git
 #	hayami% git clone https://github.com/hayami/dot.git
@@ -18,7 +20,7 @@
 #	hayami% cp -pi makefile-private-template ../private/dot/makefile
 #	hayami% make relink
 #	hayami% cd ~/sys/backup
-#	hayami% sudo /bin/true && make answer=yes backup
+#	hayami% make answer=yes backup
 
 set -e
 set -x
@@ -26,8 +28,21 @@ umask 022
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
 export LANG=C
 
+
+###
+### default values
+###
+guest=${guest:-'guest'}
+hayami=${hayami:-'hayami'}
+
+ipaddr=${ipaddr:-'dhcp'}
 fqdn=${fqdn:-"$(hostname --fqdn)"}
 newhostname=${newhostname:-"$(hostname --short)"}
+
+sshaltport=${sshaltport:-'22'}
+nobuildtools=${nobuildtools:-'0'}
+
+
 if [ -z "$updatehostname" ]; then
     if [ "$newhostname" = "$(hostname --short)" ]; then
         updatehostname=0
@@ -36,18 +51,13 @@ if [ -z "$updatehostname" ]; then
     fi
 fi
 
-ipaddr=${ipaddr:-'dhcp'}
 case "$ipaddr" in
 dhcp)	ipaddr='127.0.1.1' ;;
 static)	ipaddr=$(ip -4 -oneline address | sed -n -e 's#/.*##' -e 's#.* ##p' \
 		| while read x; do case "$x" in (127.*) ;; (*) echo $x; break \
 		;; esac; done) ;;
+*)	;; # IPv4 address is assumed to be set in $ipaddr
 esac
-
-guest=${guest:-'guest'}
-hayami=${hayami:-'hayami'}
-sshaltport=${sshaltport:-'22'}
-installdev=${installdev:-'1'}
 
 if [ -z "$log" ]; then
     log=$0
@@ -336,7 +346,7 @@ apt-get --yes install language-pack-ja		>> $log
 
 
 ###
-### apt-get update upgrade dist-upgrade autoremove clean update
+### apt-get update upgrade dist-upgrade autoremove clean (and again) update
 ###
 echo "*** apt-get update upgrade dist-upgrade autoremove clean update" >> $log
 apt-get update			>> $log
@@ -352,7 +362,7 @@ apt-get update			>> $log
 ###
 echo "*** install preferred packages"					>> $log
 apt-get --yes install language-pack-ja					>> $log
-if [ "$installdev" -eq 0 ]; then
+if [ "$nobuildtools" -ne 0 ]; then
     apt-get --yes install make
 else
     apt-get --yes install build-essential				>> $log
