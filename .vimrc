@@ -3,7 +3,7 @@
 " vim: et sw=4 sts=4
 set modeline
 set cpoptions+=u
-" set expandtab
+"set expandtab
 set tabstop=8
 set shiftwidth=8
 set softtabstop=8
@@ -12,20 +12,31 @@ set encoding=utf-8
 set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
 set ffs=unix,dos,mac
 set ambiwidth=double
-set wrap
-" set nowrap
 set sidescroll=4
 set listchars+=precedes:<,extends:>
 set nobomb
-set colorcolumn=81
+syntax on
 
 set hlsearch
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
+
+set wrap
+"set nowrap
 nmap <ESC>w :set wrap!<CR>
+
+set colorcolumn=81
 nmap <ESC>8 :call ToggleColorColumn()<CR>
 
-syntax on
+set ignorecase
+"set noignorecase
+set smartcase
+" see https://vi.stackexchange.com/questions/4054/case-sensitive-with-ignorecase-on
+nnoremap  <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=1<CR>n
+nnoremap  <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
+"nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
+"nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
+
 
 let s:useColorColumn = 1
 let s:colorColumnPos = 81
