@@ -349,10 +349,10 @@ apt-get --yes install language-pack-ja		>> $log
 ### set system locale
 ###
 x=/etc/default/locale; [ -f $x.orig ] || cp -p $x $x.orig
-localectl status
-update-locale LANG=C.UTF-8
-localectl status
-localectl list-locales
+localectl status		>> $log
+update-locale LANG=C.UTF-8	>> $log
+localectl status		>> $log
+localectl list-locales		>> $log
 
 
 ###
