@@ -346,6 +346,16 @@ apt-get --yes install language-pack-ja		>> $log
 
 
 ###
+### set system locale
+###
+x=/etc/default/locale; [ -f $x.orig ] || cp -p $x $x.orig
+localectl status
+update-locale LANG=C.UTF-8
+localectl status
+localectl list-locales
+
+
+###
 ### apt-get update upgrade dist-upgrade autoremove clean (and again) update
 ###
 echo "*** apt-get update upgrade dist-upgrade autoremove clean update" >> $log
