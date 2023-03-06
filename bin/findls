@@ -6,9 +6,22 @@ export LANG
 
 nomd5=0
 notime=0
+noowner=0
+nogroup=0
 
 while [ $# -gt 0 ]; do
     case "$1" in
+    --help|--usage)
+        (
+            echo "usage: findls [options ...] [find options ...]"
+            echo "options:"
+            echo "    --no-md5"
+            echo "    --no-time"
+            echo "    --no-owner (or --no-user)"
+            echo "    --no-group "
+        ) 1>&2
+        exit 0
+        ;;
     --no-md5|--nomd5)
         nomd5=1
         shift
@@ -17,9 +30,13 @@ while [ $# -gt 0 ]; do
         notime=1
         shift
         ;;
-    --help|--usage)
-        echo "usage: findls [--no-md5] [--no-time] [find options ...]" 1>&2
-        exit 0
+    --no-owner|--noowner|--no-user|--nouser)
+        noowner=1
+        shift
+        ;;
+    --no-group|--nogroup)
+        nogroup=1
+        shift
         ;;
     *)
         break
@@ -33,7 +50,11 @@ find "$@" \
 | while read file; do
     ls -ld --time-style=full-iso "$file"
 done \
-| while read mode link user group size ymd hms off path; do
+| while read mode link owner group size ymd hms off path; do
+
+    [ "$noowner" -eq 0 ] || owner='-'
+    [ "$nogroup" -eq 0 ] || group='-'
+
     if [ "$notime" -ne 0 ]; then
         ymd='0000-00-00'
         hms='00:00:00.000000000'
@@ -42,6 +63,7 @@ done \
     md5='-'
     case "$mode" in
     d*|l*)
+        size='-'
         ymd='0000-00-00'
         hms='00:00:00.000000000'
         off='+0000'
@@ -53,7 +75,7 @@ done \
         fi
         ;;
     esac
-    echo "$mode $user $group $size ${ymd}+${hms}$off $md5 $path"
+    echo "$mode $owner $group $size ${ymd}+${hms}$off $md5 $path"
 done
 
 exit 0
