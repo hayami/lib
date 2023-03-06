@@ -49,7 +49,7 @@ done \
     -*)
         if [ "$nomd5" -eq 0 ]; then
             md5=$(md5sum "$path")
-            md5=${md5% *}
+            md5=${md5%% *}
         fi
         ;;
     esac
