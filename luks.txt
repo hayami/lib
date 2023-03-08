@@ -1,0 +1,19 @@
+新規作成
+	sudo cryptsetup -v luksFormat /dev/sdb1
+	sudo cryptsetup luksDump /dev/sdb1
+	sudo cryptsetup luksOpen /dev/sdb1 luks-sdb1
+	sudo mkfs.ext4 /dev/mapper/luks-sdb1
+	sudo cryptsetup luksClose luks-sdb1
+
+mount and umount
+	sudo cryptsetup luksOpen /dev/sdb1 luks-sdb1
+	sudo mount /dev/mapper/luks-sdb1 /mnt
+	sudo umount /dev/mapper/luks-sdb1
+	sudo cryptsetup luksClose luks-sdb1
+
+fsck (だけ)
+	sudo cryptsetup luksOpen /dev/sdb1 luks-sdb1
+	sudo fsck.ext4 -f /dev/mapper/luks-sdb1
+	sudo cryptsetup luksClose luks-sdb1
+
+上記 "sdb1", "luks-sdb1" は適宜変更のこと
