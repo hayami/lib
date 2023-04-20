@@ -67,12 +67,13 @@ psg() {
 
 unsetenvall () {
     PATH=/usr/bin:/bin; export PATH
-    for x in `env | sed 's/=.*$//'`; do
-        case "$x" in
+    for v in $(env | while read vv; do echo ${vv%%=*}; done); do
+        case "$v" in
             HOME|HOSTTYPE|LOGNAME|OSTYPE|PATH|PWD|TERM|TMPDIR|TZ|USER|_) ;;
-            *) unset $x;;
+            *) unset $v;;
         esac
     done
+    unset v
     env
 }
 
