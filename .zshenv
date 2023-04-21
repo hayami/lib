@@ -66,7 +66,7 @@ export LANG TIME_STYLE
 ##
 ##  unset LC_*
 ##
-for v in $(env | while read vv; do echo ${vv%%=*}; done); do
+for v in $(printenv | while read vv; do echo ${vv%%=*}; done); do
     case "$v" in
     LC_*) unset $v ;;
     esac
