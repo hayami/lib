@@ -10,7 +10,7 @@ apt-cache show t-code
 apt-cache depends w3m
 apt-cache rdepends apmd
 apt-cache showpkg apmd
-apt-get -s upgrade		# -s == --dry-run == --no-act
-apt-get -s install t-code	# -s == --dry-run == --no-act
-apt-get -s --purge remove t-code (dpkg --purge t-code)
-apt-get -s --purge autoremove t-code
+apt-get [-s] upgrade		# -s == --dry-run == --no-act
+apt-get [-s] install t-code	# -s == --dry-run == --no-act
+apt-get [-s] --purge remove t-code (dpkg --purge t-code)
+apt-get [-s] --purge autoremove t-code
