@@ -26,15 +26,15 @@ cat_template() {
 # First, check the status of binary data substitution
 cd /lib/x86_64-linux-gnu/security
 
-strings -a -f pam_motd.so | grep -F -q 'update-motd.d > /run/motd.dynamic.new' || :
-if [ $? -eq 0 ]; then
+if strings -a -f pam_motd.so \
+    | grep -F -q 'update-motd.d > /run/motd.dynamic.new'; then
     upstream=true
 else
     upstream=false
 fi
 
-strings -a -f pam_motd.so | grep -F -q 'update-motd.d | /etc/motd.dynamic.new' || :
-if [ $? -eq 0 ] && [ -x /etc/motd.dynamic.new ]; then
+if strings -a -f pam_motd.so \
+    | grep -F -q 'update-motd.d | /etc/motd.dynamic.new'; then
     modified=true
 else
     modified=false
