@@ -1,0 +1,69 @@
+* ファイルを上書きする -i オプションの拡張子の扱いについて
+
+    以下は GNU sed の man ページから抜粋。
+	-i[SUFFIX], --in-place[=SUFFIX]
+		edit files in place (makes backup if SUFFIX supplied)
+
+    以下は BSD sed の man ページからの抜粋。
+	-i extension
+		Edit files in-place similarly to -I, but treat each file
+		independently from other files.
+
+    GNU sed の場合、-i オプションを以下のように指定する必要がある。
+	$ sed -i.orig -e ...
+
+    -i オプションを以下のように指定した場合はエラーになる。
+	$ sed -i .orig -e ...
+	sed: can't read .orig: No such file or directory
+
+    一方、BSD sed は以下のどちらも期待した動作をする。
+	$ sed -i.orig -e ...
+	$ sed -i .orig -e ...
+
+    なので (BSD sed の man ページの指定には逸れるが) 以下の指定方法を用
+    いることにより、-i オプションについては、互換性が保たれることになる。
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+	$ sed -i.orig -e ...
+
+
+
+* BSD sed での sed script の埋め込み方について
+
+    末尾がカンマで終わる行を次の行と連結する場合に用いる sed script として、
+    以下を例に示す。 
+	----------------
+	:loop
+	$! {
+		N
+		bloop
+	}
+	s/,\n/, /g
+	----------------
+
+    この sed script は以下のようなコマンド行で用いることができる。
+	$ sed -f script-file < input-file > output-file
+
+    これは以下の入力に対して、
+	----------------
+	abc,
+	def,
+	ghi
+	jkl
+	----------------
+
+    以下を出力する。
+	----------------
+	abc, def, ghi
+	jkl
+	----------------
+
+    さて、この sed script をコマンドライン行に収める場合、GNU sed の場合、
+    以下のように記述することができる (入出力ファイルの指定は省略。以下同様)。
+	$ sed -e ':loop; $! { N; bloop }; s/,\n/, /g'
+
+    BSD sed の場合は以下のようにする記述すると動作する (他にも色々ある)。
+	$ sed -e ':loop' -e '$! { N; bloop' -e '}; s/,\n/, /g'
+
+    -e の指定により sed script の記述を分割する必要があるのだが、どこで分割
+    すればいいのかよくわからない。最初に示した sed script と比較してみると、
+    行頭に記述するような所で分割が必要に思えるが、やはりよくわからない。
