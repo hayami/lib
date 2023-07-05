@@ -141,6 +141,14 @@ grep-color () {
 ##
 ##  Aliases
 ##
+alias d='dirs -v'
+alias h='history -t %T -r 0				\
+         | while read n t c; do				\
+             printf "%s %4d %s\n" "$t" "$n" "$c";	\
+           done						\
+         | less -S --no-init'
+
+# prepare favorite ls options if available in this system
 alias ls="\ls $(args=
                 for i in			\
                     -N				\
@@ -152,18 +160,18 @@ alias ls="\ls $(args=
                 eval echo $args)"
 alias ll='ls -Al'
 alias sl='ls'
-alias less="${PAGER:-'less'}"
 alias vi='vim'
 alias view='vim -R'
-alias cu='cu --parity=none --nostop'
-#         cu --parity=none --nostop --line /dev/ttyUSB0 --speed 115200 dir
+alias cu='cu --parity=none --nostop'  # --line /dev/ttyUSB0 --speed 115200 dir
 #alias lpr='lpr -h'
+
 
 ##
 ##  Enabling Completion
 ##
 autoload -U compinit
 compinit
+
 
 ##
 ##  Search path for the cd command
