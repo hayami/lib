@@ -142,11 +142,11 @@ grep-color () {
 ##  Aliases
 ##
 alias d='dirs -v'
-alias h='history -t %T -r 0				\
+alias h='history -t %T 0				\
          | while read n t c; do				\
              printf "%s %4d %s\n" "$t" "$n" "$c";	\
            done						\
-         | less -S --no-init'
+         | less -S --no-init -G'
 
 # prepare favorite ls options if available in this system
 alias ls="\ls $(args=
