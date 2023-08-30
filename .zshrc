@@ -158,7 +158,7 @@ alias ls="\ls $(args=
                     eval \\ls $args $i -ld / > /dev/null 2>&1 && args="$args $i"
                 done
                 eval echo $args)"
-alias ll='ls -Al'
+alias ll='ls -log'
 alias sl='ls'
 alias vi='vim'
 alias view='vim -R'
