@@ -1,6 +1,6 @@
-" /* vim: set et sw=4 sts=4: */ -- C, C++
-" # vim: noet sw=8 sts=8        -- Makefile
-" # vim: et sw=4 sts=4          -- Shell Script
+" /* vim: set et sw=4 sts=4 : */
+" # vim: noet sw=8 sts=8 :
+" # vim: et sw=4 sts=4 :
 
 set modeline
 set cpoptions+=u
