@@ -1,6 +1,7 @@
 " /* vim: set et sw=4 sts=4: */ -- C, C++
 " # vim: noet sw=8 sts=8        -- Makefile
 " # vim: et sw=4 sts=4          -- Shell Script
+
 set modeline
 set cpoptions+=u
 "set expandtab
@@ -17,17 +18,26 @@ set listchars+=precedes:<,extends:>
 set nobomb
 syntax on
 
+
+"
+" Search Result Highlighting
+"
 set hlsearch
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
 
+
+"
+" Line Wrapping
+"
 set wrap
 "set nowrap
 nmap <ESC>w :set wrap!<CR>
 
-set colorcolumn=81
-nmap <ESC>8 :call ToggleColorColumn()<CR>
 
+"
+" Smart Case Search
+"
 set ignorecase
 "set noignorecase
 set smartcase
@@ -37,6 +47,12 @@ nnoremap  <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:search
 "nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
 "nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
 
+
+"
+" Color Column
+"
+set colorcolumn=81
+nmap <ESC>8 :call ToggleColorColumn()<CR>
 
 let s:useColorColumn = 1
 let s:colorColumnPos = 81
@@ -96,10 +112,18 @@ if s:useColorColumn
     endif
 endif
 
+
+"
+" Color Scheme
+"
 if &term == 'mlterm' || &term == 'xterm-color'
     highlight Statement ctermfg=DarkGray
 endif
 
+
+"
+" Auto-Detect Character Encoding
+"
 if has('autocmd')
     function! AU_ReCheck_FENC()
         if &fileencoding == 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
@@ -109,6 +133,10 @@ if has('autocmd')
     autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
 
+
+"
+" Status Line
+"
 function! GetStatusEx()
     let str = ''
     let str = str . '' . &fileformat . ']'
