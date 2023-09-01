@@ -49,6 +49,12 @@ nnoremap  <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:search
 
 
 "
+" Execute a command under the cursor line
+"
+nnoremap <c-k> :exe 'r!' . getline('.')<cr>
+
+
+"
 " Color Column
 "
 set colorcolumn=81
