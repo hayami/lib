@@ -148,17 +148,41 @@ alias h='history -t %T 0				\
            done						\
          | less -S --no-init +G'
 
-# prepare favorite ls options if available in this system
-alias ls="\ls $(args=
-                for i in			\
-                    -N				\
-                    --show-control-chars	\
-                    --color=auto		\
-                    ; do
-                    eval \\ls $args $i -ld / > /dev/null 2>&1 && args="$args $i"
-                done
-                eval echo $args)"
-alias ll='ls -lgo'
+alias ls='() {
+    : replace -ll with -lgo
+    local i done=0
+    for i in "$@"; do
+        if [ $done = 0 ]; then
+            case "$i" in
+            -ll*)
+                i="-lgo${i#-ll}"
+                ;;
+            -*)
+                ;;
+            *)
+                done=1
+                ;;
+            esac
+        fi
+
+        shift
+        set -- "$@" "$i"
+    done
+
+    : prepend favorite options if available
+    args=
+    for i in			\
+        -N			\
+        --show-control-chars	\
+        --color=auto		\
+        ; do
+        \ls $(echo $args) $i -ld / > /dev/null 2>&1 && args="$args $i"
+    done
+
+    \ls $(echo $args) "$@"
+}'
+
+alias ll='ls -ll'
 alias sl='ls'
 alias vi='vim'
 alias view='vim -R'
