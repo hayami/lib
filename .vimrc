@@ -36,16 +36,16 @@ nmap <ESC>w :set wrap!<CR>
 
 
 "
-" Smart Case Search
+" Disable Case-Insensitive Search and Smart Case Search
+"     * You can pull the word under the cursor into a command or search
+"       line using Ctrl-R, Ctrl-W (or Ctrl-R, Ctrl-A).
+"     * You can use the \c anywhere in the pattern for case-insensitive
+"       search. For example: /pattern\c
+"     * Use \C for case-sensitive matching.
 "
-set ignorecase
-"set noignorecase
-set smartcase
-" see https://vi.stackexchange.com/questions/4054/case-sensitive-with-ignorecase-on
-nnoremap  <silent>  * :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=1<CR>n
-nnoremap  <silent>  # :let @/='\C\<' . expand('<cword>') . '\>'<CR>:let v:searchforward=0<CR>n
-"nnoremap <silent> g* :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=1<CR>n
-"nnoremap <silent> g# :let @/='\C'   . expand('<cword>')       <CR>:let v:searchforward=0<CR>n
+set noignorecase
+"set ignorecase
+"set smartcase
 
 
 "
