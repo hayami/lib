@@ -110,7 +110,7 @@ bin-install:
 	$(MAKE) bin-update
 
 bin-update:
-	[ ! -d template.bin ] || install -m 0755 template.bin/* $(HOME)/bin/
+	[ ! -d tpl.bin      ] || install -m 0755 tpl.bin/* $(HOME)/bin/
 	[ ! -d "$(PRIVATE)" ] || $(MAKE) -C "$(PRIVATE)" $@
 
 sys-install:
@@ -124,9 +124,9 @@ sys-install:
 
 sys-update:
 	[ -n "$(PRIVATE)" ]
-	install -m 0644 template.sys/usrlocal/Makefile $(HOME)/sys/$(USRLOCAL)/
-	install -m 0644 template.sys/backup/Makefile $(HOME)/sys/backup/
-	install -m 0755 template.sys/backup/*.sh $(HOME)/sys/backup/
+	install -m 0644 tpl.sys/usrlocal/Makefile $(HOME)/sys/$(USRLOCAL)/
+	install -m 0644 tpl.sys/backup/Makefile $(HOME)/sys/backup/
+	install -m 0755 tpl.sys/backup/*.sh $(HOME)/sys/backup/
 
 PRIVATE_DIRS := .ssh .gnupg
 
