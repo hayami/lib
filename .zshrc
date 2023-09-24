@@ -66,15 +66,62 @@ psg() {
 }
 
 unsetenvall () {
+    local v
     PATH=/usr/bin:/bin; export PATH
     for v in $(printenv | while read vv; do echo ${vv%%=*}; done); do
         case "$v" in
-            HOME|HOSTTYPE|LOGNAME|OSTYPE|PATH|PWD|TERM|TMPDIR|TZ|USER|_) ;;
+            HOME|PATH|PWD|TERM|TMPDIR|TZ|USER) ;;
             *) unset $v;;
         esac
     done
-    unset v
     printenv
+}
+
+lsfunc() {
+    # replace -ll with -lgo
+    local i done=0
+    for i in "$@"; do
+        if [ $done = 0 ]; then
+            case "$i" in
+            -ll*)
+                i="-lgo${i#-ll}"
+                ;;
+            -*)
+                ;;
+            *)
+                done=1
+                ;;
+            esac
+        fi
+
+        shift
+        set -- "$@" "$i"
+    done
+
+    # cache the favorit options if available
+    local args sp
+    if [ "${lsfunc_cached_favorite_options+set}" != "set" ]; then
+        args=''
+        for i in			\
+            -N				\
+            --show-control-chars	\
+            --color=auto		\
+            ; do
+            if \ls $(echo $args) $i -ld / > /dev/null 2>&1; then
+                sp=${args:+" "}
+                args="${args}${sp}${i}"
+            fi
+        done
+        lsfunc_cached_favorite_options="$args"
+    fi
+
+    \ls $(echo $lsfunc_cached_favorite_options) "$@"
+}
+
+h() {
+    history -t %T 0 | while read n t c; do
+        printf "%s %4d %s\n" "$t" "$n" "$c"
+    done | less -S --no-init +G
 }
 
 grep-color () {
@@ -142,46 +189,7 @@ grep-color () {
 ##  Aliases
 ##
 alias d='dirs -v'
-alias h='history -t %T 0				\
-         | while read n t c; do				\
-             printf "%s %4d %s\n" "$t" "$n" "$c";	\
-           done						\
-         | less -S --no-init +G'
-
-alias ls='() {
-    : replace -ll with -lgo
-    local i done=0
-    for i in "$@"; do
-        if [ $done = 0 ]; then
-            case "$i" in
-            -ll*)
-                i="-lgo${i#-ll}"
-                ;;
-            -*)
-                ;;
-            *)
-                done=1
-                ;;
-            esac
-        fi
-
-        shift
-        set -- "$@" "$i"
-    done
-
-    : prepend favorite options if available
-    args=
-    for i in			\
-        -N			\
-        --show-control-chars	\
-        --color=auto		\
-        ; do
-        \ls $(echo $args) $i -ld / > /dev/null 2>&1 && args="$args $i"
-    done
-
-    \ls $(echo $args) "$@"
-}'
-
+alias ls='lsfunc'
 alias ll='ls -ll'
 alias sl='ls'
 alias vi='vim'
@@ -189,13 +197,11 @@ alias view='vim -R'
 alias cu='cu --parity=none --nostop'  # --line /dev/ttyUSB0 --speed 115200 dir
 #alias lpr='lpr -h'
 
-
 ##
 ##  Enabling Completion
 ##
 autoload -U compinit
 compinit
-
 
 ##
 ##  Search path for the cd command
