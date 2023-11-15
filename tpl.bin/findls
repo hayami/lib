@@ -4,6 +4,12 @@ umask 022
 LANG=C
 export LANG
 
+if which gfind > /dev/null 2>&1; then
+    gfind=gfind
+else
+    gfind=find
+fi
+
 nomd5=0
 notime=0
 noowner=0
@@ -45,7 +51,7 @@ while [ $# -gt 0 ]; do
 done
 [ $# -gt 0 ] || set -- .
 
-find "$@" \
+$gfind "$@" \
 | sort -u \
 | while read file; do
     ls -ld --time-style=full-iso "$file"
