@@ -17,6 +17,7 @@ set sidescroll=4
 set listchars+=precedes:<,extends:>
 set nobomb
 syntax on
+colorscheme default
 
 
 "
