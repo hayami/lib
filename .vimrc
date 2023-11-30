@@ -59,6 +59,7 @@ nnoremap <c-k> :exe 'r!' . getline('.')<cr>
 " Color Column
 "
 set colorcolumn=81
+highlight colorcolumn ctermbg=8
 nmap <ESC>8 :call ToggleColorColumn()<CR>
 
 let s:useColorColumn = 1
