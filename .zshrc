@@ -84,7 +84,7 @@ lsfunc() {
         if [ $done = 0 ]; then
             case "$i" in
             -ll*)
-                i="-lgo${i#-ll}"
+                i="-lgod${i#-ll}"
                 ;;
             -*)
                 ;;
