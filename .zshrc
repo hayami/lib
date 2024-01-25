@@ -78,25 +78,31 @@ unsetenvall () {
 }
 
 lsfunc() {
-    # replace -ll with -lgo
-    local i done=0
+    # replace -ll with -lgo(d)
+    local i use_lgo=0 have_non_opt_args=0
     for i in "$@"; do
-        if [ $done = 0 ]; then
-            case "$i" in
-            -ll*)
-                i="-lgo${i#-ll}"
-                ;;
-            -*)
-                ;;
-            *)
-                done=1
-                ;;
-            esac
-        fi
+        case "$i" in
+        -ll*)
+            i="-l${i#-ll}"
+            use_lgo=1
+            ;;
+        -*)
+            ;;
+        *)
+            have_non_opt_args=1
+            ;;
+        esac
 
         shift
         set -- "$@" "$i"
     done
+    if [ "$use_lgo" = 1 ]; then
+        if [ "$have_non_opt_args" = 0 ]; then
+            set -- -lgo "$@"
+        else
+            set -- -lgod "$@"
+        fi
+    fi
 
     # cache the favorit options if available
     local args sp
@@ -114,6 +120,7 @@ lsfunc() {
         done
         lsfunc_cached_favorite_options="$args"
     fi
+    echo ls $(echo $lsfunc_cached_favorite_options) "$@" > /tmp/ls
 
     \ls $(echo $lsfunc_cached_favorite_options) "$@"
 }
