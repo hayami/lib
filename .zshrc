@@ -120,8 +120,8 @@ lsfunc() {
         done
         lsfunc_cached_favorite_options="$args"
     fi
-    echo ls $(echo $lsfunc_cached_favorite_options) "$@" > /tmp/ls
 
+    #echo ls $(echo $lsfunc_cached_favorite_options) "$@" > /tmp/ls.args
     \ls $(echo $lsfunc_cached_favorite_options) "$@"
 }
 
