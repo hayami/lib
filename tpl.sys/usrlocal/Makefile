@@ -92,7 +92,8 @@ rkiv-pkg: tmpdir
 remove-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
 	sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $(PKG) | tail -n +2 \
-	| sed -e 's/ -> .*//' | sort -ru | while read f; do \
+	| sed -e 's/ -> .*//' -e 's|^[$$]HOME/|'"$$HOME"'/|' | sort -ru \
+	| while read f; do			\
 	    if [ -L "$$f" ]; then		\
 		echo "rm	\"$$f\"";	\
 	    elif [ -d "$$f" ]; then		\
