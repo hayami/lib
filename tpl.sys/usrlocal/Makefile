@@ -93,13 +93,13 @@ remove-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
 	sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $(PKG) | tail -n +2 \
 	| sed -e 's/ -> .*//' | sort -ru | while read f; do \
-	    if [ -L "$$f" ]; then	\
-		echo "rm	'$$f'";	\
-	    elif [ -d "$$f" ]; then	\
-		echo "rmdir	'$$f'";	\
-	    else			\
-		echo "rm	'$$f'";	\
-	    fi;				\
+	    if [ -L "$$f" ]; then		\
+		echo "rm	\"$$f\"";	\
+	    elif [ -d "$$f" ]; then		\
+		echo "rmdir	\"$$f\"";	\
+	    else				\
+		echo "rm	\"$$f\"";	\
+	    fi;					\
 	done > $(TMPDIR)/$(PKG)-remove.sh
 	@echo
 	@echo "Run /bin/sh -xe $(TMPDIR)/$(PKG)-remove.sh to remove \"$(PKG)\"."
