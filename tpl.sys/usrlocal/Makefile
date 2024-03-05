@@ -8,7 +8,7 @@ RKIVDIR	= /mnt/backup/tmp
 filecheck check: tmpdir filelist
 	for f in $$(find * -maxdepth 0 -type f -print); do \
 	    sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $$f | tail -n +2; \
-	done | expand | sed -e 's/ -> .*//' | sort > $(TMPDIR)/ulist
+	done | sed -e 's/ -> .*//' | sort > $(TMPDIR)/ulist
 	uniq $(TMPDIR)/ulist > $(TMPDIR)/clist
 	uniq -d $(TMPDIR)/ulist > $(TMPDIR)/dlist
 	comm     $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm
@@ -72,7 +72,7 @@ rkiv-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
 	rm -f $(TMPDIR)/$(PKG)-*
 	sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $(PKG) | tail -n +2 \
-	| expand | sed -e 's/ .*$$//' -e 's|^[$$]HOME/|'"$$HOME"'/|' \
+	| sed -e 's/ -> .*//' -e 's|^[$$]HOME/|'"$$HOME"'/|' \
 	| sort -u | tee $(TMPDIR)/$(PKG)-list \
 	| while read f; do [ -L "$$f" -o ! -d "$$f" ] || echo "//$$f"; done \
 	>  $(TMPDIR)/$(PKG)-dirs2
@@ -92,13 +92,13 @@ rkiv-pkg: tmpdir
 remove-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
 	sed -n -e '/^-- INSTALLED FILES --$$/,$$p' $(PKG) | tail -n +2 \
-	| expand | sed -e 's/ .*$$//' | sort -ru | while read f; do \
+	| sed -e 's/ -> .*//' | sort -ru | while read f; do \
 	    if [ -L "$$f" ]; then	\
-		echo "rm	$$f";	\
+		echo "rm	'$$f'";	\
 	    elif [ -d "$$f" ]; then	\
-		echo "rmdir	$$f";	\
+		echo "rmdir	'$$f'";	\
 	    else			\
-		echo "rm	$$f";	\
+		echo "rm	'$$f'";	\
 	    fi;				\
 	done > $(TMPDIR)/$(PKG)-remove.sh
 	@echo
