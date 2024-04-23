@@ -1,0 +1,31 @@
+#!/bin/sh
+exec > /run/motd.dynamic.new
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LANG=C
+export PATH LANG
+
+#cat; exit 0
+
+grep -E -v								\
+    -e "^[[:blank:]]*$"							\
+    -e "^ *[*] (Documentation|Management|Support):"			\
+    -e "^Expanded Security Maintenance for Applications is not enabled"	\
+    -e "\<ESM\>"							\
+| sed									\
+    -e "s/^ *\(System information as of\)/\1/"				\
+    -e "/^ *[*] Intro.* MicroK8s/				{ N;	\
+                /Kubernetes/					{ N;	\
+                /microk8s.io/					d }}"	\
+    -e "/^ *[*] Super-optimized for/				{ N;	\
+                /MicroK8s/					{ N;	\
+                /microk8s/					d }}"	\
+    -e "/^ *[*] .* Kubernetes/					{ N;	\
+                / secure K8s/					{ N;	\
+                /secure-kubernetes/				d }}"	\
+    -e "/^ *[*] Introducing Expanded Security Maintenance/	{ N;	\
+                /Receive updates .* software packages/		{ N;	\
+                /Ubuntu Pro subscription/			{ N;	\
+                /ubuntu[.]com[/]pro/				d }}}"
+
+exit 0
