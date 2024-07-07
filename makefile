@@ -2,14 +2,14 @@
 
 # Initial setup steps in vanilla home directory follows:
 # 	cd ~
-# 	git clone https://github.com/hayami/dot.git
-# 	cd dot
+# 	git clone https://github.com/hayami/lib.git
+# 	cd lib
 # 	make install
-# 	(umask 077 && mkdir -p ../private/dot)
-# 	(umask 077 && cp -i makefile-private-template ../private/dot/makefile)
+# 	(umask 077 && mkdir -p ../private/lib)
+# 	(umask 077 && cp -i makefile-private-template ../private/lib/makefile)
 # 	make relink
 
-PRIVATE	:= $(HOME)/private/dot
+PRIVATE	:= $(HOME)/private/lib
 USRLOCAL:= usrlocal
 EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
 LINKS	:= ${shell for i in .* *; do case $$i in \
@@ -45,12 +45,12 @@ usage help:
 	@printf "\n"
 	@printf "Initial setup steps in vanilla home directory follows:\n"
 	@printf "	cd ~\n"
-	@printf "	git clone https://github.com/hayami/dot.git\n"
-	@printf "	cd dot\n"
+	@printf "	git clone https://github.com/hayami/lib.git\n"
+	@printf "	cd lib\n"
 	@printf "	make install\n"
-	@printf "	(umask 077 && mkdir -p ../private/dot)\n"
+	@printf "	(umask 077 && mkdir -p ../private/lib)\n"
 	@printf "	(umask 077 "
-	@printf "&& cp -i makefile-private-template ../private/dot/makefile)\n"
+	@printf "&& cp -i makefile-private-template ../private/lib/makefile)\n"
 	@printf "	make relink\n"
 
 # ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
