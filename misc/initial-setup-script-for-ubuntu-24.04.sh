@@ -329,24 +329,29 @@ fi
 (
     x=$(eval echo "~$hayami")
     echo "*** directory permission on $x"
-    (echo -n "(before) " && ls -ld $x)
+    b="(before) $(ls -ld $x)"
     chmod g-ws,o-rwxt $x
-    (echo -n "(after)  " && ls -ld $x)
+    a="(after)  $(ls -ld $x)"
+    echo "$a\n$b"
 ) 2>&1 | tee -a $log
 
 
 ###
-### swap guest and hayami
+### s/guest/hayami/ (but the 'users' group remains unchanged)
 ###
 (
-    echo "*** swap $guest and $hayami"
+    echo "*** s/$guest/$hayami/ (but the 'users' group remains unchanged)"
     x=/etc/group
     if grep -E -q -e "[:,]$guest"'$' $x; then
+        users=$(grep -E -e '^users:' $x)
         sed -i -e "s/\([:,]\)$guest/\1$hayami/g" $x
+        sed -i -e "s/^users:.*/$users/" $x
     fi
     x=/etc/gshadow
     if grep -E -q -e "[:,]$guest"'$' $x; then
+        users=$(grep -E -e '^users:' $x)
         sed -i -e "s/\([:,]\)$guest/\1$hayami/g" $x
+        sed -i -e "s/^users:.*/$users/" $x
     fi
 ) 2>&1 | tee -a $log
 
