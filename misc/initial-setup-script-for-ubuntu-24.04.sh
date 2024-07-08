@@ -118,14 +118,14 @@ fi
 ###
 ### set debconf/priority to medium
 ###
-(
-    #echo "*** debconf/priority"
-    ## 'low' を設定すると、全ての項目について選択肢を提示するようなの
-    ## で、その一つ上の 'medium' を設定してみる。デフォルト値は high。
-    ## 設定可能な値: critical, high, medium, low
-    #echo "debconf debconf/priority select medium" | debconf-set-selections
-    #dpkg-reconfigure --frontend noninteractive debconf
-) 2>&1 | tee -a $log
+#(
+#    echo "*** debconf/priority"
+#    # 'low' を設定すると、全ての項目について選択肢を提示するようなの
+#    # で、その一つ上の 'medium' を設定してみる。デフォルト値は high。
+#    # 設定可能な値: critical, high, medium, low
+#    echo "debconf debconf/priority select medium" | debconf-set-selections
+#    dpkg-reconfigure --frontend noninteractive debconf
+#) 2>&1 | tee -a $log
 
 
 ###
@@ -400,10 +400,10 @@ fi
 ###
 ### disable login for guest
 ###
-(
-    #echo "*** disable login for $guest"
-    #usermod -p '*' $guest
-) 2>&1 | tee -a $log
+#(
+#    echo "*** disable login for $guest"
+#    usermod -p '*' $guest
+#) 2>&1 | tee -a $log
 
 
 ###
