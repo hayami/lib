@@ -7,13 +7,12 @@ export PATH LANG
 
 #cat; exit 0
 
-grep -E -v								\
-    -e "^[[:blank:]]*$"							\
-    -e "^ *[*] (Documentation|Management|Support):"			\
-    -e "^Expanded Security Maintenance for Applications is not enabled"	\
-    -e "\<ESM\>"							\
-| sed									\
-    -e "s/^ *\(System information as of\)/\1/"				\
+sed -E									\
+    -e "/^[[:blank:]]*$/d"						\
+    -e "/^ *[*] (Documentation|Management|Support):/d"			\
+    -e "/^Expanded Security Maintenance for Applications is not/d"	\
+    -e "/\<ESM\>/d"							\
+    -e "s/^ *(System information as of)/\1/"				\
     -e "/^ *[*] Intro.* MicroK8s/				{ N;	\
                 /Kubernetes/					{ N;	\
                 /microk8s.io/					d }}"	\
