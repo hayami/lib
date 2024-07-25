@@ -141,8 +141,8 @@ backup_file() {
         fi
 
         if [ ! -e "new/${bang}${ext}" ]; then
-            find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile" \
-            > "new/${bang}${ext}"
+            find "$etcfile" -printf \
+            "%m %u:%g %s %TY-%Tm-%Td %TT $etcfile" > "new/${bang}${ext}"
             if [ -h "$etcfile" ]; then
                 find "$etcfile" -printf " -> %l\n" >> "new/${bang}${ext}"
             else
@@ -220,8 +220,14 @@ backup_diff_check() {
             read_ans "NOTICE: Do you want to update new/$bang [y/N]? "
 
             if [ $? -eq 0 ]; then
-                find "$etcfile" -printf "%m %u:%g %s %TY-%Tm-%Td %TT %p\n" \
-                > "new/${bang}${ext}" && touch -h -r "$etcfile" "new/${bang}${ext}"
+                find "$etcfile" -printf \
+                "%m %u:%g %s %TY-%Tm-%Td %TT %p" > "new/${bang}${ext}"
+                if [ -h "$etcfile" ]; then
+                    find "$etcfile" -printf " -> %l\n" >> "new/${bang}${ext}"
+                else
+                    echo >> "new/${bang}${ext}"
+                fi
+                touch -h -r "$etcfile" "new/${bang}${ext}"
                 if [ $? -eq 0 ]; then
                     echo "INFO: backup file updated: $etcfile"
                     echo -n "INFO: "; ls -ld "new/${bang}${ext}"
