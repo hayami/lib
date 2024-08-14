@@ -340,20 +340,6 @@ fi
 ### add $hayami to all supplementary groups where $guest is registered
 ###
 (
-    #echo "*** s/$guest/$hayami/ (but the 'users' group remains unchanged)"
-    #x=/etc/group
-    #if grep -E -q -e "[:,]$guest"'$' $x; then
-    #    users=$(grep -E -e '^users:' $x)
-    #    sed -i -e "s/\([:,]\)$guest/\1$hayami/g" $x
-    #    sed -i -e "s/^users:.*/$users/" $x
-    #fi
-    #x=/etc/gshadow
-    #if grep -E -q -e "[:,]$guest"'$' $x; then
-    #    users=$(grep -E -e '^users:' $x)
-    #    sed -i -e "s/\([:,]\)$guest/\1$hayami/g" $x
-    #    sed -i -e "s/^users:.*/$users/" $x
-    #fi
-
     echo "*** add $hayami to all suppl. groups where $guest is registered"
     u=$guest
     g=$(id -gn $u)
@@ -368,23 +354,6 @@ fi
 
     usermod -G $suppG $hayami
     usermod -G 'users,_ssh' $guest
-
-    ###
-    ### add _ssh group to guest and hayami
-    ###
-    #(
-    #    echo "*** adduser $guest _ssh"
-    #    x=/etc/group
-    #    if ! grep -E -q -e "^_ssh:.*$guest" $x; then
-    #        adduser $guest _ssh
-    #    fi
-    #
-    #    echo "*** adduser $hayami _ssh"
-    #    x=/etc/group
-    #    if ! grep -E -q -e "^_ssh:.*$hayami" $x; then
-    #        adduser $hayami _ssh
-    #    fi
-    #) 2>&1 | tee -a $log
 
 ) 2>&1 | tee -a $log
 
