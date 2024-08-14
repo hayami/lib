@@ -11,15 +11,15 @@
 #   (2) 次に hayami でログイン
 #       | これを選択 >>> (0)  Exit, creating the file ~/.zshrc ...
 #       hayami% cd /var/tmp
-#       hayami% sudo chown hayami: initial-setup-script-*.log
-#       hayami% mv -i initial-setup-script-*.log ~/
+#       hayami% sudo chown hayami: initial-setup-script-*.*
+#       hayami% mv -i initial-setup-script-*.* ~/
 #       hayami% cd
 #       hayami% rm .zshrc .profile .bash*
 #       hayami% git clone https://github.com/hayami/memo.git
-#       hayami% git clone https://github.com/hayami/dot.git
-#       hayami% cd dot
+#       hayami% git clone https://github.com/hayami/lib.git
+#       hayami% cd lib
 #       hayami% make install
-#       hayami% cp -pi makefile-private-template ../private/dot/makefile
+#       hayami% cp -pi makefile-private-template ../private/lib/makefile
 #       hayami% make relink
 #       hayami% cd ~/sys/backup
 #       hayami% make answer=yes backup
