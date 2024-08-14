@@ -11,7 +11,7 @@
 
 PRIVATE	:= $(HOME)/private/lib
 USRLOCAL:= usrlocal
-EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*
+EXCLUDE	:= .|..|.git|.gitignore|bin|sys|makefile*|misc|tpl.*
 LINKS	:= ${shell for i in .* *; do case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
 DOTDIR	:= $(shell pwd | sed -e "s|^$$HOME/||")
