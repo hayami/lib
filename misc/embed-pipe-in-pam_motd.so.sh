@@ -56,7 +56,7 @@ esac
 
 
 # Set sudo if privileged or not
-sudo=
+sudo=env
 [ $(id -u) -eq 0 ] || sudo=sudo
 
 
