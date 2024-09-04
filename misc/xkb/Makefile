@@ -20,6 +20,7 @@ _install:
 	sudo find /$(xkbpath) -name '*.orig' -delete
 	sudo find /$(xkbpath) -name '*.rej' -delete
 	for f in patches/*--$(current).patch; do			\
+	    [ -r "$$f" ] || continue;					\
 	    echo "applying: $$f";					\
 	    sudo patch -d /$(xkbpath) $(R) -p6 < $$f || ! break;	\
 	    # Using "! break" works in many shells      ^^^^^^^		\
@@ -47,6 +48,7 @@ $(prefix).edit/$(testfile): $(prefix).orig/$(testfile)
 	rm -rf $(prefix).edit
 	cp -a $(prefix).orig $(prefix).edit
 	for f in patches/*--$(current).patch; do echo "applying: $$f";	\
+	    [ -r "$$f" ] || continue;					\
 	    patch -d $(prefix).edit/$(xkbpath) -p6 < $$f || ! break;	\
 	done
 
