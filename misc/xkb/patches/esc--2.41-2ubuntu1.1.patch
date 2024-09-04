@@ -1,0 +1,51 @@
+diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev	2024-07-29 18:29:05.134595409 +0900
+@@ -926,6 +926,7 @@
+   grp:ralt_rshift_toggle	= +group(ralt_rshift_toggle)
+   grp:alt_shift_toggle		= +group(alt_shift_toggle)
+   grp:alt_shift_toggle_bidir	= +group(alt_shift_toggle_bidir)
++  esc:swapgrave			= +esc(swapgrave)
+ 
+ ! option		=	compat
+   grp_led:num		=	+lednum(group_lock)
+diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst	2024-07-29 21:29:00.978140132 +0900
+@@ -1011,3 +1011,4 @@
+   terminate:ctrl_alt_bksp Ctrl+Alt+Backspace
+   custom               Miscellaneous options
+   custom:types         Use user-defined custom XKB types
++  esc:swapgrave        Swap Esc and Grave/Tilde
+diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml	2024-07-29 21:26:42.661785112 +0900
+@@ -8298,6 +8298,19 @@
+         </configItem>
+       </option>
+     </group>
++    <group allowMultipleSelection="true">
++      <!-- Tweaking the position of the "Esc" key -->
++      <configItem>
++        <name>esc</name>
++        <description>Esc position</description>
++      </configItem>
++      <option>
++        <configItem>
++          <name>esc:swapgrave</name>
++          <description>Swap Esc and Grave/Tilde</description>
++        </configItem>
++      </option>
++    </group>
+   </optionList>
+ 
+ </xkbConfigRegistry>
+diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/esc dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/esc
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/esc	1970-01-01 09:00:00.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/esc	2024-07-29 21:45:33.481245018 +0900
+@@ -0,0 +1,5 @@
++partial alphanumeric_keys
++xkb_symbols "swapgrave" {
++    key <ESC>  { [ grave, asciitilde ] };
++    key <TLDE> { [ Escape ], type[group1] = "ONE_LEVEL" };
++};
