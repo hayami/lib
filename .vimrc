@@ -52,7 +52,13 @@ set noignorecase
 "
 " Execute a command under the cursor line
 "
-nnoremap <c-k> :exe 'r!' . getline('.')<cr>
+"nnoremap <c-k> :exe 'r!' . getline('.')<cr>
+
+
+"
+" Execute a command line from the cursor position to the end of the line
+"
+nnoremap <c-k> :exe 'r!' . getline('.')[col('.')-1:-1]<cr>
 
 
 "
