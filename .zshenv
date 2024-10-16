@@ -43,13 +43,28 @@ fi
 umask 022
 
 ##
+##  Homebrew
+##
+if [ -z "$HOMEBREW_PREFIX" ]; then
+    if [ -d /opt/homebrew/Cellar ]; then
+        export HOMEBREW_PREFIX=/opt/homebrew
+        export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+        export HOMEBREW_REPOSITORY=/opt/homebrew
+    fi
+fi
+
+##
 ##  PATH
 ##
 PATH=/usr/bin:/bin; export PATH
 p=
-for dir in \
-    $(find -L "$HOME/bin" -maxdepth 1 -type d -print 2> /dev/null | sort)   \
-    $HOME/sys/local/bin $HOME/sys/local/sbin /usr/local/bin /usr/local/sbin \
+for dir in					\
+    $(find -s -L "$HOME/bin" -maxdepth 1	\
+           -type d -print 2> /dev/null)		\
+    $HOME/sys/local/bin $HOME/sys/local/sbin	\
+    ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}	\
+    ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}	\
+    /usr/local/bin /usr/local/sbin		\
     /snap/bin /usr/bin /usr/sbin /bin /sbin; do
     [ -d "$dir" ] && p="${p}${p:+:}${dir}"
 done
