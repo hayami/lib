@@ -59,8 +59,8 @@ fi
 PATH=/usr/bin:/bin; export PATH
 p=
 for dir in					\
-    $(find -s -L "$HOME/bin" -maxdepth 1	\
-           -type d -print 2> /dev/null)		\
+    $(find -L "$HOME/bin" -maxdepth 1		\
+           -type d -print 2> /dev/null | sort) 	\
     $HOME/sys/local/bin $HOME/sys/local/sbin	\
     ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}	\
     ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}	\
