@@ -94,7 +94,7 @@ unset v
 PAGER="/usr/bin/env SHELL=/bin/sh less"
 LESS="-c -i -M -# 4 -R"
 export PAGER LESS
-for i in lesspipe lesspile.sh; do
+for i in lesspipe lesspipe.sh; do
     if which $i > /dev/null 2>&1; then
         LESSOPEN="| $i %s"
         export LESSOPEN
