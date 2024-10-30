@@ -70,6 +70,7 @@ for dir in					\
 done
 PATH="$p"; export PATH
 unset p dir
+[[ -o login ]] && _path="$PATH"	# see ~/.zprofile for this _path variable
 
 ##
 ##  Language/Locale

@@ -1,26 +1,17 @@
 ##
-##  Set PATH against the setting in /usr/libexec/path_helper in /etc/zprofile
+##  Rebuild PATH settings by /usr/libexec/path_helper in /etc/zprofile on macOS
 ##
-if [ -x /usr/libexec/path_helper ]; then
-    p=
-    for dir in						\
-        $(find -L "$HOME/bin" -maxdepth 1		\
-               -type d -print 2> /dev/null | sort) 	\
-        $HOME/sys/local/bin $HOME/sys/local/sbin	\
-        ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}	\
-        ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}	\
-        /usr/local/bin /usr/local/sbin			\
-        /snap/bin /usr/bin /usr/sbin /bin /sbin; do
-        [ -d "$dir" ] && p="${p}${p:+:}${dir}"
-    done
-
-    extra=$(echo "$PATH" | tr ':' '\n' | while read i; do
-        match=$(echo "$p" |  tr ':' '\n' | while read j; do
-            [ "$i" != "$j" ] || echo YES
+if [ "${_path+set}" = "set" ]; then
+    if  [ -n "$_path" ] && [ "$_path" != "$PATH" ]; then
+        extra=$(IFS=':'; for i in $(printf %s "$PATH"); do
+            match=$(IFS=':'; for j in $(printf %s "$_path"); do
+                [ "$i" != "$j" ] || echo YES
+            done)
+            [ -n "$match" ] || printf %s ":$i"
         done)
-        [ -n "$match" ] || echo -n ":$i"
-    done)
 
-    PATH="${p}${extra}"
-    unset p dir extra
+        PATH="${_path}${extra}"
+        unset extra
+    fi
+    unset _path
 fi
