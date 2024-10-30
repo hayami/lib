@@ -22,7 +22,7 @@ ifeq ($(NODE),www)
 USRLOCAL:= syslocal
 ifneq ($(DOTDIR),$(PRIVDOT))
 LINKS	:= ${shell for i in \
-	   .less* .termcap .tmux.conf .vimrc .zsh* \
+	   .less* .termcap .tmux.conf .vimrc .zsh* .zprofile \
 	   ; do [ -e "$$i" ] || continue; case $$i in \
 	   $(EXCLUDE));; *) echo $$i;; esac; done}
 endif
