@@ -1,6 +1,23 @@
-diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/escape	1970-01-01 09:00:00.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/symbols/escape	2024-11-13 17:02:02.328461617 +0900
+@@ -0,0 +1,5 @@
++partial alphanumeric_keys
++xkb_symbols "swapgrave" {
++    key <ESC>  { [ grave, asciitilde ] };
++    key <TLDE> { [ Escape ], type[group1] = "ONE_LEVEL" };
++};
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/base	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/base	2024-11-13 17:03:16.360710274 +0900
+@@ -1037,6 +1037,7 @@
+   grp:ralt_rshift_toggle	= +group(ralt_rshift_toggle)
+   grp:alt_shift_toggle		= +group(alt_shift_toggle)
+   grp:alt_shift_toggle_bidir	= +group(alt_shift_toggle_bidir)
++  escape:swapgrave		= +escape(swapgrave)
+ 
+ ! option		=	compat
+   grp_led:num		=	+lednum(group_lock)
 --- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev	2024-07-05 18:01:06.000000000 +0900
-+++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev	2024-07-29 18:29:05.134595409 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/evdev	2024-11-13 17:02:02.326461665 +0900
 @@ -926,6 +926,7 @@
    grp:ralt_rshift_toggle	= +group(ralt_rshift_toggle)
    grp:alt_shift_toggle		= +group(alt_shift_toggle)
@@ -9,17 +26,22 @@ diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev dpkg/
  
  ! option		=	compat
    grp_led:num		=	+lednum(group_lock)
-diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst
---- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst	2024-07-05 18:01:06.000000000 +0900
-+++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst	2024-07-29 21:29:00.978140132 +0900
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/base.lst	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/base.lst	2024-11-13 17:02:23.241963856 +0900
 @@ -1011,3 +1011,4 @@
    terminate:ctrl_alt_bksp Ctrl+Alt+Backspace
    custom               Miscellaneous options
    custom:types         Use user-defined custom XKB types
 +  escape:swapgrave     Swap Escape and Grave/Tilde
-diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml
---- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml	2024-07-05 18:01:06.000000000 +0900
-+++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml	2024-07-29 21:26:42.661785112 +0900
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.lst	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/evdev.lst	2024-11-13 17:02:02.327461641 +0900
+@@ -1011,3 +1011,4 @@
+   terminate:ctrl_alt_bksp Ctrl+Alt+Backspace
+   custom               Miscellaneous options
+   custom:types         Use user-defined custom XKB types
++  escape:swapgrave     Swap Escape and Grave/Tilde
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/base.xml	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/base.xml	2024-11-13 17:03:57.733743746 +0900
 @@ -8298,6 +8298,19 @@
          </configItem>
        </option>
@@ -40,12 +62,25 @@ diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml d
    </optionList>
  
  </xkbConfigRegistry>
-diff -urN dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/escape dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/escape
---- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/escape	1970-01-01 09:00:00.000000000 +0900
-+++ dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/symbols/escape	2024-07-29 21:45:33.481245018 +0900
-@@ -0,0 +1,5 @@
-+partial alphanumeric_keys
-+xkb_symbols "swapgrave" {
-+    key <ESC>  { [ grave, asciitilde ] };
-+    key <TLDE> { [ Escape ], type[group1] = "ONE_LEVEL" };
-+};
+--- dpkg/xkb-data_2.41-2ubuntu1.1.orig/usr/share/X11/xkb/rules/evdev.xml	2024-07-05 18:01:06.000000000 +0900
++++ dpkg/xkb-data_2.41-2ubuntu1.1.edit/usr/share/X11/xkb/rules/evdev.xml	2024-11-13 17:02:02.328461617 +0900
+@@ -8298,6 +8298,19 @@
+         </configItem>
+       </option>
+     </group>
++    <group allowMultipleSelection="true">
++      <!-- Tweaking the position of the "Escape" key -->
++      <configItem>
++        <name>escape</name>
++        <description>Escape position</description>
++      </configItem>
++      <option>
++        <configItem>
++          <name>escape:swapgrave</name>
++          <description>Swap Escape and Grave/Tilde</description>
++        </configItem>
++      </option>
++    </group>
+   </optionList>
+ 
+ </xkbConfigRegistry>
