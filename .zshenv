@@ -46,11 +46,14 @@ umask 022
 ##  Homebrew
 ##
 if [ -z "$HOMEBREW_PREFIX" ]; then
-    if [ -d /opt/homebrew/Cellar ]; then
-        export HOMEBREW_PREFIX=/opt/homebrew
-        export HOMEBREW_CELLAR=/opt/homebrew/Cellar
-        export HOMEBREW_REPOSITORY=/opt/homebrew
-    fi
+    test_brew=/opt/homebrew/bin/brew
+    export HOMEBREW_PREFIX=$($brew --prefix         2> /dev/null || :)
+    export HOMEBREW_CELLAR=$($brew --cellar         2> /dev/null || :)
+    export HOMEBREW_REPOSITORY=$($brew --repository 2> /dev/null || :)
+    [ -n "$HOMEBREW_PREFIX"     ] || unset HOMEBREW_PREFIX
+    [ -n "$HOMEBREW_CELLAR"     ] || unset HOMEBREW_CELLAR
+    [ -n "$HOMEBREW_REPOSITORY" ] || unset HOMEBREW_REPOSITORY
+    unset test_brew
 fi
 
 ##
