@@ -1,5 +1,6 @@
 ##
-##  Rebuild PATH settings by /usr/libexec/path_helper in /etc/zprofile on macOS
+##  A fix for macOS: Rebuild unacceptable PATH that was previously
+##  overwritten by /usr/libexec/path_helper in /etc/zprofile
 ##
 if [ "${_path+set}" = "set" ]; then
     if  [ -n "$_path" ] && [ "$_path" != "$PATH" ]; then
