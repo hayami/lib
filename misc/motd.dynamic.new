@@ -25,6 +25,10 @@ sed -E									\
     -e "/^ *[*] Introducing Expanded Security Maintenance/	{ N;	\
                 /Receive updates .* software packages/		{ N;	\
                 /Ubuntu Pro subscription/			{ N;	\
-                /ubuntu[.]com[/]pro/				d }}}"
+                /ubuntu[.]com[/]pro/				d }}}"	\
+    -e "/^ *[*] Strictly confined Kubernetes .* MicroK8s/	{ N;	\
+                /secure K8s cluster deployment/			{ N;	\
+                //						{ N;	\
+                /ubuntu[.]com[/]engage[/]secure-kubernetes/	d }}}"
 
 exit 0
