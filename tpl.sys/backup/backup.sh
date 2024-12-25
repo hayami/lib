@@ -3,6 +3,11 @@ umask 022
 LANG=C
 export LANG
 
+# In bash, you can do the same thing with: export -n answer
+anstmp="$answer"
+unset answer
+answer="$anstmp"
+
 PATH=/usr/bin:/bin; export PATH
 for v in $(printenv | while read vv; do echo ${vv%%=*}; done); do
     case "$v" in
