@@ -24,7 +24,7 @@ cat_template() {
 
 
 # First, check the status of binary data substitution
-cd /lib/x86_64-linux-gnu/security
+cd /lib/*-linux-gnu/security
 
 if strings -a -f pam_motd.so \
     | grep -F -q 'update-motd.d > /run/motd.dynamic.new'; then
@@ -75,7 +75,7 @@ fi
 
 
 # Do binary data substitution here
-cd /lib/x86_64-linux-gnu/security
+cd /lib/*-linux-gnu/security
 $sudo rm -f pam_motd.so.tmp
 $sudo cp -a pam_motd.so pam_motd.so.tmp
 $sudo cp -a pam_motd.so pam_motd.so.orig
