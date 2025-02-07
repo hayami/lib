@@ -61,4 +61,4 @@ if [ $maxlen -gt 0 -a ${#last} -gt $maxlen ]; then
         fi
     done
 fi
-echo -n ']0;'"$last"''
+printf %s ']0;'"$last"''

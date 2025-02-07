@@ -14,7 +14,7 @@ err () {
 
 yesno () {
     while :; do
-        echo -n "$@ (yes/no) "
+        printf %s "$@ (yes/no) "
         read ans
         [ "$ans" = "y" -o "$ans" = "yes" ] && return 0
         [ "$ans" = "n" -o "$ans" = "no"  ] && return 1

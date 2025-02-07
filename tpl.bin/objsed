@@ -8,10 +8,10 @@ gnused() {
 
 hex() {
     # The od command derived from BSD does not have the -w option
-    echo -n "$1" | od -A n -v -t x1 \
+    printf %s "$1" | od -A n -v -t x1 \
     | while read line; do
         for i in $(echo $line); do
-            echo -n "\\x$i";
+            printf %s "\\x$i";
         done
     done
 }
@@ -46,7 +46,7 @@ if [ ${#orig} -ge ${#repl} ]; then
     c=$((${#orig} - ${#repl}))
     pad=$(while [ $c -gt 0 ]; do
             c=$(($c - 1))
-            echo -n "\x00"
+            printf %s "\x00"
         done)
 else
     usage

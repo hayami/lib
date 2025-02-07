@@ -20,7 +20,7 @@ usage() {
 }
 
 msg_run_agent() {
-    echo -n 'Use the following command to start ssh-agent service: ' 1>&2
+    printf %s 'Use the following command to start ssh-agent service: ' 1>&2
     echo 'eval `ssh-agent`' 1>&2
 }
 
