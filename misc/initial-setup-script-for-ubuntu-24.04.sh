@@ -399,6 +399,13 @@ fi
     x=/etc/locale.gen; [ -f $x.orig ] || mv $x $x.orig
     (
         echo -n 'locales'
+        echo -n ' locales/default_environment_locale'
+        echo -n ' select'
+        echo -n ' C.UTF-8'
+        echo
+    ) | debconf-set-selections
+    (
+        echo -n 'locales'
         echo -n ' locales/locales_to_be_generated'
         echo -n ' multiselect'
         echo -n ' en_US ISO-8859-1'
