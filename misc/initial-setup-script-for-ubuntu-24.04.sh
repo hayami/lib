@@ -428,7 +428,7 @@ fi
         echo -n ', ja_JP.UTF-8 UTF-8'
         echo
     ) | debconf-set-selections
-    rm -f /etc/locale.gen
+    rm -f $x
     dpkg-reconfigure --frontend noninteractive locales
     ls -l /etc/locale.gen.orig /etc/locale.gen
     diff -u /etc/locale.gen.orig /etc/locale.gen || :
