@@ -394,6 +394,9 @@ fi
 ### set system locale
 ###
 (
+    # localectl may update /etc/locale.gen
+    x=/etc/locale.gen; [ -f $x.orig ] || mv $x $x.orig
+
     x=/etc/default/locale; [ -f $x.orig ] || cp -p $x $x.orig
     localectl status
     update-locale LANG=C.UTF-8
