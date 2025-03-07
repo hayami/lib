@@ -45,7 +45,7 @@ set -e
 set -x
 umask 022
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
-export LANG=C
+export LANG=C.UTF-8
 
 
 ###
@@ -391,6 +391,18 @@ fi
 
 
 ###
+### set system locale
+###
+(
+    x=/etc/default/locale; [ -f $x.orig ] || cp -p $x $x.orig
+    localectl status
+    update-locale LANG=C.UTF-8
+    localectl status
+    localectl list-locales
+) 2>&1 | tee -a $log
+
+
+###
 ### set locales
 ###
 (
@@ -408,28 +420,17 @@ fi
         echo -n 'locales'
         echo -n ' locales/locales_to_be_generated'
         echo -n ' multiselect'
-        echo -n ' en_US ISO-8859-1'
+        echo -n ' C.UTF-8 UTF-8'
         echo -n ', en_US.UTF-8 UTF-8'
         echo -n ', ja_JP.UTF-8 UTF-8'
         echo
     ) | debconf-set-selections
+    rm -f /etc/locale.gen
     dpkg-reconfigure --frontend noninteractive locales
     ls -l /etc/locale.gen.orig /etc/locale.gen
     diff -u /etc/locale.gen.orig /etc/locale.gen || :
     debconf-show locales
     apt-get $opts install language-pack-ja
-) 2>&1 | tee -a $log
-
-
-###
-### set system locale
-###
-(
-    x=/etc/default/locale; [ -f $x.orig ] || cp -p $x $x.orig
-    localectl status
-    update-locale LANG=C.UTF-8
-    localectl status
-    localectl list-locales
 ) 2>&1 | tee -a $log
 
 
