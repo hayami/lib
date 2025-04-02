@@ -47,9 +47,9 @@ PROMPT='%n@%m%% '
 ##
 ##  History Size
 ##
-HISTSIZE=1000
-SAVEHIST=1000
-HISTFILE=~/.zhistory
+HISTSIZE=${HISTSIZE:-1000}
+SAVEHIST=${SAVEHIST:-1000}
+HISTFILE=${HISTFILE:-~/.zhistory}
 
 ##
 ##  Shell Functions
