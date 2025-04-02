@@ -60,6 +60,31 @@ HISTSIZE=${HISTSIZE:-1000}
 SAVEHIST=${SAVEHIST:-1000}
 HISTFILE=${HISTFILE:-~/.zhistory}
 
+case "$SHELL_SESSION_DIR" in
+*/.zsh_sessions)
+    old_dir="$SHELL_SESSION_DIR"
+    for var in $(set | sed -n -e 's/^\(SHELL_SESSION_.*\)=.*/\1/p'); do
+        val=$(eval echo '$'"$var")
+        case "$val" in
+        */.zsh_sessions|*/.zsh_sessions/*)
+            alt=$(echo "$val" | sed -e 's!/.zsh_sessions$!/.zsh-sessions!g' \
+                                    -e 's!/.zsh_sessions/!/.zsh-sessions/!g')
+            eval $(echo "$var"="'$alt'")
+            ;;
+        esac
+    done
+    new_dir="$SHELL_SESSION_DIR"
+    if [ -d "$old_dir" ] && [ -n "$new_dir" ] && [ "$old_dir" != "$new_dir" ]
+    then
+        if [ -e "$new_dir" ]; then
+            rm -rf "$new_dir"
+        fi
+        mv -f "$old_dir" "$new_dir"
+    fi
+    unset old_dir new_dir var val alt
+    ;;
+esac
+
 ##
 ##  Shell Functions
 ##
