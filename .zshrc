@@ -47,6 +47,15 @@ PROMPT='%n@%m%% '
 ##
 ##  History Size
 ##
+ ##
+case "$HISTFILE" in
+*/.zsh_history)
+    if [ -f "$HISTFILE" ]; then
+        [ -f ~/.zhistory ] || mv "$HISTFILE" ~/.zhistory
+        rm -f "$HISTFILE"
+    fi
+    ;;
+esac
 HISTSIZE=${HISTSIZE:-1000}
 SAVEHIST=${SAVEHIST:-1000}
 HISTFILE=${HISTFILE:-~/.zhistory}
