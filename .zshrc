@@ -47,43 +47,58 @@ PROMPT='%n@%m%% '
 ##
 ##  History Size
 ##
- ##
-case "$HISTFILE" in
-*/.zsh_history)
-    if [ -f "$HISTFILE" ]; then
-        [ -f ~/.zhistory ] || mv "$HISTFILE" ~/.zhistory
-        rm -f "$HISTFILE"
-    fi
-    ;;
-esac
 HISTSIZE=${HISTSIZE:-1000}
 SAVEHIST=${SAVEHIST:-1000}
 HISTFILE=${HISTFILE:-~/.zhistory}
 
-case "$SHELL_SESSION_DIR" in
-*/.zsh_sessions)
-    old_dir="$SHELL_SESSION_DIR"
-    for var in $(set | sed -n -e 's/^\(SHELL_SESSION_.*\)=.*/\1/p'); do
-        val=$(eval echo '$'"$var")
-        case "$val" in
-        */.zsh_sessions|*/.zsh_sessions/*)
-            alt=$(echo "$val" | sed -e 's!/.zsh_sessions$!/.zsh-sessions!g' \
-                                    -e 's!/.zsh_sessions/!/.zsh-sessions/!g')
-            eval $(echo "$var"="'$alt'")
+##
+##  The filename tampering in /etc/zshrc and /etc/zshrc_Apple_Terminal
+##  on macOS has caused file paths to include eveil characters.  Here,
+##  these deeds must be beaten down and purified.
+##
+hlist=
+slist=
+for vv in $(set); do
+    var="${vv%%=*}"
+    old="${vv#*=}"
+    case "$var" in
+    HISTFILE|SHELL_SESSION_*)
+        case "$old" in
+        */.zsh_history)
+            new="${old%.zsh_history}.zhistory"
+            eval $(echo "$var"="'$new'")
+            hlist="$hlist\n$old|$new"
+            ;;
+        */.zsh_sessions)
+            new="${old%.zsh_sessions}.zsh-sessions"
+            eval $(echo "$var"="'$new'")
+            slist="$slist\n$old|$new"
+            ;;
+        */.zsh_sessions/*)
+            new="${old%%/.zsh_sessions/*}/.zsh-sessions/${old#*/.zsh_sessions/}"
+            eval $(echo "$var"="'$new'")
             ;;
         esac
-    done
-    new_dir="$SHELL_SESSION_DIR"
-    if [ -d "$old_dir" ] && [ -n "$new_dir" ] && [ "$old_dir" != "$new_dir" ]
-    then
-        if [ -e "$new_dir" ]; then
-            rm -rf "$new_dir"
-        fi
-        mv -f "$old_dir" "$new_dir"
+        ;;
+    esac
+done
+for i in $(echo "$hlist" | sort -u); do
+    old=${i%%|*}
+    new=${i#*|}
+    if [ -e "$old" ]; then
+        rm -rf "$new"
+        mv "$old" "$new"
     fi
-    unset old_dir new_dir var val alt
-    ;;
-esac
+done
+for i in $(echo "$slist" | sort -u); do
+    old=${i%%|*}
+    new=${i#*|}
+    if [ -e "$old" ]; then
+        rm -rf "$new"
+        mv "$old" "$new"
+    fi
+done
+unset vv var old new hlist slist i
 
 ##
 ##  Shell Functions
