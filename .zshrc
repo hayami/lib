@@ -56,8 +56,7 @@ HISTFILE=${HISTFILE:-~/.zhistory}
 ##  on macOS has caused file paths to include eveil characters.  Here,
 ##  these deeds must be beaten down and purified.
 ##
-hlist=
-slist=
+list=
 for vv in $(set); do
     var="${vv%%=*}"
     old="${vv#*=}"
@@ -67,22 +66,24 @@ for vv in $(set); do
         */.zsh_history)
             new="${old%.zsh_history}.zhistory"
             eval $(echo "$var"="'$new'")
-            hlist="$hlist\n$old|$new"
+            list="$list\n$old|$new"
             ;;
         */.zsh_sessions)
             new="${old%.zsh_sessions}.zsh-sessions"
             eval $(echo "$var"="'$new'")
-            slist="$slist\n$old|$new"
+            list="$list\n$old|$new"
             ;;
         */.zsh_sessions/*)
-            new="${old%%/.zsh_sessions/*}/.zsh-sessions/${old#*/.zsh_sessions/}"
+            top="${old%%/.zsh_sessions/*}"
+            new="$top/.zsh-sessions/${old#*/.zsh_sessions/}"
             eval $(echo "$var"="'$new'")
+            list="$list\n$top/.zsh_sessions|$top/.zsh-sessions"
             ;;
         esac
         ;;
     esac
 done
-for i in $(echo "$hlist" | sort -u); do
+for i in $(echo "$list" | sort -u); do
     old=${i%%|*}
     new=${i#*|}
     if [ -e "$old" ]; then
@@ -90,15 +91,7 @@ for i in $(echo "$hlist" | sort -u); do
         mv "$old" "$new"
     fi
 done
-for i in $(echo "$slist" | sort -u); do
-    old=${i%%|*}
-    new=${i#*|}
-    if [ -e "$old" ]; then
-        rm -rf "$new"
-        mv "$old" "$new"
-    fi
-done
-unset vv var old new hlist slist i
+unset vv var old new list top i
 
 ##
 ##  Shell Functions
