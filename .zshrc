@@ -47,8 +47,8 @@ PROMPT='%n@%m%% '
 ##
 ##  History Size
 ##
-HISTSIZE=${HISTSIZE:-1000}
-SAVEHIST=${SAVEHIST:-1000}
+[[ "$HISTSIZE" =~ '^[1-9][0-9]*$' && "$HISTSIZE" -ge 1000 ]] || HISTSIZE=1000
+[[ "$SAVEHIST" =~ '^[1-9][0-9]*$' && "$SAVEHIST" -ge 1000 ]] || SAVEHIST=1000
 HISTFILE=${HISTFILE:-~/.zhistory}
 
 ##
