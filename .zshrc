@@ -88,7 +88,7 @@ for i in $(echo "$list" | sort -u); do
     new=${i#*|}
     if [ -e "$old" ]; then
         rm -rf "$new"
-        mv "$old" "$new"
+        mv "$old" "$new" > /dev/null 2>&1 || :	# may race with other zsh procs
     fi
 done
 unset vv var old new list top i
