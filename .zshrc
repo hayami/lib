@@ -158,7 +158,7 @@ lsfunc() {
     fi
 
     #echo ls $(echo $lsfunc_cached_favorite_options) "$@" > /tmp/ls.args
-    \ls $(echo $lsfunc_cached_favorite_options) "$@"
+    LC_COLLATE=C command ls $(echo $lsfunc_cached_favorite_options) "$@"
 }
 
 h() {
