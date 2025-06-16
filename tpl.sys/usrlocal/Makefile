@@ -61,9 +61,7 @@ rkiv-all: clean
 	LANG=C $(SUDO) tar \
 	--gzip \
 	--create \
-	--sparse \
 	--numeric-owner \
-	--atime-preserve \
 	--one-file-system \
 	--file $(RKIVDIR)/$$(date '+%Y-%m-%d'),usrlocal.tar.gz \
 	--directory $(PREFIX) .
@@ -86,8 +84,8 @@ rkiv-pkg: tmpdir
 	) | sed -e 's#^//##' | sort -u > $(TMPDIR)/$(PKG)-tarlist
 	[ ! -f "$(PKG)-rkiv.tar.gz" ]
 	touch "$(PKG)-rkiv.tar.gz"
-	LANG=C $(SUDO) tar --numeric-owner --atime-preserve --one-file-system \
-	 --sparse -T $(TMPDIR)/$(PKG)-tarlist -czf $(PKG)-rkiv.tar.gz
+	LANG=C $(SUDO) tar --numeric-owner --one-file-system \
+	    -T $(TMPDIR)/$(PKG)-tarlist -czf $(PKG)-rkiv.tar.gz
 
 remove-pkg: tmpdir
 	[ -f "$(PKG)" ] || { echo "usage: make $@ PKG=foo-1.2.3" 1>&2; exit 1; }
@@ -103,6 +101,6 @@ remove-pkg: tmpdir
 	    fi;					\
 	done > $(TMPDIR)/$(PKG)-remove.sh
 	@echo
-	@echo "Run /bin/sh -xe $(TMPDIR)/$(PKG)-remove.sh to remove \"$(PKG)\"."
+	@echo "Run \"/bin/sh -xe $(TMPDIR)/$(PKG)-remove.sh\" to remove \"$(PKG)\"."
 
 # EOF
