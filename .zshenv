@@ -60,16 +60,16 @@ fi
 ##  PATH
 ##
 PATH=/usr/bin:/bin; export PATH
-prefix_list="$HOME/sys/local $HOMEBREW_PREFIX /usr/local"
+prefixes="$HOME/sys/local $HOMEBREW_PREFIX /usr/local"
 p=
 for dir in \
     $(find -L "$HOME/bin" -maxdepth 1 -type d -print 2> /dev/null | sort) \
-    $(for pref in $prefix_list; do echo $pref/bin; echo $pref/sbin; done) \
+    $(for pref in ${=prefixes}; do echo $pref/bin; echo $pref/sbin; done) \
     /snap/bin /usr/bin /usr/sbin /bin /sbin; do
     [ -d "$dir" ] && p="${p}${p:+:}${dir}"
 done
 PATH="$p"; export PATH
-unset p dir prefix_list
+unset p dir prefixes
 [[ -o login ]] && _path="$PATH"	# see ~/.zprofile for this _path variable
 
 ##
