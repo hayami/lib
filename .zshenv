@@ -60,19 +60,19 @@ fi
 ##  PATH
 ##
 PATH=/usr/bin:/bin; export PATH
+brewp="$HOMEBREW_PREFIX"
 p=
 for dir in					\
     $(find -L "$HOME/bin" -maxdepth 1		\
            -type d -print 2> /dev/null | sort) 	\
     $HOME/sys/local/bin $HOME/sys/local/sbin	\
-    ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}	\
-    ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}	\
+    ${brewp:+$brewp/bin} ${brewp:+$brewp/sbin}	\
     /usr/local/bin /usr/local/sbin		\
     /snap/bin /usr/bin /usr/sbin /bin /sbin; do
     [ -d "$dir" ] && p="${p}${p:+:}${dir}"
 done
 PATH="$p"; export PATH
-unset p dir
+unset p dir brewp
 [[ -o login ]] && _path="$PATH"	# see ~/.zprofile for this _path variable
 
 ##
