@@ -9,7 +9,7 @@ unset answer
 answer="$anstmp"
 
 PATH=/usr/bin:/bin; export PATH
-for v in $(printenv | while read vv; do echo ${vv%%=*}; done); do
+for v in $(env -0 | tr '\n\0' '.\n' | sed 's/=.*//'); do
     case "$v" in
         (HOME|PATH|PWD|TERM|TMPDIR|TZ|USER) ;;
         (*) unset $v ;;

@@ -82,7 +82,7 @@ export LANG TIME_STYLE
 ##
 ##  unset LC_*
 ##
-for v in $(printenv | while read vv; do echo ${vv%%=*}; done); do
+for v in $(env -0 | tr '\n\0' '.\n' | sed 's/=.*//'); do
     case "$v" in
     LC_*) unset $v ;;
     esac
