@@ -6,8 +6,7 @@ ps uxwwe | while read line; do
         SSH_AUTH_SOCK=*) s="$i";;
         esac
     done
-    if [ -n "$p" -a -n "$s" ]; then
-        echo "export $p; export $s"
-    fi
+    [ -z "$p" ] || echo "export $p"
+    [ -z "$s" ] || echo "export $s"
     p=''; s=''
 done | sort -u
