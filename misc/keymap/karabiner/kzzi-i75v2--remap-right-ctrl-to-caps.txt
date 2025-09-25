@@ -1,0 +1,12 @@
+Right Control のタップで Caps Lock のトグル動作をさせる。Right Control を
+Caps Lock にしてしまってももいいのだが、それだと Right Control がなくなっ
+てしまう。もしもの時のため、タップ以外では Right Control として機能するよ
+うにする。
+
+  - "basic.to_if_alone_timeout_milliseconds": 1000
+    これを付けないとうまく動いてくれない。1 秒以上長押してからリリースした
+    場合、それはタップとして扱われない。
+
+  - "hold_down_milliseconds": 100
+    これを付けないとうまく動いてくれない。キーボード本体? に誤認されないよ
+    うに、適当な間隔が必要らしい。 0 とか 1 ではうまく動いてくれなかった。

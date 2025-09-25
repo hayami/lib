@@ -1,0 +1,18 @@
+{
+    "description": "Map Caps Lock to Left Control for Kzzi i75v2 keyboard",
+    "identifiers": {
+        "is_keyboard": true,
+        "product_id": 654009,
+        "vendor_id": 13652
+    },
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "caps_lock",
+                "modifiers": { "optional": ["any"] }
+            },
+            "to": [{ "key_code": "left_control" }],
+            "type": "basic"
+        }
+    ]
+}

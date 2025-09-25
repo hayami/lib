@@ -1,0 +1,26 @@
+{
+    "description": "Swap mouse button 2 and 3 for Logitech LIFT M800 Mouse",
+    "identifiers": {
+        "is_pointing_device": true,
+        "product_id": 50504,
+        "vendor_id": 1133
+    },
+    "manipulators": [
+        {
+            "from": {
+                "modifiers": { "optional": ["any"] },
+                "pointing_button": "button2"
+            },
+            "to": [{ "pointing_button": "button3" }],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "modifiers": { "optional": ["any"] },
+                "pointing_button": "button3"
+            },
+            "to": [{ "pointing_button": "button2" }],
+            "type": "basic"
+        }
+    ]
+}

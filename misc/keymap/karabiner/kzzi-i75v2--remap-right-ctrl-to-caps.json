@@ -1,0 +1,25 @@
+{
+    "description": "Right Control tap toggles Caps Lock for Kzzi i75v2 keyboard",
+    "identifiers": {
+        "is_keyboard": true,
+        "product_id": 654009,
+        "vendor_id": 13652
+    },
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "right_control",
+                "modifiers": { "optional": ["any"] }
+            },
+            "parameters": { "basic.to_if_alone_timeout_milliseconds": 1000 },
+            "to": [{ "key_code": "right_control" }],
+            "to_if_alone": [
+                {
+                    "hold_down_milliseconds": 100,
+                    "key_code": "caps_lock"
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

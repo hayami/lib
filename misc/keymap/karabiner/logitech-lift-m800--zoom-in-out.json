@@ -1,0 +1,30 @@
+{
+    "description": "Change mouse button 4/5 to zoom in/out for Logitech LIFT M800 Mouse",
+    "identifiers": {
+        "is_pointing_device": true,
+        "product_id": 50504,
+        "vendor_id": 1133
+    },
+    "manipulators": [
+        {
+            "from": { "pointing_button": "button4" },
+            "to": [
+                {
+                    "key_code": "equal_sign",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": { "pointing_button": "button5" },
+            "to": [
+                {
+                    "key_code": "hyphen",
+                    "modifiers": ["command"]
+                }
+            ],
+            "type": "basic"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "description": "Invert vertical mouse wheel for Logitech LIFT M800 Mouse",
+    "identifiers": {
+        "is_pointing_device": true,
+        "product_id": 50504,
+        "vendor_id": 1133
+    },
+    "manipulators": [
+        {
+            "flip": ["vertical_wheel"],
+            "type": "mouse_basic"
+        }
+    ]
+}
