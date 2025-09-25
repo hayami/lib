@@ -1,0 +1,7 @@
+#
+# Swap Esc and Backquote/Tilde
+#   for Kzzi i75v2 Keyboard (Vendor: 3554, Product: FA09)
+#
+evdev:input:b*v3554pFA09*
+ KEYBOARD_KEY_70029=grave
+ KEYBOARD_KEY_70035=esc

@@ -1,0 +1,13 @@
+#
+# Swap Alt and Win
+#   for Kzzi i75v2 Keyboard (Vendor: 3554, Product: FA09)
+#
+# When Kzzi i75v2 keyboard is used on Linux with its "Mac mode" (Fn + s), you
+# may want to swap the Command and Option keys. This hwdb file places the Alt
+# keys on both sides of the spacebar and positions the Win keys outside them.
+#
+evdev:input:b*v3554pFA09*
+ KEYBOARD_KEY_700E2=leftmeta
+ KEYBOARD_KEY_700E3=leftalt
+ KEYBOARD_KEY_700E6=rightmeta
+ KEYBOARD_KEY_700E7=rightalt

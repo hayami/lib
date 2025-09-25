@@ -1,0 +1,6 @@
+#
+# Remap Right Control to Caps Lock
+#   for Kzzi i75v2 Keyboard (Vendor: 3554, Product: FA09)
+#
+evdev:input:b*v3554pFA09*
+ KEYBOARD_KEY_700E4=capslock

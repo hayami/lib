@@ -1,0 +1,7 @@
+#
+# Swap Mouse Button 2 and 3
+#   for Logitech LIFT M800 Mouse (Vendor: 046D, Product: C548)
+#
+evdev:input:b*v046DpC548*
+ KEYBOARD_KEY_90002=btn_middle
+ KEYBOARD_KEY_90003=btn_right

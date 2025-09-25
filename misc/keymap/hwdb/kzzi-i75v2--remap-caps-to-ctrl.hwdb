@@ -1,0 +1,12 @@
+#
+# Remap Caps Lock to Left Control
+#   for Kzzi i75v2 Keyboard (Vendor: 3554, Product: FA09)
+#
+# NOTICE:
+#   Pressing Control (remapped from Caps Lock) briefly lights
+#   the Caps Lock LED because the keyboard turns it on and the
+#   OS immediately turns it off. To resolve this, a fix on the
+#   keyboard side is suspected to be required.
+#
+evdev:input:b*v3554pFA09*
+ KEYBOARD_KEY_70039=leftctrl
