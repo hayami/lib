@@ -1,0 +1,20 @@
+Perforce コマンド例
+export P4PORT=perforce.example.jp:1666
+export P4USER=noname
+export P4CLIENT=moka
+p4 help
+p4 help login
+p4 login
+p4 sync
+p4 sync file.c
+p4 edit file.c
+vi file.c
+p4 diff -du file.c
+p4 submit file.c
+| Description:
+|	テキスト文字列
+p4 submit -d "テキスト文字列" file.c
+p4 tag -a -l ラベル名 file.c
+p4 tag -a -l ラベル名 ...@654321,@654321
+p4 labels -u ユーザー名
+p4 label -o ラベル名

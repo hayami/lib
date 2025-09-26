@@ -1,0 +1,6 @@
+GNU Global コマンド例
+cd src
+mkdir ../dir
+gtags ../dir
+htags -asF -t 'title string' -d ../dir ../dir
+firefox ../dir/HTML/index.html

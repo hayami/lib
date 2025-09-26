@@ -1,0 +1,23 @@
+telnet imap4-server 143
+Trying 192.168.0.1...
+Connected to imap4-server.
+Escape character is '^]'.
+* OK
+0 CAPABILITY
+1 LOGIN user password
+1 OK Logged in.
+2 LIST "" *
+* LIST (\HasNoChildren) "." "INBOX"
+2 OK List completed.
+3 RENAME folder1.foo folder2.bar
+3 OK Reanme completed.
+4 CREATE folder3
+4 OK Create completed.
+5 DELETE folder4
+5 OK Delete completed.
+6 LOGOUT
+* BYE Logging out
+6 OK Logout completed.
+Connection closed by foreign host.
+
+[参考資料](http://www.atmarkit.co.jp/ait/kw/mobile_kannkyou_yasashii_mail.html)

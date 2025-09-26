@@ -1,0 +1,3 @@
+avahi-browse -t --all
+avahi-resolve --name kamonegi.local
+avahi-resolve --address 192.168.0.99

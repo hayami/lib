@@ -1,0 +1,53 @@
+DHCP クライアントで IP アドレスを再取得するには
+http://www.atmarkit.co.jp/flinux/rensai/linuxtips/435regetipadd.html
+
+dhclient コマンドの場合、IP アドレスを解放するときは -r オプションを付ける。
+ここでは、NIC が eth0 しかないため、引数として必要な eth0 を省略している。
+-------------------------------------------------------
+# dhclient -r
+Internet Software Consortium DHCP Client V3.0pl1
+Copyright 1995-2001 Internet Software Consortium.
+All rights reserved.
+For info, please visit http://www.isc.org/products/DHCP
+
+Listening on LPF/lo/
+Sending on   LPF/lo/
+Listening on LPF/eth0/00:50:56:40:03:29
+Sending on   LPF/eth0/00:50:56:40:03:29
+Sending on   Socket/fallback
+DHCPRELEASE on eth0 to 192.168.0.1 port 67
+-------------------------------------------------------
+
+続いて、再度 dhclient コマンドを実行する。
+-------------------------------------------------------
+# dhclient
+Internet Software Consortium DHCP Client V3.0pl1
+Copyright 1995-2001 Internet Software Consortium.
+All rights reserved.
+For info, please visit http://www.isc.org/products/DHCP
+
+Listening on LPF/lo/
+Sending on   LPF/lo/
+Listening on LPF/eth0/00:50:56:40:03:29
+Sending on   LPF/eth0/00:50:56:40:03:29
+Sending on   Socket/fallback
+DHCPDISCOVER on lo to 255.255.255.255 port 67 interval 8
+DHCPREQUEST on eth0 to 255.255.255.255 port 67
+DHCPACK from 192.168.0.1
+bound to 192.168.0.26 -- renewal in 42269 seconds.　← IPアドレスを取得
+-------------------------------------------------------
+
+dhcpcdの場合、IPアドレスを解放するときは-kオプションを付ける。
+-------------------------------------------------------
+# dhcpcd -k
+-------------------------------------------------------
+
+続いて、再度dhcpcdデーモンを実行する。
+-------------------------------------------------------
+# dhcpcd -n -H eth0
+-------------------------------------------------------
+
+-n は現在動作している dhcpcd プロセスがある場合、貸出期間を更新させるオプショ
+ン。-H は dhcpcd に対して、そのマシンのホスト名を DHCP サーバから提供されるホ
+スト名オプションに設定させるものだ。もちろん、これらのオプションを指定しない
+で、コマンドラインで dhcpcd を実行するだけでも IP アドレスは取得できる。

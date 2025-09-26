@@ -1,0 +1,18 @@
+PostScript ファイルを LaserJet6L で印刷する場合の解説です.
+まず, GhostScript というプログラムをインストールします.
+(以下 GhostScript インストールの解説 )
+Aladdin 社のものが綺麗な出力を期待できます. 非商用個人的利用なら自由に使えます.
+一時配布元は ftp://ftp.cs.wisc.edu/ghost/aladdin/ です. ここの README を良く読
+んで, 必要なファイルを自分のマシンに取ってきます.  これを展開して, また README
+や, INSTALL を読みます.
+Aladdin 社が出しているものは, そのままでは簡単に日本語を使えませんから, それ用
+の対応をする必要があります. これは例えば, jaist の田中 哲さんの WEB ページから
+情報を集めてきます.
+    http://www.ldl.jaist.ac.jp:8080/~akr/nonresearch/free-software/ghostscript/
+ここに書いてあるとおりにインストールします. 2,3日も苦労すれば勘所がつかめてきま
+す. がんばってください. さて, うまく gs がインストールできたらあとは簡単です.
+$ gs -q -dNOPAUSE -dBATCH -sDEVICE=ljet4 -sOutputFile=- 印刷したいPSファイル名 | lpr
+とコマンドラインから打込めば,印刷成功.
+> ちゃちゃかも知れませんが、LaserJet5L/6L ならば、
+>     -sDEVICE=lj4dith
+> とすると、画像を印刷する時に更に綺麗なディザリングをやってくれます。

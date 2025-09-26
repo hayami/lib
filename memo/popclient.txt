@@ -1,0 +1,4 @@
+dial-up IP 接続時にメールサーバからメールを持ってくる方法。
+解法: 1.  popclient を用いる。具体的には、
+          % popclient -3 -v -u USERNAME -p PASSWARD MAILSERVER
+          などとする。

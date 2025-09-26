@@ -1,0 +1,23 @@
+Sort by UID and GID in ascending order
+
+umask 077
+
+sort -t: -n -k 3 /etc/passwd > /etc/passwd-
+cat /etc/passwd- > /etc/passwd
+rm /etc/passwd-
+
+sort -t: -n -k 3 /etc/group > /etc/group-
+cat /etc/group- > /etc/group
+rm /etc/group-
+
+awk -F: '{ print $1 }' /etc/passwd | while read u; do \
+egrep -e "^${u}:" /etc/shadow; done > /etc/shadow-
+cat /etc/shadow- > /etc/shadow
+rm /etc/shadow-
+
+awk -F: '{ print $1 }' /etc/group | while read g; do \
+egrep -e "^${g}:" /etc/gshadow; done > /etc/gshadow-
+cat /etc/gshadow- > /etc/gshadow
+rm /etc/gshadow-
+
+umask 022

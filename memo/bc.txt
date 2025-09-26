@@ -1,0 +1,32 @@
+bc を shell script で利用する
+
+以下は POSIX 準拠の bc で使えるはず
+
+[前準備]
+$ int='\ndefine i(x){\nauto o;o=scale;scale=0;x=x/1;scale=o;return(x)}'
+$ ceil='\ndefine c(x){\nv=i(x);if(v!=x)if(x>0)v=v+1;return(v)}'
+$ floor='\ndefine f(x){\nv=i(x);if(v!=x)if(x<0)v=v-1;return(v)}'
+
+[使用例]
+$ echo "$int; $ceil; c(3)" | bc
+$ echo "$int; $ceil; c(3.0)" | bc
+$ echo "$int; $ceil; c(3.1)" | bc
+$ echo "$int; $floor; f(3)" | bc
+$ echo "$int; $floor; f(3.0)" | bc
+$ echo "$int; $floor; f(3.1)" | bc
+
+
+NOTE:
+  * bc を -l オプションを付けて起動すると、数学ライブラリが読み込まれ、c(x) は
+    cos(x) として使えるが、上記の ceil を使うと c(x) が上書きされる。
+    例:
+        $ echo "c(3.14)" | bc -l
+        -.99999873172753954528
+        $ echo "$int; $ceil; c(3.14)" | bc -l
+        4
+
+  * 改行文字 '\n' について
+      - POSIX bc requires the opening brace on the same line as the define
+        key word and the auto statement on the next line. などとの記述があ
+        るが、結局の所、関数定義の '{' 後には常に改行が必要らしい。
+      - define の前の改行は必須ではない (便宜上入れてある)。

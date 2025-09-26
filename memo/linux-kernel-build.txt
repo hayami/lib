@@ -1,0 +1,8 @@
+make mrproper
+make oldconfig
+make dep (obsolete)
+make clean
+make bzImage
+make modules
+make modules_install
+make install

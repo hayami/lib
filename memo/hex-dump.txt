@@ -1,0 +1,3 @@
+od -Ax -t x1z file		# 横 16 バイト表示
+od -Ax -t x1z -w1 -v file	# 横 1 バイト表示
+od -An -t x1z -w1 -v file	# 横 1 バイト表示, アドレス表示なし

@@ -1,0 +1,42 @@
+Subject: SSH tunnel を使った外部からのログイン手順
+Date: Tue, 21 May 2002 19:29:29 +0900 (JST)
+
+<SSH tunnel を使った外部からのログイン手順>
+
+1. ログイン元となるマシン (client) に OpenSSH (プロトコルバージョン 2)
+   をインストールします。
+
+2. client で自分 (例: noname@example.jp) の DSA 鍵を作成します。
+
+    $ ssh-keygen -d -C "noname@example.jp"
+
+3. ~/.ssh/config に以下の oops エントリを作成します。
+
+    Host oops
+        Protocol 2
+        DSAAuthentication yes
+        PasswordAuthentication no
+        HostName 123.234.111.222
+        User oopsusers
+        LocalForward 2323 192.168.0.99:23
+
+   なお、最後の LocalForward は自分の使いたい方法で設定してください。
+   上記の例では、192.168.0.99 の 23 番ポート (telnet) を 2323 番ポート
+   に繋げてくれます。
+
+   注) 同じマシンで同じポートを使わないように注意しましょう :-)
+
+4. ~/.ssh/id_dsa.pub の内容を noname@example.jp 宛にメールして
+   ください。oopsusers に登録します。
+
+5. 登録が完了したら、以下の手順で利用できます。
+
+    $ ssh -f -N oops
+    Enter passphrase for DSA key '/home/noname/.ssh/id_dsa': 
+    $ telnet localhost 2323
+    Password: 
+    Last login: Mon Apr  1 12:34:56 2002 from 192.168.0.77
+    $
+
+   最初の ssh は fork して background に行きますので、使い終ったら
+   忘れずに kill しておいてください。

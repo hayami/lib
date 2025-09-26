@@ -1,0 +1,53 @@
+RHEL4 で ldaps:// を使うときの、サーバ証明書 (私設認証局を利用) の作成方法
+
+rm -f /usr/share/ssl/certs/slapd.* /etc/openldap/cacerts/*
+cd /usr/share/ssl
+rm -rf demoCA
+./misc/CA -newca	# これで demoCA ディレクトリとその下が作成される
+<Enter>
+認証局のパスフレーズ<Enter>
+認証局のパスフレーズ<Enter>
+JP
+Tokyo
+Chiyoda-ku 
+Example, Inc.
+<Enter>
+<Enter>
+<Enter>
+SSLEAY_CONFIG='-nodes' ./misc/CA -newreq	# newreq.pem が作成される
+JP
+Tokyo
+Chiyoda-ku 
+Example, Inc.
+<Enter>
+ldap.example.jp
+<Enter>
+<Enter>
+<Enter>
+openssl req -in newreq.pem -text	# newreq.pem の中身を見る
+./misc/CA -sign				# newreq.pem を署名 > newcert.pem
+認証局のパスフレーズ<Enter>
+y<Enter>
+y<Enter>
+openssl x509 -in newcert.pem -text	# newcert.pem の中身を見る
+./misc/CA -verify newcert.pem		# newcert.pem の確認
+mv newreq.pem certs/slapd.key
+mv newcert.pem certs/slapd.crt
+chmod 640 certs/slapd.*
+chgrp ldap certs/slapd.*
+cp demoCA/cacert.pem /etc/openldap/cacerts/
+c_rehash /etc/openldap/cacerts
+ls -fl /usr/share/ssl/certs/slapd.* /etc/openldap/cacerts/*
+vi /etc/openldap/slapd.conf
+| TLSCACertificateFile  /etc/openldap/cacerts/cacert.pem
+| TLSCertificateFile    /usr/share/ssl/certs/slapd.crt
+| TLSCertificateKeyFile /usr/share/ssl/certs/slapd.key
+vi /etc/openldap/ldap.conf
+| TLS_CACERTDIR /etc/openldap/cacerts	# そのまま
+rm -rf /usr/share/ssl/demoCA		# 必要なければ削除
+service ldap restart
+ldapsearch -x -H ldap://ldap.example.jp/ -b '' -s base namingContexts
+ldapsearch -x -H ldaps://ldap.example.jp/ -b '' -s base namingContexts
+(おまけ)
+ldapsearch -x -h ldap.example.jp -b '' -s base '(objectclass=*)' namingContexts
+ldapsearch -x -h ldap.example.jp -b 'dc=example,dc=jp' -s sub '(objectclass=*)'

@@ -1,0 +1,118 @@
+■ apache2 をインストールして CGI を使えるようにするだけ (Ubuntu 20.04 を想定)
+
+# apt-get install apache2
+# cd /etc/apache2
+# vi conf-available/serve-cgi-bin.conf
+       |--- /etc/apache2/conf-available/serve-cgi-bin.conf.orig
+       |+++ /etc/apache2/conf-available/serve-cgi-bin.conf
+       |@@ -8,8 +8,8 @@
+       | 	</IfModule>
+       | 
+       | 	<IfDefine ENABLE_USR_LIB_CGI_BIN>
+       |-		ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+       |-		<Directory "/usr/lib/cgi-bin">
+       |+		ScriptAlias /cgi-bin/ /var/www/cgi-bin/
+       |+		<Directory "/var/www/cgi-bin">
+       | 			AllowOverride None
+       | 			Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+       | 			Require all granted
+# a2enmod cgid
+# systemctl restart apache2
+
+# cd /var/www
+# mkdir cgi-bin
+# cd cgi-bin
+# vi test.cgi
+       |--- /dev/null
+       |+++ test.cgi
+       |@@ -0,0 +1,7 @@
+       |+#!/bin/sh
+       |+echo 'Content-Type: text/plain'
+       |+echo
+       |+umask
+       |+pwd
+       |+id -a
+       |+env
+# chmod 0755 test.cgi
+
+これで http://localhost/cgi-bin/test.cgi にアクセスできるようになるはず。
+
+
+■ http://server-name/~ユーザー名/ で CGI を使う
+   (public_html ではなく www を使用)
+
+# cd /etc/apaches
+# vi mods-available/userdir.conf
+       |--- /etc/apache2/mods-available/userdir.conf.orig
+       |+++ /etc/apache2/mods-available/userdir.conf
+       |@@ -1,10 +1,11 @@
+       | <IfModule mod_userdir.c>
+       |-	UserDir public_html
+       |+	UserDir www
+       | 	UserDir disabled root
+       | 
+       |-	<Directory /home/*/public_html>
+       |+	<Directory /home/*/www>
+       |+		AddHandler cgi-script .cgi
+       | 		AllowOverride FileInfo AuthConfig Limit Indexes
+       |-		Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+       |+		Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec ExecCGI
+       | 		Require method GET POST OPTIONS
+       | 	</Directory>
+       | </IfModule>
+# a2enmod userdir
+# systemctl restart apache2
+
+$ mkdir $HOME/www
+$ cp -pi /var/www/cgi-bin/test.cgi $HOME/www
+
+これで http://localhost/~ユーザー名/test.cgi にアクセスできるようになるはず。
+
+
+■ suexec を使えるようにする
+
+# apt-get install apache2-suexec-custom
+# cd /etc/apache2
+# vi suexec/www-data
+       |--- /etc/apache2/suexec/www-data.orig
+       |+++ /etc/apache2/suexec/www-data
+       |@@ -1,5 +1,5 @@
+       | /var/www
+       |-public_html/cgi-bin
+       |+www
+       | # The first two lines contain the suexec document root and the suexec userdir
+       | # suffix. If one of them is disabled by prepending a # character, suexec will
+       | # refuse the corresponding type of request.
+# a2enmod suexec
+# systemctl restart apache2
+
+これで http://localhost/~ユーザー名/test.cgi にアクセスすると、
+test.cgi がユーザー名で指定したユーザーの権限で実行されるはず。
+
+
+■ http://server-name/u/ユーザー名/ でも suexec を使えるようにする
+
+# cd /etc/apaches
+# vi sites-available/000-default.conf
+       |--- /etc/apache2/sites-available/000-default.conf.orig
+       |+++ /etc/apache2/sites-available/000-default.conf
+       |@@ -26,6 +26,10 @@
+       | 	# following line enables the CGI configuration for this host only
+       | 	# after it has been globally disabled with "a2disconf".
+       | 	#Include conf-available/serve-cgi-bin.conf
+       |+
+       |+	RewriteEngine	on
+       |+	RewriteRule	^/u/([^/]+)$		/u/$1/
+       |+	RewriteRule	^/u/([^/]+)/(.*)	/~$1/$2		[PT]
+       | </VirtualHost>
+       | 
+       | # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+# a2enmod rewite
+# systemctl restart apache2
+
+これで http://localhost/u/ユーザー名/test.cgi にアクセスすると、
+test.cgi がユーザー名で指定したユーザーの権限で実行されるはず。
+
+000-default.conf に Rewwrite を書くのではなく userdir.conf に
+	AliasMatch ^/u/([^/]+)/(.*) /home/$1/www/$2
+を追加する方法があるが、これだと suexec が効いてくれない。

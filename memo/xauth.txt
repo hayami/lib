@@ -1,0 +1,7 @@
+http://docs.sun.com:80/ab2/
+ - デスクトップとウィンドウシステム
+ - 以下の文書内で検索 [xauth]
+ - Allowing Access When Using MIT-MAGIC-COOKIE-1
+user$ xauth nextract - :0.0 > /tmp/xauth.info
+root$ xauth nmerge - < /tmp/xauth.info
+user$ rm /tmp/xauth.info

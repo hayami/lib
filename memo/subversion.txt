@@ -1,0 +1,16 @@
+Subversion コマンド例
+svn help
+svn help list
+svn list -R https://svn.example.jp:3690/svn/prj/trunk
+svn delete https://…/branch
+svn copy https://…/trunk https://…/newbranch
+svn co https://…/branch
+svn update
+svn diff
+svn diff -c 812
+svn diff -r 811:812
+svn commit
+svn diff https://…/trunk https://…/branch
+svn log --stop-on-copy https://…/branch
+svn update
+svn merge --dry-run -r 778:HEAD https://…/branch

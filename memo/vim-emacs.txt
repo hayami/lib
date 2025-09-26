@@ -1,0 +1,13 @@
+				Emacs		Vim		備考
+--------------------------------------------------------------------------
+カーソル上の単語を検索		C-s C-w		* / #		下 / 上
+検索次候補			C-s		n
+検索前候補			C-r		N
+インクルードファイルを表示	---		gf  / C-w gf	右側はタブ
+インクルードファイル表示終了	---		C-o / :q	で開く場合
+タブを巡回			---		gt
+オンラインマニュアルを表示	---		<セクション番号>K
+case-{,in}sensitive search	C-s M-c		/\c<search-pattern>
+case-{,in}sensitive back search	C-r M-c		?\c<search-pattern>
+
+参考文献: http://www.atmarkit.co.jp/flinux/rensai/vim09/09a.html など

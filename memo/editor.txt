@@ -1,0 +1,21 @@
+;;;		-*- Mode: Emacs-Lisp; coding: utf-8; indent-tabs-mode: nil -*-
+
+〓〓〓 UTF-8 〓〓〓
+
+;;; Local Variables: ***
+;;; mode: Indented-Text ***
+;;; auto-fill-mode: 1 ***
+;;; fill-column: 77 ***
+;;; kinsoku-nobashi-limit: 2 ***
+;;; End: ***
+
+/*
+ * Local Variables: //
+ * mode: Indented-Text //
+ * auto-fill-mode: 1 //
+ * fill-column: 72 //
+ * kinsoku-nobashi-limit: 2 //
+ * End: //
+ */
+
+/* vim: set ai et sw=4 ts=8 sts=4: */

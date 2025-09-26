@@ -1,0 +1,86 @@
+o リポジトリを作成するときには、cvs init コマンドを実行して下さい。通常の方法
+  で指定された CVS のルート以下の、 空のリポジトリを利用できるように整えます。
+	$ cvs -d /export/cvsroot init
+
+o 新しいプロジェクトを始める場合、まず空のディレクトリを作ります。その後 import
+  コマンドを使って、リポジトリに各々の (空の) ディレクトリを登録 (作成) します。
+  そして add コマンドで、ファイル (と新しいディレクトリ) を加えていきます。
+	$ mkdir tc
+	$ mkdir tc/man
+	$ mkdir tc/testing
+	$ cd tc
+	$ cvs import -m "Created directory structure" yoyodyne/dir yoyo start
+
+o チェックアウト
+	$ cvs checkout tc
+
+o $CVSEDITOR / $EDITOR / vi にてメッセージを書込む場合。
+	$ cvs commit backend.c
+
+o メッセージを引数で渡す場合。
+	$ cvs commit -m "Added an optimization pass" backend.c
+
+o 修正が格納されているかどうか確認。
+	$ cvs release
+
+o 修正が格納されているかどうか確認。同時に作業コピーを削除。
+	$ cvs release -d tc
+
+o 取り出した時の状態と、作業コピーとを比較。
+	$ cvs diff driver.c
+
+o タグを付ける。
+	$ cvs tag release-1-0 .
+
+o ファイルのステータスを確認する。
+	$ cvs status -v backend.c
+
+o モジュールから取り出すリビジョンを指定。
+	$ cvs checkout -r release-1-0 tc
+
+o ファイルをリポジトリに加える。
+	$ cvs add backend.c
+	$ cvs commit -m "Early version. Not yet compilable." backend.c
+
+o ファイルを削除する例。
+	$ cd test
+	$ rm ?.c
+	$ cvs remove
+	cvs remove: Removing .
+	cvs remove: scheduling a.c for removal
+	cvs remove: scheduling b.c for removal
+	cvs remove: use 'cvs commit' to remove these files permanently
+	$ cvs ci -m "Removed unneeded files"
+	cvs commit: Examining .
+	cvs commit: Committing .
+
+o 格納前に気が変わったのなら、add コマンドを用いて、簡単にファイルを復活させる
+  ことができます。
+	$ ls
+	CVS   ja.h  oj.c
+	$ rm oj.c
+	$ cvs remove oj.c
+	cvs remove: scheduling oj.c for removal
+	cvs remove: use 'cvs commit' to remove this file permanently
+	$ cvs add oj.c
+	U oj.c
+	cvs add: oj.c, version 1.1.1.1, resurrected
+
+o remove コマンドを実行する前に失敗に気付いた場合、update コマンドを用いてファ
+  イルを復活できます。
+	$ rm oj.c
+	$ cvs update oj.c
+	cvs update: warning: oj.c was lost
+	U oj.c
+
+o モジュールを定義する簡単な手順を示します。
+  1. ファイル `modules' のコピーを取ってきます。
+	$ cvs checkout CVSROOT/modules
+	$ cd CVSROOT
+  2. ファイルを編集します。モジュール `tc' を定義するには次の行を加えます。
+	tc   yoyodyne/tc
+  3. ファイル `modules' を格納します。
+	$ cvs commit -m "Added the tc module." modules
+  4. モジュール `modules' (の作業コピー) を放棄します。
+	$ cd ..
+	$ cvs release -d CVSROOT

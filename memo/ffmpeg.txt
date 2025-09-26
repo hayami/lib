@@ -1,0 +1,25 @@
+ffmpeg usage examples
+---------------------
+
+* 動画の切り出し
+	ffmpeg -i src.mp4 -c copy -ss 開始 -to 終了 dst.mp4
+	ffmpeg -i src.mp4 -c copy -ss 開始 -t 長さ dst.mp4
+
+	開始, 終了, 長さ の指定例
+		00:12:34  0 時間 12 分 34 秒
+		60        60 秒
+
+* 音量調整
+	ffmpeg -i in.m4a -af volume=6dB -vcodec copy out.m4a
+	ffmpeg -i in.m4a -af volume=-6dB -vcodec copy out.m4a
+
+
+* 画面動画撮影 / Real time screen capture (video/audio)
+	ffmpeg -video_size 640x360 -framerate 30 -f x11grab -i :0.0+14,222 \
+	    -f alsa -i default -ac 2 -acodec aac -ar 44100 -b:a 320k       \
+	    -vcodec libx264 -pix_fmt yuv420p -map 0:v:0 -map 1:a:0 dst.mp4
+
+	- X11 画面 (Display: 0.0) の 14,222 を左上とする 640x360 の領域を撮影
+	- 同時音声録音
+	- もちろん環境によっては引数を調整する必要がある
+	- たまたま期待どおりに動作しただけかもしれない

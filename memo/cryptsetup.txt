@@ -1,0 +1,7 @@
+umount /home
+cryptsetup luksClose home
+cryptsetup luksDump /dev/sda9
+cryptsetup luksAddKey /dev/sda9
+cryptsetup luksDelKey /dev/sda9 0
+cryptsetup luksOpen /dev/sda9 home
+mount /home
