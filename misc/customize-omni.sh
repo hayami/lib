@@ -95,7 +95,7 @@ diffcolorless() (
 
 
 exitret=0
-for omnipath in omni.ja browser/omni.ja; do
+for omnipath in browser/omni.ja; do
 
     if [ ! -f $topdir/$omnipath ]; then
         echo "ERROR: file not found: $topdir/$omnipath" 1>&2
