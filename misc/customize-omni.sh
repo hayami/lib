@@ -59,6 +59,7 @@ customize() (
                 key_close) ;;
                 key_newNavigator) ;;
                 key_newNavigatorTab) ;;
+                key_quitApplication) ;;
                 *) do_substitute=0 ;;
                 esac
 
