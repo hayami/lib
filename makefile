@@ -11,9 +11,10 @@
 
 PRIVATE	:= $(HOME)/private/lib
 USRLOCAL:= usrlocal
-EXCLUDE	:= .|..|.git|.gitignore|makefile*|memo|misc|tpl.*
-LINKS	:= ${shell for i in .* *; do case $$i in \
-	   $(EXCLUDE));; *) echo $$i;; esac; done}
+EXCLUDE	:= .|..|.git|.gitignore
+INCLUDE	:= Makefile memo.txt
+LINKS	:= ${shell for i in .* $(INCLUDE); do [ -e "$$i" ] || continue; \
+	   case "$$i" in $(EXCLUDE));; *) echo "$$i";; esac; done}
 DOTDIR	:= $(shell pwd | sed -e "s|^$$HOME/||")
 PRIVDOT	:= $(shell echo $(PRIVATE) | sed -e "s|^$$HOME/||")
 NODE	:= $(shell node=$$(uname -n); echo $${node%%[0-9.]*})
@@ -23,8 +24,8 @@ USRLOCAL:= syslocal
 ifneq ($(DOTDIR),$(PRIVDOT))
 LINKS	:= ${shell for i in \
 	   .less* .termcap .tmux.conf .vimrc .zsh* .zprofile \
-	   ; do [ -e "$$i" ] || continue; case $$i in \
-	   $(EXCLUDE));; *) echo $$i;; esac; done}
+	   ; do [ -e "$$i" ] || continue; \
+	   case "$$i" in $(EXCLUDE));; *) echo "$$i";; esac; done}
 endif
 endif
 
