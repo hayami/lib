@@ -129,12 +129,15 @@ if [ "$use_custom_colors" != "0" ]; then
         :
     fi
 
+    # 133%
+    x_foreground=$(rgb_multiply "$x_foreground" 133/100)
+
     for color in black red green yellow blue magenta cyan white; do
         script='{ print toupper(substr($0,1,1)) substr($0,2) }'
         Color=$(echo "$color" | awk "$script")	# 先頭 1 文字だけ大文字にする
 
-        # 110%
-        exp='x_'$color'=$(rgb_multiply "$x_'$color'" 110/100)'
+        # 133%
+        exp='x_'$color'=$(rgb_multiply "$x_'$color'" 133/100)'
         eval "$exp"
 
         # 100% * 110%
@@ -146,13 +149,19 @@ fi
 
 list_client_options() {
     cat <<- EOF
-    macOptionIsMeta=true
-    fontSize=17
-    fontFamily=PlemolJP	// monospace | Firge | PlemolJP | Ricty Diminished
+    // options for ttyd
+    rendererType=			// dom | canvas | webgl
+    unicodeVersion=11
+    disableReconnect=true
+    enablePasteOnCtrlV=true		// [mod]
+
+    // options for xterm.js
     cursorBlink=false
-    cursorStyle=block	// block | underline | bar
     cursorInactiveStyle=outline
-    rendererType=	// dom | canvas | webgl
+    cursorStyle=block			// block | underline | bar
+    fontFamily=Ricty Diminished Neo	// Ubuntu Mono | monospace
+    fontSize=18
+    macOptionIsMeta=true
     theme={								\\
         "background":			"$x_background",		\\
         "foreground":			"$x_foreground",		\\
@@ -216,7 +225,7 @@ list_client_options		\
         *=*[^0-9a-zA-Z]*)
             var="${arg%%=*}"
             val="${arg#*=}"
-            printf "s='%s'\n" "$var" "$val"
+            printf "%s='%s'\n" "$var" "$val"
             ;;
         *)
             printf "%s\n" "$arg"
