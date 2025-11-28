@@ -154,6 +154,7 @@ list_client_options() {
     unicodeVersion=11
     disableReconnect=true
     enablePasteOnCtrlV=true		// [mod]
+    enableTrimSelection=true		// [mod]
 
     // options for xterm.js
     cursorBlink=false
