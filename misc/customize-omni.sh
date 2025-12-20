@@ -88,9 +88,9 @@ diffcolorless() (
                 GIT_CONFIG_KEY_1=color.diff-highlight.newHighlight	\
                 GIT_CONFIG_VALUE_1='green bold'				\
                 perl "$dh"						\
-            < "$1" | less -R
+            < "$1" | less -S -R
     else
-            less "$1"
+            less -S "$1"
     fi
 )
 
