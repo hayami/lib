@@ -119,7 +119,7 @@ unsetenvall () {
     printenv
 }
 
-lsfunc() {
+lswrapper() {
     # replace -ll with -lgo
     local i done=0
     for i in "$@"; do
@@ -142,7 +142,7 @@ lsfunc() {
 
     # cache the favorit options if available
     local args sp
-    if [ "${lsfunc_cached_favorite_options+set}" != "set" ]; then
+    if [ "${lswrapper_cached_favorite_options+set}" != "set" ]; then
         args=''
         for i in			\
             -N				\
@@ -154,14 +154,14 @@ lsfunc() {
                 args="${args}${sp}${i}"
             fi
         done
-        lsfunc_cached_favorite_options="$args"
+        lswrapper_cached_favorite_options="$args"
     fi
 
-    #echo ls $(echo $lsfunc_cached_favorite_options) "$@" > /tmp/ls.args
+    #echo ls $(echo $lswrapper_cached_favorite_options) "$@" > /tmp/ls.args
     LS_COLORS="${LS_COLORS:-$(
         eval $(dircolors --sh 2> /dev/null) && echo "$LS_COLORS"
     )}" \
-    LC_COLLATE=C command ls $(echo $lsfunc_cached_favorite_options) "$@"
+    LC_COLLATE=C command ls $(echo $lswrapper_cached_favorite_options) "$@"
 }
 
 h() {
@@ -171,6 +171,7 @@ h() {
 }
 
 grep-color () {
+    local x
     if [ $# -eq 0 ]; then
         case "$GREP_OPTIONS" in
             *--color=never*)  x=       ;;
@@ -235,7 +236,7 @@ grep-color () {
 ##  Aliases
 ##
 alias d='dirs -v'
-alias ls='lsfunc'
+alias ls='lswrapper'
 alias ll='ls -ll'
 alias llh='ls -llh'
 alias lltr='ls -lltr'
