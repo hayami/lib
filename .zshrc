@@ -142,7 +142,7 @@ lswrapper() {
 
     # cache the favorit options if available
     local args sp
-    if [ "${lswrapper_cached_favorite_options+set}" != "set" ]; then
+    if [ "${lswrapper_favorite_options+set}" != "set" ]; then
         args=''
         for i in			\
             -N				\
@@ -154,14 +154,15 @@ lswrapper() {
                 args="${args}${sp}${i}"
             fi
         done
-        lswrapper_cached_favorite_options="$args"
+        lswrapper_favorite_options="$args"
     fi
 
-    #echo ls $(echo $lswrapper_cached_favorite_options) "$@" > /tmp/ls.args
+    #echo ls $(echo $lswrapper_favorite_options) "$@" > /tmp/ls.args
     LS_COLORS="${LS_COLORS:-$(
         eval $(dircolors --sh 2> /dev/null) && echo "$LS_COLORS"
     )}" \
-    LC_COLLATE=C command ls $(echo $lswrapper_cached_favorite_options) "$@"
+    LC_COLLATE=C \
+    command ls $(echo $lswrapper_favorite_options) "$@"
 }
 
 h() {
