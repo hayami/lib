@@ -3,5 +3,5 @@
 Type=Application
 Name=ttyd
 Comment=ttyd
-Exec=/bin/sh -c 'while :; do sleep 5; date -Iseconds; $HOME/lib/misc/run-ttyd-wrapper; echo "exit-code=$?"; done > /tmp/xdg-desktop-autostart-ttyd.desktop-$$.log 2>&1'
+Exec=/usr/bin/setpriv --pdeathsig SIGTERM -- /bin/sh -c 'exec > /tmp/xdg-desktop-autostart-ttyd.desktop-$$.log 2>&1; set -x; PATH=/usr/bin:/bin; export PATH; trap "killall ttyd; exit" HUP INT QUIT TERM; while :; do sleep 5; date -Iseconds; $HOME/lib/misc/run-ttyd-wrapper & wait $!; echo "exit-code=$?"; done'
 Terminal=false
