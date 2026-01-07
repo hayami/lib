@@ -158,7 +158,7 @@ lswrapper() {
     fi
 
     #echo ls $(echo $lswrapper_favorite_options) "$@" > /tmp/ls.args
-    LS_COLORS="${LS_COLORS:-$(
+    LS_COLORS="${LS_COLORS-$(
         eval $(dircolors --sh 2> /dev/null) && echo "$LS_COLORS"
     )}" \
     LC_COLLATE=C \
