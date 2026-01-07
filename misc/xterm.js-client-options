@@ -160,8 +160,10 @@ list_client_options() {
     cursorBlink=false
     cursorInactiveStyle=outline
     cursorStyle=block			// block | underline | bar
-    fontFamily=Ricty Diminished Neo	// Ubuntu Mono | monospace
-    fontSize=18
+    fontFamily="'Noto Sans Mono', 'Kosugi Maru', 'monospace'"
+    fontSize=12
+    fontWeight=500
+    fontWeightBold=700
     macOptionIsMeta=true
     theme={								\\
         "background":			"$x_background",		\\
