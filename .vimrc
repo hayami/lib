@@ -24,6 +24,8 @@ colorscheme default
 " Search Result Highlighting
 "
 set hlsearch
+highlight Search cterm=NONE ctermfg=15 ctermbg=172
+highlight IncSearch cterm=NONE ctermfg=15 ctermbg=136
 nmap <ESC>u :nohl<CR>
 nmap <ESC><ESC> :nohl<CR>
 
