@@ -1,0 +1,33 @@
+~/.fonts にフォントをインストールする方法
+
+	$ mkdir ~/.fonts
+	$ cd ~/.fonts
+	(このディレクトリに *.ttf ファイルを置く)
+	$ fc-cache -fv
+
+
+フォントを検索する方法 (以下は「Kosugi Maru」で検索する場合)
+
+	$ fc-match -f "%{family}\n%{fullname}\n%{file}\n" 'Kosugi Maru'
+	Kosugi Maru
+	Kosugi Maru Regular
+	(path to home)/.fonts/KosugiMaru-Regular.ttf
+
+
+例: ~/.fonts にNoto Sans Mono 一式と Kosugi Maru (Regular) をインストールする手順
+
+	$ mkdir -p ~/.fonts
+	$ cd ~/.fonts
+	$ for i in \
+	NotoSansMono-Thin.ttf \
+	NotoSansMono-ExtraLight.ttf \
+	NotoSansMono-Light.ttf \
+	NotoSansMono-Regular.ttf \
+	NotoSansMono-Medium.ttf \
+	NotoSansMono-SemiBold.ttf \
+	NotoSansMono-Bold.ttf \
+	NotoSansMono-ExtraBold.ttf \
+	NotoSansMono-Black.ttf \
+	; do curl -O https://cdn.jsdelivr.net/gh/notofonts/notofonts.github.io/fonts/NotoSansMono/hinted/ttf/$i; done
+	$ curl -L -O https://github.com/googlefonts/kosugi-maru/raw/refs/heads/main/fonts/ttf/KosugiMaru-Regular.ttf
+	$ fc-cache -fv
