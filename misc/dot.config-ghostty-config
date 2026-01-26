@@ -8,13 +8,16 @@ term = xterm-256color
 window-width = 80
 window-height = 28
 
+# Disable notifications messages
+app-notifications = no-clipboard-copy
+
 # Link Previews
 link-previews = osc8
 
 # Bell
 bell-features = system
 
-# Font (フォールバックは後続行に書けばいいらしい)
+# Font (Fallback font may be specified on the following line)
 font-size = 10
 font-family = "Noto Sans Mono"
 font-family = "Kosugi Maru"
@@ -24,6 +27,10 @@ font-style = SemiBold
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+
+# Make the selection highlight brighter (for Solarized Dark Higher Contrast)
+selection-background = #586e75
+selection-foreground = #fdf6e3
 
 # Clipboard
 copy-on-select = clipboard
