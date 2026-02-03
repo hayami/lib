@@ -46,9 +46,9 @@ PROMPT='%n@%m%% '
 
 ##
 ##  EOL Mark
-##  "<<NoEOL>>" in red reverse video
+##  Show "<<No EOL>>" in red reverse video
 ##
-PROMPT_EOL_MARK=$'%{\e[31;7m%}<<NoEOL>>%{\e[0m%}'
+PROMPT_EOL_MARK=$'%{\e[31;7m%}<<No EOL>>%{\e[0m%}'
 
 ##
 ##  History Size
