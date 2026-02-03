@@ -45,6 +45,12 @@ umask 022
 PROMPT='%n@%m%% '
 
 ##
+##  EOL Mark
+##  "<<NoEOL>>" in red reverse video
+##
+PROMPT_EOL_MARK=$'%{\e[31;7m%}<<NoEOL>>%{\e[0m%}'
+
+##
 ##  History Size
 ##
 [[ "$HISTSIZE" =~ '^[1-9][0-9]*$' && "$HISTSIZE" -ge 1000 ]] || HISTSIZE=1000
