@@ -44,10 +44,21 @@ keybind = ctrl+v=paste_from_clipboard
 keybind = ctrl+shift+v=text:\x16
 
 # Split Window
-keybind = ctrl+shift+[=goto_split:previous
-keybind = ctrl+shift+]=goto_split:next
+keybind = ctrl+shift+[=new_split:left
+keybind = ctrl+shift+]=new_split:right
 keybind = ctrl+shift+|=new_split:right
+keybind = ctrl+shift+==new_split:up
 keybind = ctrl+shift+-=new_split:down
+
+# Page Up/Down Keys
+keybind = page_up=scroll_page_lines:-1
+keybind = page_down=scroll_page_lines:1
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
+keybind = ctrl+page_up=jump_to_prompt:-1
+keybind = ctrl+page_down=jump_to_prompt:1
+keybind = ctrl+shift+page_up=goto_split:previous
+keybind = ctrl+shift+page_down=goto_split:next
 
 
 # This is the configuration file for Ghostty.
