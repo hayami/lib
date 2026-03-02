@@ -61,6 +61,10 @@ set noignorecase
 " Execute a command line from the cursor position to the end of the line
 "
 nnoremap <c-k> :exe 'r!' . getline('.')[col('.')-1:-1]<cr>
+" Fix for Ghostty: Do not send CSI >4;2m (modifyOtherKeys=2) if using ghostty
+if exists('$GHOSTTY_BIN_DIR') || exists('$GHOSTTY_RESOURCES_DIR')
+  set t_TI=
+endif
 
 
 "
