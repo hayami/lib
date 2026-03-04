@@ -42,7 +42,10 @@ umask 022
 ##
 ##  Shell Prompt
 ##
-PROMPT='%n@%m%% '
+PROMPT='%n@%m%%'
+PROMPT="%B${PROMPT}%b"	# Bold
+PROMPT="%S${PROMPT}%s"	# Reverse Video
+PROMPT="${PROMPT} "	# Add a trailing space
 
 ##
 ##  EOL Mark
