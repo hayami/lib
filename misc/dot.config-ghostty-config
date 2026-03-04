@@ -1,6 +1,17 @@
 # Theme
 theme = Solarized Dark Higher Contrast
 
+# Disable dimming for unfocused panes
+unfocused-split-opacity = 1.0
+
+# Make the pane border color more visible
+split-divider-color = #9a7400
+
+# Make the selection highlight brighter
+# (for Solarized Dark Higher Contrast)
+selection-background = #586e75
+selection-foreground = #fdf6e3
+
 # Set TERM as follows. By default, it is set to xterm-ghostty
 term = xterm-256color
 
@@ -27,10 +38,6 @@ font-style = SemiBold
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
-
-# Make the selection highlight brighter (for Solarized Dark Higher Contrast)
-selection-background = #586e75
-selection-foreground = #fdf6e3
 
 # Clipboard
 copy-on-select = clipboard
