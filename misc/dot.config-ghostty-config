@@ -1,26 +1,46 @@
 # Theme
-theme = Solarized Dark Higher Contrast
+#theme = Ghostty Default Style Dark
+#theme = GitLab Dark Grey
+#theme = Gruvbox Material
+#theme = Horizon
+#theme = Material Design Colors
+#theme = Solarized Dark Higher Contrast
 
-# Make bright colors more distinguishable
-palette = 8=#002b36
-palette = 9=#ff6b6b
-palette = 10=#a6e22e
-palette = 11=#ffd75f
-palette = 12=#5fafff
-palette = 13=#d787ff
-palette = 14=#5fd7d7
-palette = 15=#fdf6e3
+# Theme: https://terminalcolors.com/themes/zenbones/duckbones/
+background = #0e101a
+foreground = #ebefc0
+selection-background = #37382d
+selection-foreground = #ebefc0
+cursor-color = #edf2c2
+cursor-text = #0e101a
+palette = 0=#0e101a
+palette = 1=#e03600
+palette = 2=#5dcd97
+palette = 3=#e39500
+palette = 4=#00a3cb
+palette = 5=#795ccc
+palette = 6=#00a3cb
+palette = 7=#ebefc0
+palette = 8=#2b2f46
+palette = 9=#ff4821
+palette = 10=#58db9e
+palette = 11=#f6a100
+palette = 12=#00b4e0
+palette = 13=#b3a1e6
+palette = 14=#00b4e0
+palette = 15=#b3b692
+# Make the selection highlight brighter for the Duckbones
+selection-background = #4a4c38
+selection-foreground = #f3f7cc
+# Make the pane border color more visible for the Duckbones (ANSI color 58)
+split-divider-color = #5f5f00
+
+# Make cursor colors more distinguishable
+cursor-color = #f34b00
+cursor-text = #002831
 
 # Disable dimming for unfocused panes
 unfocused-split-opacity = 1.0
-
-# Make the pane border color more visible
-split-divider-color = #9a7400
-
-# Make the selection highlight brighter
-# (for Solarized Dark Higher Contrast)
-selection-background = #586e75
-selection-foreground = #fdf6e3
 
 # Set TERM as follows. By default, it is set to xterm-ghostty
 term = xterm-256color
