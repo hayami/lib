@@ -29,9 +29,9 @@ palette = 12=#00b4e0
 palette = 13=#b3a1e6
 palette = 14=#00b4e0
 palette = 15=#b3b692
-# Make the selection highlight brighter for the Duckbones
-selection-background = #4a4c38
-selection-foreground = #f3f7cc
+# Make the selection color more visible for the Duckbones
+selection-background = #77216F
+selection-foreground = #F7EFFF
 # Make the pane border color more visible for the Duckbones (ANSI color 58)
 split-divider-color = #5f5f00
 
