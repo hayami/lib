@@ -295,7 +295,8 @@ fi
     x=/etc/ssh/sshd_config; [ -f $x.orig ] || cp -p $x $x.orig
     sed -i -e "s/^#.*Port\([ \t]\+\).*/Port\1$sshaltport/" $x
     grep -E -q -e "^Port[[:blank:]]+$sshaltport"'$' $x
-    sed -i -e 's/^#.*PermitRootLogin\([ \t]\+\).*/PermitRootLogin\1no/' $x
+    sed -i -e 's/^#.*[^"]PermitRootLogin\([ \t]\+\).*/PermitRootLogin\1no/' $x
+    sed -i -e 's/^#PermitRootLogin\([ \t]\+\).*/PermitRootLogin\1no/' $x
     grep -E -q -e '^PermitRootLogin[[:blank:]]+no$' $x
     sed -i -e 's/^#.*UseDNS\([ \t]\+\).*/UseDNS\1yes/' $x
     grep -E -q -e '^UseDNS[[:blank:]]+yes$' $x
