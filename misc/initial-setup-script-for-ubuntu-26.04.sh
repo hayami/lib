@@ -198,12 +198,12 @@ fi
 ###
 ### set USERGROUPS_ENAB to 'no' in /etc/login.defs
 ###
-(
-    echo "*** /etc/login.defs"
-    x=/etc/login.defs; [ -f $x.orig ] || cp -p $x $x.orig
-    sed -i -e 's/^USERGROUPS_ENAB\([ \t]\+\)yes.*/USERGROUPS_ENAB\1no/' $x
-    grep -E -q -e '^USERGROUPS_ENAB[[:blank:]]+no$' $x
-) 2>&1 | tee -a $log
+#(
+#    echo "*** /etc/login.defs"
+#    x=/etc/login.defs; [ -f $x.orig ] || cp -p $x $x.orig
+#    sed -i -e 's/^USERGROUPS_ENAB\([ \t]\+\)yes.*/USERGROUPS_ENAB\1no/' $x
+#    grep -E -q -e '^USERGROUPS_ENAB[[:blank:]]+no$' $x
+#) 2>&1 | tee -a $log
 
 
 ###
