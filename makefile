@@ -10,6 +10,7 @@
 # 	make relink
 
 PRIVATE	:= $(HOME)/private/lib
+SYSLOCAL:= syslocal
 USRLOCAL:= usrlocal
 EXCLUDE	:= .|..|.git|.gitignore
 INCLUDE	:= Makefile memo.txt
@@ -20,7 +21,6 @@ PRIVDOT	:= $(shell echo $(PRIVATE) | sed -e "s|^$$HOME/||")
 NODE	:= $(shell node=$$(uname -n); echo $${node%%[0-9.]*})
 
 ifeq ($(NODE),www)
-USRLOCAL:= syslocal
 ifneq ($(DOTDIR),$(PRIVDOT))
 LINKS	:= ${shell for i in \
 	   .less* .termcap .tmux.conf .vimrc .zsh* .zprofile \
@@ -117,6 +117,8 @@ bin-update:
 sys-install:
 	[ -n "$(PRIVATE)" ]
 	install -d -m 0755 $(HOME)/sys
+	install -d -m 0755 $(HOME)/sys/local
+	install -d -m 0755 $(HOME)/sys/$(SYSLOCAL)
 	install -d -m 0755 $(HOME)/sys/$(USRLOCAL)
 	install -d -m 0755 $(HOME)/sys/backup
 	install -d -m 0755 $(HOME)/sys/backup/orig
@@ -125,6 +127,7 @@ sys-install:
 
 sys-update:
 	[ -n "$(PRIVATE)" ]
+	install -m 0644 tpl.sys/syslocal/Makefile $(HOME)/sys/$(SYSLOCAL)/
 	install -m 0644 tpl.sys/usrlocal/Makefile $(HOME)/sys/$(USRLOCAL)/
 	install -m 0644 tpl.sys/backup/Makefile $(HOME)/sys/backup/
 	install -m 0755 tpl.sys/backup/*.sh $(HOME)/sys/backup/
