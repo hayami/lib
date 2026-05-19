@@ -1,6 +1,6 @@
 PREFIX	:= $(shell echo -n "$$HOME/sys/local")
 SUDO	:= $(shell [ "$$(id -u)" != "0" ] \
-           && which sudo > /dev/null 2>&1 && echo -n "sudo")
+	   && which sudo > /dev/null 2>&1 && echo -n "sudo")
 COMM	:= comm --nocheck-order
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
