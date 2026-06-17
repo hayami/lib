@@ -1,6 +1,5 @@
 PREFIX	:= $(shell echo -n "$$HOME/sys/local")
-SUDO	:= $(shell [ "$$(id -u)" != "0" ] \
-	   && which sudo > /dev/null 2>&1 && echo -n "sudo")
+SUDO	:=
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
 
