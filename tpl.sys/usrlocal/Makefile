@@ -1,9 +1,11 @@
 PREFIX	:= /usr/local
 SUDO	:= $(shell [ "$$(id -u)" != "0" ] \
 	   && which sudo > /dev/null 2>&1 && echo -n "sudo")
-COMM	:= comm --nocheck-order
+COMM	:= comm
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
+
+export LC_ALL = C
 
 filecheck check: tmpdir filelist
 	for f in $$(find * -maxdepth 0 -type f -print); do \
