@@ -1,7 +1,6 @@
 PREFIX	:= /usr/local
 SUDO	:= $(shell [ "$$(id -u)" != "0" ] \
 	   && which sudo > /dev/null 2>&1 && echo -n "sudo")
-COMM	:= comm
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
 
@@ -13,10 +12,10 @@ filecheck check: tmpdir filelist
 	done | sed -e 's/ -> .*//' | sort > $(TMPDIR)/ulist
 	uniq $(TMPDIR)/ulist > $(TMPDIR)/clist
 	uniq -d $(TMPDIR)/ulist > $(TMPDIR)/dlist
-	$(COMM)     $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm
-	$(COMM) -23 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm1
-	$(COMM) -13 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm2
-	$(COMM) -12 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm3
+	comm     $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm
+	comm -23 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm1
+	comm -13 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm2
+	comm -12 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm3
 	@if [ -s $(TMPDIR)/dlist ]; then \
 	    echo; \
 	    (	echo -n "*** Following files are registerd in duplicate."; \
@@ -78,7 +77,7 @@ rkiv-pkg: tmpdir
 	>  $(TMPDIR)/$(PKG)-dirs2
 	while read d2; do fgrep "$$d2/" $(TMPDIR)/$(PKG)-dirs2; done \
 	< $(TMPDIR)/$(PKG)-dirs2 | sort -u > $(TMPDIR)/$(PKG)-dirs2c
-	$(COMM) -23 $(TMPDIR)/$(PKG)-dirs2 $(TMPDIR)/$(PKG)-dirs2c \
+	comm -23 $(TMPDIR)/$(PKG)-dirs2 $(TMPDIR)/$(PKG)-dirs2c \
 	> $(TMPDIR)/$(PKG)-dirs2u
 	(   sed -e 's#^#//#' $(TMPDIR)/$(PKG)-list \
 	    | fgrep -v -f $(TMPDIR)/$(PKG)-dirs2u; \
