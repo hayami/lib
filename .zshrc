@@ -263,9 +263,9 @@ alias cu='cu --parity=none --nostop'  # --line /dev/ttyUSB0 --speed 115200 dir
 ##
 brew_prefix=$(brew --prefix 2> /dev/null)
 if [ -n "$brew_prefix" ]; then
-    export HOMEBREW_PREFIX="$brew_prewfix"
-    export HOMEBREW_CELLAR="$brew_prewfix/Cellar";
-    export HOMEBREW_REPOSITORY="$brew_prewfix/Homebrew";
+    export HOMEBREW_PREFIX="$brew_prefix"
+    export HOMEBREW_CELLAR="$brew_prefix/Cellar";
+    export HOMEBREW_REPOSITORY="$brew_prefix/Homebrew";
 
     zcdir="$brew_prefix/share/zsh-completions"
     if [ -d "$zcdir" ]; then
