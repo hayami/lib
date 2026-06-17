@@ -261,8 +261,9 @@ alias cu='cu --parity=none --nostop'  # --line /dev/ttyUSB0 --speed 115200 dir
 ##
 ##  Enabling Completion
 ##
-if [ -n "$HOMEBREW_PREFIX" ]; then
-    zcdir="$HOMEBREW_PREFIX/share/zsh-completions"
+brew_prefix=$(brew --prefix 2> /dev/null)
+if [ -n "$brew_prefix" ]; then
+    zcdir="$brew_prefix/share/zsh-completions"
     if [ -d "$zcdir" ]; then
         case "$FPATH" in
         ${zcdir}:*|*:${zcdir}:*|*:${zcdir}) ;;
@@ -271,6 +272,7 @@ if [ -n "$HOMEBREW_PREFIX" ]; then
     fi
     unset zcdir
 fi
+unset brew_prefix
 autoload -Uz compinit
 compinit
 

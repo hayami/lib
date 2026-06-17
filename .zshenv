@@ -43,24 +43,10 @@ fi
 umask 022
 
 ##
-##  Homebrew
-##
-if [ -z "$HOMEBREW_PREFIX" ]; then
-    test_brew=/opt/homebrew/bin/brew
-    export HOMEBREW_PREFIX=$($test_brew --prefix 2> /dev/null)
-    export HOMEBREW_CELLAR=$($test_brew --cellar 2> /dev/null)
-    export HOMEBREW_REPOSITORY=$($test_brew --repository 2> /dev/null)
-    [ -n "$HOMEBREW_PREFIX"     ] || unset HOMEBREW_PREFIX
-    [ -n "$HOMEBREW_CELLAR"     ] || unset HOMEBREW_CELLAR
-    [ -n "$HOMEBREW_REPOSITORY" ] || unset HOMEBREW_REPOSITORY
-    unset test_brew
-fi
-
-##
 ##  PATH
 ##
 PATH=/usr/bin:/bin; export PATH
-prefixes="$HOME/sys/local $HOMEBREW_PREFIX /usr/local"
+prefixes="$HOME/sys/local /usr/local"
 p=
 for dir in \
     $(find -L "$HOME/bin" -maxdepth 1 -type d -print 2> /dev/null | sort) \
