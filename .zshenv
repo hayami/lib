@@ -97,6 +97,17 @@ EDITOR=vim
 export EDITOR
 
 ##
+##  Homebrew
+##
+brew_prefix=$(brew --prefix 2> /dev/null)
+if [ -n "$brew_prefix" ]; then
+    export HOMEBREW_PREFIX="$brew_prefix"
+    export HOMEBREW_CELLAR="$brew_prefix/Cellar"
+    export HOMEBREW_REPOSITORY="$brew_prefix/Homebrew"
+fi
+unset brew_prefix
+
+##
 ##  Others
 ##
 #ftp_proxy="http://proxy.example.jp:8080/"
