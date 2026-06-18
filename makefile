@@ -125,27 +125,29 @@ sys-install:
 
 sys-update:
 	[ -n "$(PRIVATE)" ]
-	for i in syslocal usrlocal backup; do \
+	@for i in syslocal usrlocal backup; do \
 	    f=$$i/Makefile; \
+	    dot=../../$(DOTDIR); \
 	    [ -f tpl.sys/$$f ] || continue; \
 	    [ ! -e $(HOME)/sys/$$f ] || continue; \
-	    ln -s ../../$(DOTDIR)/tpl.sys/$$f $(HOME)/sys/$$f || ! break; \
+	    (set -x; ln -s $$dot/tpl.sys/$$f $(HOME)/sys/$$f) || ! break; \
 	done
-	for i in syslocal usrlocal; do \
-	    f=$(HOME)/$$i/EXCLUDES; \
+	@for i in syslocal usrlocal; do \
+	    f=$(HOME)/sys/$$i/EXCLUDES; \
 	    if [ ! -e $$f ]; then \
-	        touch $$f || ! break; \
+	        (set -x; touch $$f) || ! break; \
             fi; \
-	    f=$(HOME)/$$i/SHAREPATH; \
+	    f=$(HOME)/sys/$$i/SHAREPATH; \
 	    if [ ! -e $$f ]; then \
-	        echo '-- INSTALLED FILES --' > $$f || ! break; \
+	        (set -x; echo '-- INSTALLED FILES --' > $$f) || ! break; \
 	    fi; \
 	done
-	for i in $(cd tpl.sys/backup && echo *.sh); do \
+	@for i in $(cd tpl.sys/backup && echo *.sh); do \
 	    f=backup/$$i; \
+	    dot=../../$(DOTDIR); \
 	    [ ! -e $(HOME)/sys/$$f ] || continue; \
-	    ln -s ../../$(DOTDIR)/tpl.sys/$$f $(HOME)/sys/$$f || ! break; \
-	    chmod 0755 $(HOME)/sys/$$f || ! break; \
+	    (set -x; ln -s $$dot/tpl.sys/$$f $(HOME)/sys/$$f) || ! break; \
+	    (set -x; chmod 0755 $(HOME)/sys/$$f) || ! break; \
 	done
 
 PRIVATE_DIRS := .ssh .gnupg
