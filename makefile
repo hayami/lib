@@ -145,7 +145,7 @@ sys-update:
 	@for i in $$(cd tpl.sys/backup && echo *.sh); do \
 	    f=backup/$$i; \
 	    dot=../../$(DOTDIR); \
-	    [ -e $(HOME)/sys/$$f ] || continue; \
+	    [ ! -e $(HOME)/sys/$$f ] || continue; \
 	    (set -x; ln -s $$dot/tpl.sys/$$f $(HOME)/sys/$$f) || ! break; \
 	    (set -x; chmod 0755 $(HOME)/sys/$$f) || ! break; \
 	done
