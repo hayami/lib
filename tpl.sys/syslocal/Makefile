@@ -1,4 +1,4 @@
-PREFIX	:= $(shell echo -n "$$HOME/sys/local")
+PREFIX	:= $(shell printf "%s" "$$HOME/sys/local")
 SUDO	:=
 TMPDIR	= .tmp
 RKIVDIR	= /mnt/backup/tmp
@@ -17,28 +17,28 @@ filecheck check: tmpdir filelist
 	comm -12 $(TMPDIR)/flist $(TMPDIR)/clist > $(TMPDIR)/comm3
 	@if [ -s $(TMPDIR)/dlist ]; then \
 	    echo; \
-	    (	echo -n "*** Following files are registerd in duplicate."; \
+	    (	printf "*** Following files are registerd in duplicate."; \
 		echo; cat $(TMPDIR)/dlist; \
 	    ) 1>&2; \
 	fi
 	@if [ -s $(TMPDIR)/comm1 ]; then \
 	    echo; \
-	    (	echo -n "*** Following files are illegally exist"; \
-		echo -n " or not registerd in this directory."; \
+	    (	printf "*** Following files are illegally exist"; \
+		printf " or not registerd in this directory."; \
 		echo; cat $(TMPDIR)/comm1; \
 	    ) 1>&2; \
 	fi
 	@if [ -s $(TMPDIR)/comm2 ]; then \
 	    echo; \
-	    (	echo -n "*** Following files are registerd"; \
-		echo -n " in this directory, but not exist."; \
+	    (	printf "*** Following files are registerd"; \
+		printf " in this directory, but not exist."; \
 		echo; cat $(TMPDIR)/comm2; \
 	    ) 1>&2; \
 	fi
 
 filelist: tmpdir
 	regexp=$$(while read re; do			\
-		    echo -n "$$or$$re";			\
+		    printf "%s" "$$or$$re";		\
 		    or='|';				\
 		done < EXCLUDES);			\
 	(cd $(PREFIX) && $(SUDO) find . -xdev -print)	\
