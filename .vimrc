@@ -12,6 +12,7 @@ set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=iso-2022-jp,utf-8,euc-jp,cp932
 set ffs=unix,dos,mac
+"set ambiwidth=single
 set ambiwidth=double
 set sidescroll=4
 set listchars+=precedes:<,extends:>
