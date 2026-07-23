@@ -12,7 +12,7 @@
 #   (2) 次に hayami でログイン
 #       | これを選択 >>> (0)  Exit, creating the file ~/.zshrc ...
 #       hayami% cd /var/tmp
-#       hayami% sudo chown hayami: initial-setup-script-*.*
+#       hayami% sudo chown hayami:hayami initial-setup-script-*.*
 #       hayami% mv -i initial-setup-script-*.* ~/
 #       hayami% cd
 #       hayami% rm .zshrc .profile .bash*
