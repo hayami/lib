@@ -175,9 +175,7 @@ lswrapper() {
 }
 
 h() {
-    history -t %T 0 | while read n t c; do
-        printf "%s  %4d  %s\n" "$t" "$n" "$c"
-    done | less -S --no-init +G
+    history -t %T 0 | less -S --no-init +G
 }
 
 grep-color () {
