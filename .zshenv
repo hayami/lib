@@ -97,7 +97,48 @@ EDITOR=vim
 export EDITOR
 
 ##
-##  Homebrew
+##  Insert Homebrew paths into PATH
+##
+if ret=$(brew --prefix 2> /dev/null); then
+    brew_prefix="$ret"
+else
+    for i in /home/linuxbrew/.linuxbrew /opt/homebrew; do
+       if ret=$($i/bin/brew --prefix 2> /dev/null); then
+           brew_prefix="$ret"
+           break
+       fi
+    done
+fi
+unset ret
+if [ "$brew_prefix" != "" ]; then
+    case "$PATH" in
+    *:$brew_prefix/bin:*|$brew_prefix/bin:*|:$brew_prefix/bin)
+        ;;
+    *)  # Insert ${brew_prefix}/{bin,sbin} into PATH immediately before
+        # /snap/bin, /usr/bin, /usr/sbin, or similar whichever comes first.
+        old="$IFS"
+        IFS=":"
+        set -- ${=PATH}
+        IFS="$old"
+        flag=0; head=""; tail=""
+        for i in "$@"; do
+            case "$i" in /snap/bin|/usr/bin|/usr/sbin|/bin|/sbin) flag=1;; esac
+            if [ $flag -eq 0 ]; then
+                head="${head}${i}:"
+            else
+                tail="${tail}:${i}"
+            fi
+        done
+        PATH="${head}${brew_prefix}/bin:${brew_prefix}/sbin${tail}"
+        unset flag head tail
+        export PATH
+        [[ -o login ]] && _path="$PATH"	# see ~/.zprofile for this _path variable
+        ;;
+    esac
+fi
+
+##
+##  Homebrew Enviroment Variables
 ##
 brew_prefix=$(brew --prefix 2> /dev/null)
 if [ -n "$brew_prefix" ]; then
