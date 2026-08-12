@@ -1,0 +1,14 @@
+#!/bin/sh
+ps uxwwe | while read line; do
+    disp=
+    xauth=
+    for i in $line; do
+        case "$i" in
+        DISPLAY=*) disp="${i#*=}" ;;
+        XAUTHORITY=*) xauth="${i#*=}" ;;
+        esac
+    done
+    if [ -n "$disp" -a -n "$xauth" ]; then
+       echo "export DISPLAY=$disp XAUTHORITY=$xauth"
+    fi
+done | sort -u
