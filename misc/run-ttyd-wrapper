@@ -1,7 +1,12 @@
 #!/bin/sh
 umask 022
 
-export PATH=$HOME/sys/local/opt/ttyd/bin:/usr/bin:/bin
+for i in $HOME/sys/local/opt/ttyd/bin $HOME/sys/local/bin; do
+    if [ -x "$i/ttyd" ]; then
+        export PATH=${i}:/usr/bin:/bin
+        break
+    fi
+done
 export xterm_client_options=$HOME/lib/misc/xterm.js-client-options
 
 $HOME/lib/misc/run-ttyd
