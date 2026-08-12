@@ -25,6 +25,64 @@
 ##
 ##  Global Order:
 ##	zshenv, zprofile, zshrc, zlogin
+##
+##  STARTUP File Loading Sequence
+##	The assumptions for the figure below are as follows:
+##		RCS        = ON
+##		GLOBAL_RCS = ON
+##	Both options are ON by default in zsh.
+##
+##              zsh starts
+##                  |
+##                  v
+##             /etc/zshenv
+##    (Always read, regardless of RCS)
+##                  |
+##                  v
+##          $ZDOTDIR/.zshenv
+##                  |
+##                  v
+##            Login shell?
+##            /          \
+##          NO            YES
+##          |              |
+##          |              v
+##          |        /etc/zprofile
+##          |              |
+##          |              v
+##          |      $ZDOTDIR/.zprofile
+##          |              |
+##          +--------------+
+##                  |
+##                  v
+##         Interactive shell?
+##            /          \
+##          NO            YES
+##          |              |
+##          |              v
+##          |          /etc/zshrc
+##          |              |
+##          |              v
+##          |        $ZDOTDIR/.zshrc
+##          |              |
+##          +--------------+
+##                  |
+##                  v
+##            Login shell?
+##            /          \
+##          NO            YES
+##          |              |
+##          |              v
+##          |         /etc/zlogin
+##          |              |
+##          |              v
+##          |       $ZDOTDIR/.zlogin
+##          |              |
+##          +--------------+
+##                  |
+##                  v
+##              zsh ready
+##
 
 ##
 ##  CAUTION: This files is sourced by /bin/sh (Bourn Shell) in .xsession file.
