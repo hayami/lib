@@ -2,11 +2,8 @@
 ps uxwwe | while read line; do
     for i in $line; do
         case "$i" in
-        SSH_AGENT_PID=*) p="$i";;
-        SSH_AUTH_SOCK=*) s="$i";;
+        SSH_AGENT_PID=*) echo "export $i" ;;
+        SSH_AUTH_SOCK=*) echo "export $i" ;;
         esac
     done
-    [ -z "$p" ] || echo "export $p"
-    [ -z "$s" ] || echo "export $s"
-    p=''; s=''
 done | sort -u
