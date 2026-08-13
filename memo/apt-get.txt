@@ -12,5 +12,15 @@ apt-cache rdepends apmd
 apt-cache showpkg apmd
 apt-get [-s] upgrade			# -s = --dry-run = --no-act
 apt-get [-s] install t-code
-apt-get [-s] --purge remove t-code	# same as dpkg --purge t-code
-apt-get [-s] --purge autoremove t-code
+apt-get [-s] remove --purge t-code	# same as dpkg --purge t-code
+apt-get [-s] autoremove --purge t-code	# [*1]
+apt-get [-s] purge --autoremove t-code	# [*1]
+apt-get [-s] autopurge t-code		# shortcut for autoremove --purge
+
+[*1] The end result will be the same. Both apt autoremove --purge and apt
+     purge --autoremove will cause orphan dependencies, i.e., packages
+     automatically installed and not anymore required by any other package,
+     to be removed, including their system wide configuration files ("purge").
+     Without the options, they will behave differently. apt autoremove will
+     do an autoremove, whereas apt purge will do nothing because no package
+     was specified.
